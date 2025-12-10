@@ -1,10 +1,62 @@
-.footer-bar {
-  background-color: #2b5c84; /* dark-blue like sample */
-  border-top: 4px solid #5aa7ff; /* light blue thin line */
+.footer-wrapper {
+  background-color: #0f2a55;
+  color: #ffffff;
 }
 
-.footer-text {
-  color: #ffffff;
+.footer-logo {
+  width: 50px;
+  height: 50px;
+}
+
+.text-gold {
+  color: #e8b500;
+}
+
+.footer-desc {
+  color: #cbd5e1;
   font-size: 14px;
-  font-weight: 500;
+  max-width: 300px;
+}
+
+.footer-light {
+  color: #dbe4f0;
+  font-size: 14px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #dbe4f0;
+}
+
+.footer-links li:hover {
+  color: #e8b500;
+}
+
+.schedule-btn {
+  background-color: #e8b500;
+  border: none;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.schedule-btn:hover {
+  background-color: #d7a200;
+}
+
+.footer-bottom {
+  background-color: #0d2247;
+  border-top: 1px solid #314b72;
+}
+
+.footer-bottom .footer-links span:hover {
+  color: #e8b500;
 }

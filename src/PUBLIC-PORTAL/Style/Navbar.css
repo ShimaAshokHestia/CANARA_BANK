@@ -1,40 +1,50 @@
-.top-ticker-bar {
-  background-color: #1f4f77;
-  color: #fff;
-  font-size: 13px;
-  padding: 4px 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.nav-logo {
+  width: 48px;
+  height: 48px;
 }
 
-.logo-main {
-  width: 55px;
-  height: auto;
+.nav-title {
+  color: #0f2a55;
+  font-size: 16px;
 }
 
-.logo-50 {
-  width: 65px;
-  height: 60px;
+.nav-subtitle {
+  font-size: 12px;
+  color: #b48f00;
 }
 
-.nav-text {
+/* NAV LINKS */
+.nav-item {
   font-weight: 500;
-  color: #214d6b !important;
+  color: #333 !important;
 }
 
-.nav-text:hover {
-  color: #0d6efd !important;
+.nav-item:hover {
+  color: #0f2a55 !important;
 }
 
+/* ACTIVE TAB STYLE (BLUE PILL) */
+.nav-item.active {
+  background: #0f2a55;
+  color: #fff !important;
+  padding: 6px 16px;
+  border-radius: 20px;
+}
+
+/* LOGIN BUTTON */
 .login-btn {
-  background-color: #2d6fa8;
+  background-color: #e8b500;
   border: none;
+  font-weight: 600;
   border-radius: 8px;
-  font-weight: 500;
+  padding: 6px 18px;
 }
 
-.mini-subtitle {
-  font-size: 10px;
-  color: #888;
+.login-btn:hover {
+  background-color: #d39e00;
+}
+
+/* BOTTOM CONTACT STRIP */
+.contact-strip {
+  background-color: #0f2a55;
 }

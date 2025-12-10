@@ -1,0 +1,62 @@
+.contact-page-wrapper {
+  background-color: #f4f6f9;
+}
+
+/* HEADER SECTION */
+.contact-header {
+  background-color: #0f2a55;
+  color: white;
+}
+
+.contact-title {
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.contact-subtitle {
+  font-size: 16px;
+  opacity: 0.7;
+}
+
+/* CARD STYLES */
+.contact-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+}
+
+/* ICON CIRCLES */
+.icon-circle {
+  width: 45px;
+  height: 45px;
+  background: #fde8a9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #b08600;
+}
+
+/* SEND BUTTON */
+.send-btn {
+  background-color: #e8b500;
+  border: none;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 8px;
+}
+
+.send-btn:hover {
+  background-color: #d39e00;
+}
+
+/* OFFICE HOURS CARD */
+.office-hours-card {
+  background-color: #0f2a55;
+  border-radius: 12px;
+  border: none;
+  color: white;
+}

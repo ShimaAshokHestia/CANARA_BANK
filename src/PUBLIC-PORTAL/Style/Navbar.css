@@ -1,0 +1,40 @@
+.top-ticker-bar {
+  background-color: #1f4f77;
+  color: #fff;
+  font-size: 13px;
+  padding: 4px 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logo-main {
+  width: 55px;
+  height: auto;
+}
+
+.logo-50 {
+  width: 65px;
+  height: 60px;
+}
+
+.nav-text {
+  font-weight: 500;
+  color: #214d6b !important;
+}
+
+.nav-text:hover {
+  color: #0d6efd !important;
+}
+
+.login-btn {
+  background-color: #2d6fa8;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.mini-subtitle {
+  font-size: 10px;
+  color: #888;
+}

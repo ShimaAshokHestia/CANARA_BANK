@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "../Style/Footer.css";
+import logo from "../Assets/Images/AIBEA_logo.jpg"
 
 const Footer: React.FC = () => {
   return (
@@ -12,7 +13,7 @@ const Footer: React.FC = () => {
           {/* Logo + About */}
           <Col md={4} sm={12}>
             <div className="d-flex align-items-center gap-2 mb-2">
-              <img className="footer-logo" alt="50 Years Logo" />
+              <img src={logo} className="footer-logo" alt="50 Years Logo" />
               <div>
                 <h6 className="fw-bold mb-0">CBEU</h6>
                 <span className="small text-muted-gold">Family Welfare Scheme</span>

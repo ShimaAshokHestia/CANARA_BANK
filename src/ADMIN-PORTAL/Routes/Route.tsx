@@ -38,6 +38,7 @@ import StateView from '../Pages/Settings/State/StateView';
 import BranchList from '../Pages/Branch/List';
 import BranchCreate from '../Pages/Branch/Create';
 import BranchEdit from '../Pages/Branch/Edit';
+import BranchView from '../Pages/Branch/View';
 
 //Circle
 import CircleList from '../Pages/Circle/List';
@@ -73,7 +74,7 @@ export default function AdminRoutes() {
         <Route path="/dashboard/settings/branch-list" element={<BranchList />} />
         <Route path="/dashboard/settings/branch-create" element={<BranchCreate />} />
         <Route path="/dashboard/settings/branch-edit/:branchId" element={<BranchEdit />} />
-        {/* <Route path="/dashboard/settings/branch-view/:stateId" element={<StateView />} /> */}
+        <Route path="/dashboard/settings/branch-view/:stateId" element={<BranchView />} />
 
         {/* Circles */}
         <Route path="/dashboard/settings/circles-list" element={<CircleList />} />

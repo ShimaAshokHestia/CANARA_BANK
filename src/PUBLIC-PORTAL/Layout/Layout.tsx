@@ -14,7 +14,7 @@ const PublicLayout: React.FC = () => {
       </div>
 
       {/* Page Content */}
-      <Container fluid className="flex-grow-1 px-0 mt-2">
+      <Container fluid className="flex-grow-1 px-0">
         <Outlet />
       </Container>
 

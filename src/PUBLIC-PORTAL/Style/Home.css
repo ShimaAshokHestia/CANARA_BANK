@@ -1,0 +1,100 @@
+/* HERO SECTION */
+.hero-section {
+  background: url('/images/hero-bg.jpg') center/cover no-repeat;
+  height: 90vh;
+  color: white;
+  padding-top: 120px;
+  position: relative;
+}
+
+.hero-badge {
+  background: #FFD966;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  display: inline-block;
+  color: #0f2a55;
+}
+
+.hero-title {
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.highlight {
+  color: #ffd966;
+}
+
+.hero-btn-primary {
+  background: #ffd966;
+  color: #0f2a55;
+  font-weight: 600;
+  border: none;
+}
+
+.hero-btn-secondary {
+  color: white !important;
+  border: 1px solid white !important;
+  font-weight: 500;
+}
+
+/* Section Titles */
+.section-mini-title {
+  color: #d39e00;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.section-subtext {
+  max-width: 600px;
+  margin: auto;
+  color: #555;
+}
+
+/* Commitment Cards */
+.commit-card {
+  padding: 20px;
+  border-radius: 12px;
+  min-height: 210px;
+}
+
+.commit-icon {
+  font-size: 28px;
+  background: #fff4c4;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+/* History Boxes */
+.history-box {
+  text-align: center;
+  padding: 25px;
+  border-radius: 12px;
+  background: #f7f9fc;
+}
+
+/* News Section */
+.news-card {
+  border-radius: 12px;
+}
+
+.featured-card {
+  background: #fff4c4;
+  border-radius: 12px;
+}
+
+.quick-links-card {
+  background: #0f2a55;
+  color: white;
+  border-radius: 12px;
+}

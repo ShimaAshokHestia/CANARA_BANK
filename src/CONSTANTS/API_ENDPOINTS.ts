@@ -3,13 +3,13 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://sreenathganga-001-site16.jtempurl.com/api';
 
 export const API_ENDPOINTS = {
-    AUTH: {
+  AUTH: {
     LOGIN: `${API_BASE_URL}/Auth/login`,
     LOGOUT: `${API_BASE_URL}/Auth/logout`,
     CHANGE_PASSWORD: `${API_BASE_URL}/Auth/change-password`,
     FORGOT_PASSWORD: `${API_BASE_URL}/Auth/forgot-password`,
   },
-    USER: {
+  USER: {
     GET_ALL: `${API_BASE_URL}/User`,
     GET_BY_ID: (id: number) => `${API_BASE_URL}/User/${id}`,
     CREATE: `${API_BASE_URL}/User`,
@@ -18,7 +18,7 @@ export const API_ENDPOINTS = {
     CHANGE_PASSWORD: `${API_BASE_URL}/User/ChangePassWord`,
     // UPLOAD_PROFILE_PIC: `${API_BASE_URL}/User/upload-profile-pic`,
   },
-   CUSTOMER: {
+  CUSTOMER: {
     GET_ALL: `${API_BASE_URL}/Customer`,
     GET_BY_ID: (id: number) => `${API_BASE_URL}/Customer/${id}`,
     CREATE: `${API_BASE_URL}/Customer`,
@@ -38,41 +38,49 @@ export const API_ENDPOINTS = {
     GET: `${API_BASE_URL}/Attachment`,
     DOWNLOAD: (attachmentId: number) => `${API_BASE_URL}/Attachment/download/${attachmentId}`,
   },
-   DAY_QUOTE:{
-    GET_ALL:`${API_BASE_URL}/DayQuote`,
-    GET_BY_ID:(id: number) => `${API_BASE_URL}/DayQuote/${id}`,
+  DAY_QUOTE: {
+    GET_ALL: `${API_BASE_URL}/DayQuote`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/DayQuote/${id}`,
     CREATE: `${API_BASE_URL}/DayQuote`,
     UPDATE: (id: number) => `${API_BASE_URL}/DayQuote/${id}`,
     DELETE: (id: number) => `${API_BASE_URL}/DayQuote/${id}`,
   },
-  MAIN_PAGE:{
-  GET_ALL:`${API_BASE_URL}/MainPage`,
-  GET_BY_ID:(id: number) => `${API_BASE_URL}/MainPage/${id}`,
-  CREATE: `${API_BASE_URL}/MainPage`,
-  UPDATE: (id: number) => `${API_BASE_URL}/MainPage/${id}`,
-  DELETE: (id: number) => `${API_BASE_URL}/MainPage/${id}`,
+  MAIN_PAGE: {
+    GET_ALL: `${API_BASE_URL}/MainPage`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/MainPage/${id}`,
+    CREATE: `${API_BASE_URL}/MainPage`,
+    UPDATE: (id: number) => `${API_BASE_URL}/MainPage/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/MainPage/${id}`,
   },
-  CIRCLE:{
-  GET_ALL:`${API_BASE_URL}/Circle`,
-  GET_BY_ID:(id: number) => `${API_BASE_URL}/Circle/${id}`,
-  CREATE: `${API_BASE_URL}/Circle`,
-  UPDATE: (id: number) => `${API_BASE_URL}/Circle/${id}`,
-  DELETE: (id: number) => `${API_BASE_URL}/Circle/${id}`,
+  CIRCLE: {
+    GET_ALL: `${API_BASE_URL}/Circle`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/Circle/${id}`,
+    CREATE: `${API_BASE_URL}/Circle`,
+    UPDATE: (id: number) => `${API_BASE_URL}/Circle/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/Circle/${id}`,
   },
-  BRANCH:{
-   GET_ALL:`${API_BASE_URL}/Branch`,
-   GET_BY_ID:(id: number) => `${API_BASE_URL}/Branch/${id}`,
-   CREATE: `${API_BASE_URL}/Branch`,
-   UPDATE: (id: number) => `${API_BASE_URL}/Branch/${id}`,
-   DELETE: (id: number) => `${API_BASE_URL}/Branch/${id}`,
+  BRANCH: {
+    GET_ALL: `${API_BASE_URL}/Branch`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/Branch/${id}`,
+    CREATE: `${API_BASE_URL}/Branch`,
+    UPDATE: (id: number) => `${API_BASE_URL}/Branch/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/Branch/${id}`,
   },
- MANAGING_COMMITTEE:{
-  GET_ALL:`${API_BASE_URL}/ManagingCommittee`,
-  GET_BY_ID:(id: number) => `${API_BASE_URL}/ManagingCommittee/${id}`,
-  CREATE: `${API_BASE_URL}/ManagingCommittee`,
-  UPDATE: (id: number) => `${API_BASE_URL}/ManagingCommittee/${id}`,
-  DELETE: (id: number) => `${API_BASE_URL}/ManagingCommittee/${id}`,
+  MANAGING_COMMITTEE: {
+    GET_ALL: `${API_BASE_URL}/ManagingComitee`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/ManagingComitee/${id}`,
+    CREATE: `${API_BASE_URL}/ManagingComitee`,
+    UPDATE: (id: number) => `${API_BASE_URL}/ManagingComitee/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/ManagingComitee/${id}`,
   },
+  STATE: {
+  GET_ALL: `${API_BASE_URL}/State`,
+  GET_BY_ID: (id: number) => `${API_BASE_URL}/State/${id}`,
+  CREATE: `${API_BASE_URL}/State`,
+  UPDATE: (id: number) => `${API_BASE_URL}/State/${id}`,
+  DELETE: (id: number) => `${API_BASE_URL}/State/${id}`,
+},
+
 };
 
 // ✅ Helper function to get full image URL

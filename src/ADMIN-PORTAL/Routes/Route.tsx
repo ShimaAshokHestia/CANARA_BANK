@@ -9,6 +9,7 @@ import Login from '../../Auth/Login';
 import UserList from '../Pages/User/List';
 import UserCreate from '../Pages/User/Create';
 import UserEdit from '../Pages/User/Edit';
+import UserView from '../Pages/User/View';
 
 //Customer
 import CustomerList from '../Pages/Customer/List';
@@ -27,11 +28,17 @@ import MainPageCreate from '../Pages/MainPage/Create';
 import MainPageEdit from '../Pages/MainPage/Edit';
 // import MainPageView from '../Pages/MainPage/View';
 
+//State
+import StateList from '../Pages/Settings/State/StateList';
+import StateCreate from '../Pages/Settings/State/StateCreate';
+import StateEdit from '../Pages/Settings/State/StateEdit';
+import StateView from '../Pages/Settings/State/StateView';
+
 export default function AdminRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
-      
+
       <Route path="/dashboard" element={<DashBoard />}>
         <Route index element={<HomePage />} />
 
@@ -39,27 +46,36 @@ export default function AdminRoutes() {
         <Route path='settings/user-list' element={<UserList />} />
         <Route path='settings/user-create' element={<UserCreate />} />
         <Route path='settings/user-edit/:userId' element={<UserEdit />} />
+        <Route path='settings/user-view/:userId' element={<UserView />} />
 
         {/* Customer */}
-        <Route path='settings/customer-list' element={<CustomerList/>} />
+        <Route path='settings/customer-list' element={<CustomerList />} />
         <Route path='settings/customer-create' element={<CustomerCreate />} />
         <Route path='settings/customer-edit/:customerId' element={<CustomerEdit />} />
 
+        {/* State */}
+        <Route path="/dashboard/settings/state-list" element={<StateList />} />
+        <Route path="/dashboard/settings/state-create" element={<StateCreate />} />
+        <Route path="/dashboard/settings/state-edit/:stateId" element={<StateEdit />} />
+        <Route path="/dashboard/settings/state-view/:stateId" element={<StateView />} />
+
         {/* Manage Committe */}
         {/* ///demo */}
-        <Route path='cms/manage-committe-list' element={<ManagingCommitteeList/>} />
+        <Route path='cms/manage-committe-list' element={<ManagingCommitteeList />} />
         <Route path='cms/manage-committe-create' element={<ManagingCommitteeCreate />} />
         <Route path='cms/manage-committe-edit/:managingComitteeId' element={<ManagingCommitteeEdit />} />
         <Route path='cms/manage-committe-view/:managingComitteeId' element={<ManagingCommitteeView />} />
 
         {/* Main Page */}
-        <Route path='cms/mainpage-list' element={<MainPageList/>} />
+        <Route path='cms/mainpage-list' element={<MainPageList />} />
         <Route path='cms/mainpage-create' element={<MainPageCreate />} />
         <Route path='cms/mainpage-edit/:mainPageId' element={<MainPageEdit />} />
         {/* <Route path='cms/mainpage-view/:mainPageId' element={<MainPageView />} /> */}
 
+
+
       </Route>
-      
+
       {/* Catch-All Route for 404 */}
       <Route path='*' element={<PageNotFound />} />
     </Routes>

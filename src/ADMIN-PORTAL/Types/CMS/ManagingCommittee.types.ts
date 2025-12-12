@@ -1,7 +1,7 @@
 import type { AuditTrails } from "../../../Types/AuditLog.types";
 
 export interface ManagingCommittee {
-  managingComitteeId: number;       // e.g., 1
+  managingComiteeId: number;       // e.g., 1
   managingComitteeName: string;     // e.g., "John Mathew"
   position: string;                 // e.g., "Chairman"
   description1: string;             // e.g., "John has over 20 years of banking experience"

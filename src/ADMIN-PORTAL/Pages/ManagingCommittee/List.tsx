@@ -6,7 +6,7 @@ import ManagingCommitteeService from "../../Services/CMS/ManagingCommittee.servi
 import KiduServerTable from "../../../Components/KiduServerTable";
 
 const columns = [
-  { key: "managingComitteeId", label: "ID", enableSorting: true, type: "text" as const },
+  { key: "managingComiteeId", label: "ID", enableSorting: true, type: "text" as const },
   { key: "managingComitteeName", label: "Name", enableSorting: true, type: "text" as const },
   { key: "position", label: "Position", enableSorting: true, type: "text" as const },
   { key: "description1", label: "Description 1", enableSorting: false, type: "text" as const },

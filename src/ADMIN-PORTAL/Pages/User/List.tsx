@@ -61,7 +61,7 @@ const UserList: React.FC = () => {
       addButtonLabel="Add User"
       addRoute="/dashboard/settings/user-create"
       editRoute="/dashboard/settings/user-edit"
-      viewRoute="/dashboard/users/view"
+      viewRoute="/dashboard/settings/user-view"
       showAddButton={true}
       showExport={true}
       showSearch={true}

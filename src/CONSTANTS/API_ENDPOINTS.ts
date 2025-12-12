@@ -38,6 +38,41 @@ export const API_ENDPOINTS = {
     GET: `${API_BASE_URL}/Attachment`,
     DOWNLOAD: (attachmentId: number) => `${API_BASE_URL}/Attachment/download/${attachmentId}`,
   },
+   DAY_QUOTE:{
+    GET_ALL:`${API_BASE_URL}/DayQuote`,
+    GET_BY_ID:(id: number) => `${API_BASE_URL}/DayQuote/${id}`,
+    CREATE: `${API_BASE_URL}/DayQuote`,
+    UPDATE: (id: number) => `${API_BASE_URL}/DayQuote/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/DayQuote/${id}`,
+  },
+  MAIN_PAGE:{
+  GET_ALL:`${API_BASE_URL}/MainPage`,
+  GET_BY_ID:(id: number) => `${API_BASE_URL}/MainPage/${id}`,
+  CREATE: `${API_BASE_URL}/MainPage`,
+  UPDATE: (id: number) => `${API_BASE_URL}/MainPage/${id}`,
+  DELETE: (id: number) => `${API_BASE_URL}/MainPage/${id}`,
+  },
+  CIRCLE:{
+  GET_ALL:`${API_BASE_URL}/Circle`,
+  GET_BY_ID:(id: number) => `${API_BASE_URL}/Circle/${id}`,
+  CREATE: `${API_BASE_URL}/Circle`,
+  UPDATE: (id: number) => `${API_BASE_URL}/Circle/${id}`,
+  DELETE: (id: number) => `${API_BASE_URL}/Circle/${id}`,
+  },
+  BRANCH:{
+   GET_ALL:`${API_BASE_URL}/Branch`,
+   GET_BY_ID:(id: number) => `${API_BASE_URL}/Branch/${id}`,
+   CREATE: `${API_BASE_URL}/Branch`,
+   UPDATE: (id: number) => `${API_BASE_URL}/Branch/${id}`,
+   DELETE: (id: number) => `${API_BASE_URL}/Branch/${id}`,
+  },
+ MANAGING_COMMITTEE:{
+  GET_ALL:`${API_BASE_URL}/ManagingCommittee`,
+  GET_BY_ID:(id: number) => `${API_BASE_URL}/ManagingCommittee/${id}`,
+  CREATE: `${API_BASE_URL}/ManagingCommittee`,
+  UPDATE: (id: number) => `${API_BASE_URL}/ManagingCommittee/${id}`,
+  DELETE: (id: number) => `${API_BASE_URL}/ManagingCommittee/${id}`,
+  },
 };
 
 // ✅ Helper function to get full image URL

@@ -72,7 +72,7 @@ const BranchList: React.FC = () => {
       addButtonLabel="Add Branch"
       addRoute="/dashboard/settings/branch-create"
       editRoute="/dashboard/settings/branch-edit"
-      viewRoute="/dashboard/branches/view"
+      viewRoute="/dashboard/settings/branch-view"
       showAddButton={true}
       showExport={true}
       showSearch={true}

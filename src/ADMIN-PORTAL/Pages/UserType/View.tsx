@@ -1,0 +1,45 @@
+import React from "react";
+import KiduView from "../../Components/KiduView";
+import type { ViewField } from "../../Components/KiduView";
+import UserTypeService from "../../Services/Settings/UserType.services";
+
+
+const UserTypeView: React.FC = () => {
+  const fields: ViewField[] = [
+    { key: "userTypeId", label: "User Type ID", icon: "bi-hash" },
+    { key: "abbreviation", label: "Abbreviation", icon: "bi-tag" },
+    { key: "description", label: "Description", icon: "bi-card-text" },
+  ];
+
+  const handleFetch = async (id: string) => {
+    const response = await UserTypeService.getUserTypeById(Number(id));
+    return response;
+  };
+
+  const handleDelete = async (id: string) => {
+    await UserTypeService.deleteUserType(Number(id));
+  };
+
+  return (
+    <KiduView
+      title="User Type Details"
+      fields={fields}
+      onFetch={handleFetch}
+      onDelete={handleDelete}
+      editRoute="/dashboard/user/usertype-edit"
+      listRoute="/dashboard/user/usertype-list"
+      paramName="userTypeId"
+      auditLogConfig={{
+        tableName: "UserType",
+        recordIdField: "userTypeId",
+      }}
+      themeColor="#18575A"
+      loadingText="Loading User Type details..."
+      showEditButton
+      showDeleteButton
+      deleteConfirmMessage="Are you sure you want to delete this user type? This action cannot be undone."
+    />
+  );
+};
+
+export default UserTypeView;

@@ -81,11 +81,11 @@ export const API_ENDPOINTS = {
     DELETE: (id: number) => `${API_BASE_URL}/State/${id}`,
   },
   STATUS: {
-    GET_ALL: `${API_BASE_URL}/api/Status`,
-    GET_BY_ID: (id: number) => `${API_BASE_URL}/api/Status/${id}`,
-    CREATE: `${API_BASE_URL}/api/Status`,
-    UPDATE: (id: number) => `${API_BASE_URL}/api/Status/${id}`,
-    DELETE: (id: number) => `${API_BASE_URL}/api/Status/${id}`,
+    GET_ALL: `${API_BASE_URL}/Status`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/Status/${id}`,
+    CREATE: `${API_BASE_URL}/Status`,
+    UPDATE: (id: number) => `${API_BASE_URL}/Status/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/Status/${id}`,
   },
   CATEGORY: {
     GET_ALL: `${API_BASE_URL}/Category`,
@@ -108,28 +108,28 @@ export const API_ENDPOINTS = {
     UPDATE: (id: number) => `${API_BASE_URL}/UserType/${id}`,
     DELETE: (id: number) => `${API_BASE_URL}/UserType/${id}`,
   },
-   MEMBER:{
-   GET_ALL: `${API_BASE_URL}/Member`,
-   GET_BY_ID: (id: number) => `${API_BASE_URL}/Member/${id}`,
-   CREATE: `${API_BASE_URL}/Member`,
-   UPDATE: (id: number) => `${API_BASE_URL}/Member/${id}`,
-   DELETE: (id: number) => `${API_BASE_URL}/Member/${id}`,
+  MEMBER: {
+    GET_ALL: `${API_BASE_URL}/Member`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/Member/${id}`,
+    CREATE: `${API_BASE_URL}/Member`,
+    UPDATE: (id: number) => `${API_BASE_URL}/Member/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/Member/${id}`,
   },
-  DEATH_CLAIMS:{
-   GET_ALL: `${API_BASE_URL}/DeathClaim`,
-   GET_BY_ID: (id: number) => `${API_BASE_URL}/DeathClaim/${id}`,
-   CREATE: `${API_BASE_URL}/DeathClaim`,
-   UPDATE: (id: number) => `${API_BASE_URL}/DeathClaim/${id}`,
-   DELETE: (id: number) => `${API_BASE_URL}/DeathClaim/${id}`,
+  DEATH_CLAIMS: {
+    GET_ALL: `${API_BASE_URL}/DeathClaim`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/DeathClaim/${id}`,
+    CREATE: `${API_BASE_URL}/DeathClaim`,
+    UPDATE: (id: number) => `${API_BASE_URL}/DeathClaim/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/DeathClaim/${id}`,
   },
   MONTH: {
-  GET_ALL: `${API_BASE_URL}/Month`,
-  GET_BY_ID: (id: number) => `${API_BASE_URL}/Month/${id}`,
-  CREATE: `${API_BASE_URL}/Month`,
-  UPDATE: (id: number) => `${API_BASE_URL}/Month/${id}`,
-  DELETE: (id: number) => `${API_BASE_URL}/Month/${id}`,
-},
-  
+    GET_ALL: `${API_BASE_URL}/Month`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/Month/${id}`,
+    CREATE: `${API_BASE_URL}/Month`,
+    UPDATE: (id: number) => `${API_BASE_URL}/Month/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/Month/${id}`,
+  },
+
 };
 
 // ✅ Helper function to get full image URL

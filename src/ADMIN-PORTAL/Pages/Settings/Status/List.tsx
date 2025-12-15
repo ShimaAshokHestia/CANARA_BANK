@@ -1,7 +1,7 @@
 import React from "react";
-import type { Status } from "../../../Types/Settings/Status";
+import type { Status } from "../../../Types/Settings/Status.types";
 import KiduServerTable from "../../../../Components/KiduServerTable";
-import StatusService from "../../../Services/Settings/StatusService";
+import StatusService from "../../../Services/Settings/Status.services";
 
 const columns = [
   { key: "statusId", label: "Status ID", enableSorting: true, type: "text" as const },

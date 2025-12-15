@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import type { Field } from "../../../Components/KiduCreate";
-import type { Status } from "../../../Types/Settings/Status";
+import type { Status } from "../../../Types/Settings/Status.types";
 import KiduCreate from "../../../Components/KiduCreate";
-import StatusService from "../../../Services/Settings/StatusService";
+import StatusService from "../../../Services/Settings/Status.services";
 
 const StatusCreate: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);

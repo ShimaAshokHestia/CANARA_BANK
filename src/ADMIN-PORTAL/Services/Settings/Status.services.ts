@@ -1,7 +1,7 @@
 import { API_ENDPOINTS } from "../../../CONSTANTS/API_ENDPOINTS";
 import HttpService from "../../../Services/HttpService";
 import type { CustomResponse } from "../../../Types/ApiTypes";
-import type { Status } from "../../Types/Settings/Status";
+import type { Status } from "../../Types/Settings/Status.types";
 
 const StatusService = {
   async getAllStatuses(): Promise<Status[]> {

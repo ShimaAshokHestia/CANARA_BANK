@@ -1,0 +1,36 @@
+// src/ADMIN-PORTAL/Pages/Settings/Month/MonthCreate.tsx
+import React from "react";
+import type { Field } from "../../../Components/KiduCreate";
+import MonthService from "../../../Services/Settings/Month.services";
+import KiduCreate from "../../../Components/KiduCreate";
+import type { Month } from "../../../Types/Settings/Month.types";
+
+const MonthCreate: React.FC = () => {
+  const fields: Field[] = [
+    { name: "monthName", rules: { type: "text", label: "Month Name", required: true, colWidth: 6 } },
+    { name: "abbrivation", rules: { type: "text", label: "Abbreviation", required: true, colWidth: 6 } },
+  ];
+
+  const handleSubmit = async (formData: Record<string, any>) => {
+    const payload: Omit<Month, "monthCode" | "auditLogs"> = {
+      monthName: formData.monthName.trim(),
+      abbrivation: formData.abbrivation.trim(),
+    };
+    await MonthService.createMonth(payload);
+  };
+
+  return (
+    <KiduCreate
+      title="Create Month"
+      fields={fields}
+      onSubmit={handleSubmit}
+      successMessage="Month created successfully!"
+      errorMessage="Failed to create month. Please try again."
+      // ✅ use navigateOnSuccess (supported) instead of navigateBackPath
+      navigateOnSuccess="/dashboard/settings/month-list"
+      themeColor="#18575A"
+    />
+  );
+};
+
+export default MonthCreate;

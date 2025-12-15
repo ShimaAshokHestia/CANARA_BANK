@@ -13,7 +13,7 @@ import KiduAuditLogs from "../../Components/KiduAuditLogs";
 
 // ==================== TYPES ====================
 export interface FieldRule {
-  type: "text" | "number" | "email" | "password" | "select" | "textarea" | "popup" | "date" | "radio" | "url" | "checkbox" | "toggle";
+  type: "text" | "number" | "email" | "password" | "select" | "textarea" | "popup" | "date" | "radio" | "url" | "checkbox" | "toggle" | "rowbreak";
   label: string;
   required?: boolean;
   minLength?: number;
@@ -111,6 +111,8 @@ const KiduEdit: React.FC<KiduEditProps> = ({
   const initialErrors: Record<string, string> = {};
   
   fields.forEach(f => {
+    if (f.rules.type === "rowbreak") return; // Skip rowbreak
+    
     if (f.rules.type === "toggle" || f.rules.type === "checkbox") {
       initialValues[f.name] = false;
     } else if (f.rules.type === "radio" && options[f.name]?.length) {
@@ -168,6 +170,8 @@ const KiduEdit: React.FC<KiduEditProps> = ({
         // Format data according to fields
         const formattedData: Record<string, any> = {};
         fields.forEach(f => {
+          if (f.rules.type === "rowbreak") return; // Skip rowbreak
+          
           if (f.rules.type === "toggle" || f.rules.type === "checkbox") {
             // Handle boolean conversion for toggle/checkbox
             const rawValue = data[f.name];
@@ -324,6 +328,8 @@ const KiduEdit: React.FC<KiduEditProps> = ({
     const newErrors: Record<string, string> = {};
     
     fields.forEach(f => {
+      if (f.rules.type === "rowbreak") return; // Skip rowbreak
+      
       const rule = f.rules;
       const value = formData[f.name];
       
@@ -583,8 +589,14 @@ const KiduEdit: React.FC<KiduEditProps> = ({
   };
 
   // ==================== RENDER FIELD ====================
-  const renderField = (field: Field) => {
+  const renderField = (field: Field, index: number) => {
     const { name, rules } = field;
+    
+    // Handle row break
+    if (rules.type === "rowbreak") {
+      return <div key={`rowbreak-${index}`} className="w-100"></div>;
+    }
+    
     const colWidth = rules.colWidth || 4;
     
     return (
@@ -701,7 +713,7 @@ const KiduEdit: React.FC<KiduEditProps> = ({
                 {/* Form Fields Section */}
                 <Col xs={12} md={imageConfig ? 9 : 12}>
                   <Row className="g-2">
-                    {regularFields.map(renderField)}
+                    {regularFields.map((field, index) => renderField(field, index))}
                   </Row>
                 </Col>
               </Row>

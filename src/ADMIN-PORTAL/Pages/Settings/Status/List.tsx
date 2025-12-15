@@ -9,7 +9,6 @@ const columns = [
   { key: "abbreviation", label: "Abbreviation", enableSorting: true, type: "text" as const },
   { key: "description", label: "Description", enableSorting: false, type: "text" as const },
   { key: "groupId", label: "Group ID", enableSorting: true, type: "text" as const },
-  { key: "isActive", label: "Active", enableSorting: true, type: "checkbox" as const },
 ];
 
 const StatusList: React.FC = () => {

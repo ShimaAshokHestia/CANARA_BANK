@@ -9,9 +9,7 @@ const columns = [
   { key: "userName", label: "User Name", enableSorting: true, type: "text" as const },
   { key: "userEmail", label: "Email", enableSorting: true, type: "text" as const },
   { key: "phoneNumber", label: "Phone", enableSorting: true, type: "text" as const },
-  { key: "address", label: "Address", enableSorting: false, type: "text" as const },
   { key: "isActive", label: "Active", enableSorting: true, type: "checkbox" as const },
-  { key: "companyId", label: "Company ID", enableSorting: true, type: "text" as const },
 ];
 
 const UserList: React.FC = () => {

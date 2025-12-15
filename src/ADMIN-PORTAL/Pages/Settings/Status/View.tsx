@@ -17,12 +17,6 @@ const StatusView: React.FC = () => {
     },
     { key: "description", label: "Description", icon: "bi-file-text" },
     { key: "groupId", label: "Group ID", icon: "bi-folder" },
-    { 
-      key: "isActive", 
-      label: "Is Active", 
-      icon: "bi-check-circle",
-      isBoolean: true 
-    },
   ];
 
   // Fetch status data

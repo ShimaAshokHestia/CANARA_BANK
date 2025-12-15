@@ -129,6 +129,20 @@ export const API_ENDPOINTS = {
     UPDATE: (id: number) => `${API_BASE_URL}/Month/${id}`,
     DELETE: (id: number) => `${API_BASE_URL}/Month/${id}`,
   },
+  USER_ROLE_RIGHT: {
+    GET_ALL: `${API_BASE_URL}/UserRoleRight`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/UserRoleRight/${id}`,
+    CREATE: `${API_BASE_URL}/UserRoleRight`,
+    UPDATE: (id: number) => `${API_BASE_URL}/UserRoleRight/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/UserRoleRight/${id}`,
+  },
+  REFUND_CONTRIBUITION: {
+    GET_ALL: `${API_BASE_URL}/RefundContribuition`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/RefundContribuition/${id}`,
+    CREATE: `${API_BASE_URL}/RefundContribuition`,
+    UPDATE: (id: number) => `${API_BASE_URL}/RefundContribuition/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/RefundContribuition/${id}`,
+  },
 
 };
 

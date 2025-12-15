@@ -54,15 +54,7 @@ const StatusCreate: React.FC = () => {
         colWidth: 12
       }
     },
-    // Toggle field at the bottom
-    {
-      name: "isActive",
-      rules: {
-        type: "toggle",
-        label: "Is Active",
-        required: false
-      }
-    }
+   
   ];
 
   // Handle form submission
@@ -75,7 +67,7 @@ const StatusCreate: React.FC = () => {
         abbreviation: formData.abbreviation.trim().toUpperCase(),
         description: formData.description?.trim() || "",
         groupId: Number(formData.groupId),
-        isActive: Boolean(formData.isActive),
+        
       };
 
       await StatusService.createStatus(statusData);

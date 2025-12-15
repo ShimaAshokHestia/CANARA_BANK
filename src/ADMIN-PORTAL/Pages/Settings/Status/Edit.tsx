@@ -53,15 +53,7 @@ const StatusEdit: React.FC = () => {
         colWidth: 12
       }
     },
-    // Toggle field at the bottom
-    {
-      name: "isActive",
-      rules: {
-        type: "toggle",
-        label: "Is Active",
-        required: false
-      }
-    }
+   
   ];
 
   // Fetch status data by ID
@@ -76,25 +68,18 @@ const StatusEdit: React.FC = () => {
   };
 
   // Handle form update
-  const handleUpdate = async (statusId: string, formData: Record<string, any>) => {
-    try {
-      // Transform form data to match Status type
-      const statusData: Omit<Status, 'statusId' | 'auditLogs'> = {
-        name: formData.name.trim(),
-        abbreviation: formData.abbreviation.trim().toUpperCase(),
-        description: formData.description?.trim() || "",
-        groupId: Number(formData.groupId),
-        isActive: Boolean(formData.isActive),
-      };
-
-      await StatusService.updateStatus(Number(statusId), statusData);
-      
-    } catch (error: any) {
-      console.error("Error updating status:", error);
-      throw error;
-    }
+ const handleUpdate = async (statusId: string, formData: Record<string, any>) => {
+  const payload: Omit<Status, 'auditLogs'> = {
+    statusId: Number(statusId),  // ✅ Add this
+    name: formData.name.trim(),
+    abbreviation: formData.abbreviation.trim().toUpperCase(),
+    description: formData.description?.trim() || "",
+    groupId: Number(formData.groupId),
   };
 
+  await StatusService.updateStatus(Number(statusId), payload);
+  // ✅ Remove manual refetch - KiduEdit handles it
+};
   return (
     <KiduEdit
       title="Edit Status"

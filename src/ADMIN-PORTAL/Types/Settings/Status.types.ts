@@ -6,6 +6,5 @@ export interface Status {
   abbreviation: string;
   description: string;
   groupId: number;
-  isActive?: boolean;
   auditLogs?: AuditTrails[];
 }

@@ -29,14 +29,14 @@ const StatusService = {
     return response.value;
   },
 
-  async updateStatus(id: number, data: Partial<Omit<Status, 'statusId'>>): Promise<Status> {
-    const response = await HttpService.callApi<CustomResponse<Status>>(
-      API_ENDPOINTS.STATUS.UPDATE(id),
-      'PUT',
-      data
-    );
-    return response.value;
-  },
+  async updateStatus(id: number, data: Partial<Omit<Status, 'statusId'>>): Promise<void> {
+  await HttpService.callApi<CustomResponse<void>>(
+    API_ENDPOINTS.STATUS.UPDATE(id),
+    'PUT',
+    data
+  );
+  // No return needed - just fire and forget
+},
 
   async deleteStatus(id: number): Promise<void> {
     await HttpService.callApi<CustomResponse<void>>(

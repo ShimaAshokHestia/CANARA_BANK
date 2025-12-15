@@ -17,7 +17,9 @@ import {
   BsAward,
   BsCircle,
   BsBuildingGear,
-  BsPersonFillGear
+  BsPersonFillGear,
+  BsBuilding,
+  BsCalendar3
 } from "react-icons/bs";
 import { FaFileInvoice } from "react-icons/fa6";
 import { BiLogOut } from "react-icons/bi";
@@ -38,6 +40,8 @@ const Sidebar: React.FC = () => {
     { label: "Designation", path: "/dashboard/settings/designation-list", icon: <BsAward /> },
     { label: "Circles", path: "/dashboard/settings/circles-list", icon: <BsCircle /> },
     { label: "Branches", path: "/dashboard/settings/branch-list", icon: <BsBuildingGear /> },
+    { label: "Company", path: "/dashboard/settings/company-list", icon: <BsBuilding /> },
+    { label: "Month", path: "/dashboard/settings/month-list", icon: <BsCalendar3 /> },
     { label: "Users", path: "settings/user-list", icon: <BsPersonFillGear /> }
   ];
 

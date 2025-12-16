@@ -65,7 +65,7 @@ const DeathClaimCreate: React.FC = () => {
       loadingState={isLoading}
       successMessage="Death claim created successfully!"
       errorMessage="Failed to create death claim. Please try again."
-      navigateOnSuccess="/dashboard/claims/deathclaim-list"
+      navigateOnSuccess="/dashboard/claims/deathclaims-list"
       navigateDelay={1200}
       themeColor="#18575A"
     />

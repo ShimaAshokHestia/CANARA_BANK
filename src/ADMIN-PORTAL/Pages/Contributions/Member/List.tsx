@@ -8,16 +8,16 @@ const columns = [
   { key: "memberId", label: "Member ID", enableSorting: true, type: "text" as const },
   { key: "staffNo", label: "Staff No", enableSorting: true, type: "text" as const },
   { key: "name", label: "Name", enableSorting: true, type: "text" as const },
-  { key: "genderId", label: "Gender ID", enableSorting: true, type: "text" as const },
-  { key: "designationId", label: "Designation ID", enableSorting: true, type: "text" as const },
-  { key: "categoryId", label: "Category ID", enableSorting: true, type: "text" as const },
-  { key: "branchId", label: "Branch ID", enableSorting: true, type: "text" as const },
+  // { key: "genderId", label: "Gender ID", enableSorting: true, type: "text" as const },
+  // { key: "designationId", label: "Designation ID", enableSorting: true, type: "text" as const },
+  // { key: "categoryId", label: "Category ID", enableSorting: true, type: "text" as const },
+  // { key: "branchId", label: "Branch ID", enableSorting: true, type: "text" as const },
 
-  { key: "dobString", label: "DOB", enableSorting: false, type: "text" as const },
-  { key: "dojString", label: "DOJ", enableSorting: false, type: "text" as const },
-  { key: "dojtoSchemeString", label: "DOJ to Scheme", enableSorting: false, type: "text" as const },
+  // { key: "dobString", label: "DOB", enableSorting: false, type: "text" as const },
+  // { key: "dojString", label: "DOJ", enableSorting: false, type: "text" as const },
+  // { key: "dojtoSchemeString", label: "DOJ to Scheme", enableSorting: false, type: "text" as const },
 
-  { key: "statusId", label: "Status ID", enableSorting: true, type: "text" as const },
+  // { key: "statusId", label: "Status ID", enableSorting: true, type: "text" as const },
   { key: "isRegCompleted", label: "Reg. Completed", enableSorting: true, type: "checkbox" as const },
   { key: "unionMember", label: "Union Member", enableSorting: true, type: "text" as const },
 ];
@@ -73,9 +73,9 @@ const MemberList: React.FC = () => {
       columns={columns}
       idKey="memberId"
       addButtonLabel="Add Member"
-      addRoute="/dashboard/member/member-create"
-      editRoute="/dashboard/member/member-edit"
-      viewRoute="/dashboard/member/member-view"
+      addRoute="/dashboard/contributions/member-create"
+      editRoute="/dashboard/contributions/member-edit"
+      viewRoute="/dashboard/contributions/member-view"
       showAddButton={true}
       showExport={true}
       showSearch={true}

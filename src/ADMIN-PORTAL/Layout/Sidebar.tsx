@@ -46,14 +46,14 @@ const Sidebar: React.FC = () => {
   ];
 
   const contribSubMenu = [
-    { label: "Member", path: "/dashboard/contributions/member" },
+    { label: "Member", path: "/dashboard/contributions/member-list" },
     { label: "Monthly Contributions", path: "/dashboard/contributions/monthly" },
     { label: "Direct Pay", path: "/dashboard/contributions/directpay" }
   ];
 
   const claimsSubMenu = [
-    { label: "Refund", path: "/dashboard/claims/refund" },
-    { label: "Death Claims", path: "/dashboard/claims/death" }
+    { label: "Refund", path: "/dashboard/claims/refundcontribution-list" },
+    { label: "Death Claims", path: "/dashboard/claims/deathclaims-list" }
   ];
 
   const cmsSubMenu = [

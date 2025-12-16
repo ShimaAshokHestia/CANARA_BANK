@@ -15,6 +15,7 @@ import UserView from '../Pages/User/View';
 import CustomerList from '../Pages/Customer/List';
 import CustomerCreate from '../Pages/Customer/Create';
 import CustomerEdit from '../Pages/Customer/Edit';
+import CustomerView from '../Pages/Customer/View';
 
 //Manage Committe
 import ManagingCommitteeList from '../Pages/ManagingCommittee/List';
@@ -46,6 +47,12 @@ import CircleCreate from '../Pages/Circle/Create';
 import CircleEdit from '../Pages/Circle/Edit';
 import CircleView from '../Pages/Circle/View';
 
+//Company
+import CompanyList from '../Pages/Settings/Company/List';
+import CompanyCreate from '../Pages/Settings/Company/Create';
+import CompanyEdit from '../Pages/Settings/Company/Edit';
+import CompanyView from '../Pages/Settings/Company/View';
+
 //Designation
 import DesignationList from '../Pages/Settings/Designation/List';
 import DesignationCreate from '../Pages/Settings/Designation/Create';
@@ -76,6 +83,25 @@ import MonthCreate from '../Pages/Settings/Month/Create';
 import MonthEdit from '../Pages/Settings/Month/Edit';
 import MonthView from '../Pages/Settings/Month/View';
 
+//Member
+import MemberList from '../Pages/Contributions/Member/List';
+import MemberCreate from '../Pages/Contributions/Member/Create';
+import MemberEdit from '../Pages/Contributions/Member/Edit';
+import MemberView from '../Pages/Contributions/Member/View';
+
+//Refund Contribution
+import RefundContributionList from '../Pages/Claims/Refund/List';
+import RefundContributionCreate from '../Pages/Claims/Refund/Create';
+import RefundContributionEdit from '../Pages/Claims/Refund/Edit';
+import RefundContributionView from '../Pages/Claims/Refund/View';
+
+//Death Claims
+import DeathClaimList from '../Pages/Claims/DeathClaims/List';
+import DeathClaimCreate from '../Pages/Claims/DeathClaims/Create';
+import DeathClaimEdit from '../Pages/Claims/DeathClaims/Edit';
+import DeathClaimView from '../Pages/Claims/DeathClaims/View';
+
+
 export default function AdminRoutes() {
   return (
     <Routes>
@@ -94,7 +120,7 @@ export default function AdminRoutes() {
         <Route path='settings/customer-list' element={<CustomerList />} />
         <Route path='settings/customer-create' element={<CustomerCreate />} />
         <Route path='settings/customer-edit/:customerId' element={<CustomerEdit />} />
-        {/* <Route path='settings/customer-view/:customerId' element={<CustomerView />} /> */}
+        <Route path='settings/customer-view/:customerId' element={<CustomerView />} />
 
         {/* State */}
         <Route path="/dashboard/settings/state-list" element={<StateList />} />
@@ -119,6 +145,12 @@ export default function AdminRoutes() {
         <Route path="/dashboard/settings/circles-create" element={<CircleCreate />} />
         <Route path="/dashboard/settings/circles-edit/:circleId" element={<CircleEdit />} />
         <Route path="/dashboard/settings/circles-view/:stateId" element={<CircleView />} />
+
+        {/* Company */}
+        <Route path="/dashboard/settings/company-list" element={<CompanyList />} />
+        <Route path="/dashboard/settings/company-create" element={<CompanyCreate />} />
+        <Route path="/dashboard/settings/company-edit/:companyId" element={<CompanyEdit />} />
+        <Route path="/dashboard/settings/company-view/:companyId" element={<CompanyView />} />
 
         {/* Designation */}
         <Route path="/dashboard/settings/designation-list" element={<DesignationList />} />
@@ -156,9 +188,23 @@ export default function AdminRoutes() {
         <Route path='cms/mainpage-edit/:mainPageId' element={<MainPageEdit />} />
         <Route path='cms/mainpage-view/:mainPageId' element={<MainPageView />} />
 
-        
+        {/* Member */}
+        <Route path='/dashboard/contributions/member-list' element={<MemberList />} />
+        <Route path='/dashboard/contributions/member-create' element={<MemberCreate />} />
+        <Route path='/dashboard/contributions/member-edit/:memberId' element={<MemberEdit />} />
+        <Route path='/dashboard/contributions/member-view/:memberId' element={<MemberView />} />
 
+         {/* Refund */}
+         <Route path='/dashboard/claims/refundcontribution-list' element={<RefundContributionList/>}/>
+         <Route path='/dashboard/claims/refundcontribution-create' element={<RefundContributionCreate/>}/>
+         <Route path='/dashboard/claims/refundcontribution-edit/:refundContributionId' element={<RefundContributionEdit/>}/>
+         <Route path='/dashboard/claims/refundcontribution-view/:refundContributionId' element={<RefundContributionView/>}/>
 
+        {/* Death Claims */}
+         <Route path='/dashboard/claims/deathclaims-list' element={<DeathClaimList/>}/>
+         <Route path='/dashboard/claims/deathclaims-create' element={<DeathClaimCreate/>}/>
+         <Route path='/dashboard/claims/deathclaims-edit/:deathClaimId' element={<DeathClaimEdit/>}/>
+         <Route path='/dashboard/claims/deathclaims-view/:deathClaimId' element={<DeathClaimView/>}/>
       </Route>
 
       {/* Catch-All Route for 404 */}

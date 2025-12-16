@@ -39,7 +39,8 @@ const RefundContributionView: React.FC = () => {
       onFetch={handleFetch}
       onDelete={handleDelete}
       paramName="refundContributionId"
-      listRoute="/dashboard/contributions/refundcontribution-list"
+      editRoute="/dashboard/claims/refundcontribution-edit"
+      listRoute="/dashboard/claims/refundcontribution-list"
       auditLogConfig={{ tableName: "RefundContribution", recordIdField: "refundContributionId" }}
       themeColor="#18575A"
     />

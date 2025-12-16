@@ -26,7 +26,8 @@ const DesignationList: React.FC = () => {
         filteredDesignations = designations.filter(
           (designation) =>
             designation.name?.toLowerCase().includes(searchLower) ||
-            designation.description?.toLowerCase().includes(searchLower)
+            designation.description?.toLowerCase().includes(searchLower) ||
+            designation.designationId.toString().includes(searchLower)
         );
       }
 

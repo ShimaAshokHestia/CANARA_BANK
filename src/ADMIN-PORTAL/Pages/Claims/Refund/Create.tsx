@@ -53,7 +53,7 @@ const RefundContributionCreate: React.FC = () => {
       onSubmit={handleSubmit}
       successMessage="Refund Contribution created successfully!"
       errorMessage="Failed to create Refund Contribution. Please try again."
-      navigateOnSuccess="/dashboard/contributions/refundcontribution-list"
+      navigateOnSuccess="/dashboard/claims/refundcontribution-list"
       themeColor="#18575A"
     />
   );

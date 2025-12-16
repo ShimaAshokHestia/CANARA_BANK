@@ -48,8 +48,8 @@ const MemberView: React.FC = () => {
       fields={fields}
       onFetch={handleFetch}
       onDelete={handleDelete}
-      editRoute="/dashboard/member/member-edit"
-      listRoute="/dashboard/member/member-list"
+      editRoute="/dashboard/contributions/member-edit"
+      listRoute="/dashboard/contributions/member-list"
       paramName="memberId"
       auditLogConfig={{ tableName: "Member", recordIdField: "memberId" }}
       themeColor="#18575A"

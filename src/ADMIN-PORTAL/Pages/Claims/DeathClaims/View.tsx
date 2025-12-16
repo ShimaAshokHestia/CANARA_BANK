@@ -36,8 +36,8 @@ const DeathClaimView: React.FC = () => {
       fields={fields}
       onFetch={handleFetch}
       onDelete={handleDelete}
-      editRoute="/dashboard/claims/deathclaim-edit"
-      listRoute="/dashboard/claims/deathclaim-list"
+      editRoute="/dashboard/claims/deathclaims-edit"
+      listRoute="/dashboard/claims/deathclaims-list"
       paramName="deathClaimId"
       auditLogConfig={{
         tableName: "DeathClaim",

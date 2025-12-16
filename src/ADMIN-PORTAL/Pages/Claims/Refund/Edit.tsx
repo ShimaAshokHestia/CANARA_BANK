@@ -61,7 +61,7 @@ const RefundContributionEdit: React.FC = () => {
       paramName="refundContributionId"
       successMessage="Refund Contribution updated successfully!"
       errorMessage="Failed to update Refund Contribution."
-      navigateBackPath="/dashboard/contributions/refundcontribution-list"
+      navigateBackPath="/dashboard/claims/refundcontribution-list"
       auditLogConfig={{ tableName: "RefundContribution", recordIdField: "refundContributionId" }}
       themeColor="#18575A"
     />

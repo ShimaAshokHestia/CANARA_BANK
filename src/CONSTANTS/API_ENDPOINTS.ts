@@ -137,13 +137,41 @@ export const API_ENDPOINTS = {
     DELETE: (id: number) => `${API_BASE_URL}/UserRoleRight/${id}`,
   },
   REFUND_CONTRIBUITION: {
-    GET_ALL: `${API_BASE_URL}/RefundContribuition`,
-    GET_BY_ID: (id: number) => `${API_BASE_URL}/RefundContribuition/${id}`,
+    GET_ALL: `${API_BASE_URL}/RefundContribution`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/RefundContribution/${id}`,
     CREATE: `${API_BASE_URL}/RefundContribuition`,
-    UPDATE: (id: number) => `${API_BASE_URL}/RefundContribuition/${id}`,
-    DELETE: (id: number) => `${API_BASE_URL}/RefundContribuition/${id}`,
+    UPDATE: (id: number) => `${API_BASE_URL}/RefundContribution/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/RefundContribution/${id}`,
   },
-
+  COMPANY:{
+    GET_ALL: `${API_BASE_URL}/Company/GetAll/admin-getall-company`,
+    GET:`${API_BASE_URL}/Company/GetCompanyLookUp/admin-lookUp-company`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/Company/GetById/${id}`,
+    CREATE: `${API_BASE_URL}/Company/Create`,
+    UPDATE: (id: number) => `${API_BASE_URL}/Company/Update/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/Company/Delete/${id}`,
+  },
+  CIRCLE_STATE:{
+    GET_ALL: `${API_BASE_URL}/CircleState`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/CircleState/${id}`,
+    CREATE: `${API_BASE_URL}/CircleState`,
+    UPDATE: (id: number) => `${API_BASE_URL}/CircleState/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/CircleState/${id}`,
+  },
+  SUPPORT_TICKET:{
+    GET_ALL: `${API_BASE_URL}/SupportTicket`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/SupportTicket/${id}`,
+    CREATE: `${API_BASE_URL}/SupportTicket`,
+    UPDATE: (id: number) => `${API_BASE_URL}/SupportTicket/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/SupportTicket/${id}`,
+  },
+  YEAR_MASTER:{
+    GET_ALL: `${API_BASE_URL}/YearMaster`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/YearMaster/${id}`,
+    CREATE: `${API_BASE_URL}/YearMaster`,
+    UPDATE: (id: number) => `${API_BASE_URL}/YearMaster/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/YearMaster/${id}`,
+  },
 };
 
 // ✅ Helper function to get full image URL

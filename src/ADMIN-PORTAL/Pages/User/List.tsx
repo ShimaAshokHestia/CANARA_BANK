@@ -31,7 +31,8 @@ const UserList: React.FC = () => {
             user.userName?.toLowerCase().includes(searchLower) ||
             user.userEmail?.toLowerCase().includes(searchLower) ||
             user.phoneNumber?.toLowerCase().includes(searchLower) ||
-            user.address?.toLowerCase().includes(searchLower)
+            user.address?.toLowerCase().includes(searchLower) ||
+            user.userId.toString().includes(searchLower)
         );
       }
 

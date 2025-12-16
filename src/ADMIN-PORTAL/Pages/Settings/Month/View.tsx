@@ -16,17 +16,23 @@ const MonthView: React.FC = () => {
     return response; // should be your CustomResponse
   };
 
+  function handleDelete(_id: string): Promise<void> {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <KiduView
       title="View Month"
       fields={fields}
       onFetch={handleFetch}
+      onDelete={handleDelete}
       paramName="monthCode"
+      editRoute="/dashboard/settings/month-edit"
       listRoute="/dashboard/settings/month-list"              
       auditLogConfig={{ tableName: "Month", recordIdField: "monthCode" }}
       themeColor="#18575A"
-      showEditButton={false}                                  
-      showDeleteButton={false}                                 
+      showEditButton={true}                                  
+      showDeleteButton={true}                                 
     />
   );
 };

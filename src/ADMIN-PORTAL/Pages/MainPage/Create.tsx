@@ -9,72 +9,13 @@ const MainPageCreate: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fields: Field[] = [
-    {
-      name: "companyId",
-      rules: {
-        type: "number",
-        label: "Company ID",
-        required: true,
-        placeholder: "Enter company ID",
-        colWidth: 4,
-      },
-    },
-    {
-      name: "companyName",
-      rules: {
-        type: "text",
-        label: "Company Name",
-        required: true,
-        minLength: 2,
-        maxLength: 150,
-        placeholder: "Enter company name",
-        colWidth: 6,
-      },
-    },
-
-    {
-      name: "mainText",
-      rules: {
-        type: "textarea",
-        label: "Main Text",
-        required: true,
-        placeholder: "Main hero/intro text for the website",
-        colWidth: 12,
-      },
-    },
-    {
-      name: "slogan",
-      rules: {
-        type: "text",
-        label: "Slogan",
-        required: true,
-        minLength: 1,
-        maxLength: 200,
-        placeholder: "Short slogan/tagline",
-        colWidth: 12,
-      },
-    },
-
-    {
-      name: "corouselImage1",
-      rules: {
-        type: "text",
-        label: "Carousel Image 1 (URL or path)",
-        required: false,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "corouselImage2",
-      rules: {
-        type: "text",
-        label: "Carousel Image 2 (URL or path)",
-        required: false,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "corouselImage3",
+    {name: "companyId",rules: { type: "number",label: "Company ID",required: true, placeholder: "Enter company ID", colWidth: 4, }, },
+    {name: "companyName", rules: {type: "text",label: "Company Name",required: true,minLength: 2, maxLength: 150,placeholder: "Enter company name",colWidth: 6, },},
+    {name: "mainText", rules: { type: "textarea", label: "Main Text", required: true, placeholder: "Main hero/intro text for the website",colWidth: 12,},},
+    { name: "slogan", rules: { type: "text",label: "Slogan", required: true,minLength: 1, maxLength: 200,placeholder: "Short slogan/tagline", colWidth: 12,}, },
+    {name: "corouselImage1", rules: {type: "text",label: "Carousel Image 1 (URL or path)",required: false,colWidth: 4,},},
+    {name: "corouselImage2",rules: { type: "text",label: "Carousel Image 2 (URL or path)", required: false, colWidth: 4, }, },
+    {name: "corouselImage3",
       rules: {
         type: "text",
         label: "Carousel Image 3 (URL or path)",

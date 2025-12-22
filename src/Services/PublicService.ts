@@ -1,9 +1,49 @@
 // src/services/PublicService.ts
 
 export const PublicService = {
+
     /* ===========================
-     HOME PAGE (NEW)
-     =========================== */
+    NAVBAR (PUBLIC)
+    =========================== */
+    navbar: {
+        brand: {
+            title: "Canara Bank Employees’ Union",
+            subtitle: "Golden Jubilee Family Welfare Scheme",
+            logoAlt: "50 Years Logo",
+            menuhead: "Menu"
+        },
+
+        menu: [
+            { label: "Home", route: "/" },
+            { label: "About Us", route: "/about-us" },
+            { label: "Rules & Regulations", route: "/rules" },
+            { label: "Downloads", route: "/downloads" },
+            { label: "Managing Committee", route: "/managing-committee" },
+            { label: "Claims Settled", route: "/claims" },
+            { label: "Contact", route: "/contact-us" },
+        ],
+
+        auth: {
+            loginButton: {
+                label: "Members Login",
+                iconclass: "bi bi-box-arrow-in-right me-2",
+            },
+        },
+
+        contactStrip: {
+            phone: {
+                iconclass: "bi bi-telephone-fill me-1",
+                value: "+91 98765 43210",
+            },
+            email: {
+                iconclass: "bi-envelope-fill me-1",
+                value: "canarabankemployeesunion@cbfws.org",
+            },
+        },
+    },
+    /* ===========================
+    HOME PAGE (NEW)
+    =========================== */
     home: {
         hero: {
             badge: "✨ Celebrating 50 Years of Service",
@@ -127,18 +167,18 @@ export const PublicService = {
                 heading: "Quick Links",
 
                 quickLinks: [
-                    { label: "Download Forms", href: "#downloads" },
-                    { label: "View Claims Status", href: "#claims" },
-                    { label: "Rules & Regulations", href: "#rules" },
-                    { label: "Managing Committee", href: "#committee" },
+                    { label: "Download Forms", path: "/downloads" },
+                    { label: "View Claims Status", path: "/claims" },
+                    { label: "Rules & Regulations", path: "/rules" },
+                    { label: "Managing Committee", path: "/managing-committee" },
                 ],
             },
         },
     },
 
     /* ===========================
-       ABOUT PAGE (NEW)
-       =========================== */
+    ABOUT PAGE (NEW)
+    =========================== */
     about: {
         header: {
             title: "About Us",
@@ -162,17 +202,17 @@ export const PublicService = {
         history: {
             title: "Our History",
             icon: "bi bi-clock-history",
-            paragraphs: 
-               {
+            paragraphs:
+            {
                 paragraph1: "The Scheme was launched at Thiruvananthapuram on December 18, 2002 by the then General Secretary of Canara Bank Employees’ Union Com A N Balasubramanian…",
 
-                paragraph2:" The Rules and Regulations for the Scheme were formulated by the Central Committee held at Goa on 29th and 30th June 2002…",
+                paragraph2: " The Rules and Regulations for the Scheme were formulated by the Central Committee held at Goa on 29th and 30th June 2002…",
 
-                paragraph3:" The Scheme was launched with a humble refundable contribution of Rs. 50/- per month…",
+                paragraph3: " The Scheme was launched with a humble refundable contribution of Rs. 50/- per month…",
 
-               paragraph4: "The Scheme also gives monthly pension of upto Rs. 1250/-…",
+                paragraph4: "The Scheme also gives monthly pension of upto Rs. 1250/-…",
 
-                paragraph5:"  We salute all the members of the Scheme who have joined in this noble task…",
+                paragraph5: "  We salute all the members of the Scheme who have joined in this noble task…",
             }
             ,
             footerNote: "News Update",
@@ -181,6 +221,7 @@ export const PublicService = {
 
     /* ===========================
     RULES & REGULATIONS (NEW)
+
     =========================== */
     rules: {
         header: {
@@ -191,18 +232,19 @@ export const PublicService = {
 
         preamble: {
             title: "Preamble",
-            paragraphs: 
-               { paragraph1:"WHEREAS the General Body Meeting of Canara Bank Employee’s Union (Regd),(hereinafter referred to as the “Union”), at its 21st Conference held at Chennai from 5th to 8th January 2002 had resolved unanimously to constitute a Scheme, to provide financial assistance to the family of deceased members of Scheme, and",
+            paragraphs:
+            {
+                paragraph1: "WHEREAS the General Body Meeting of Canara Bank Employee’s Union (Regd),(hereinafter referred to as the “Union”), at its 21st Conference held at Chennai from 5th to 8th January 2002 had resolved unanimously to constitute a Scheme, to provide financial assistance to the family of deceased members of Scheme, and",
 
-                paragraph2:"WHEREAS the said General Body Meeting had approved the salient features of the said Scheme, and",
+                paragraph2: "WHEREAS the said General Body Meeting had approved the salient features of the said Scheme, and",
 
-                paragraph3:" WHEREAS for the proper administration of the scheme, it is necessary to frame Rules and Regulations to govern and regulate the operation of the Scheme and the disbursement of relief to the beneficiaries and matters connected therewith, and",
+                paragraph3: " WHEREAS for the proper administration of the scheme, it is necessary to frame Rules and Regulations to govern and regulate the operation of the Scheme and the disbursement of relief to the beneficiaries and matters connected therewith, and",
 
-                paragraph4:"WHEREAS the General Body Meeting of Canara Bank Employee’s Union, at its 22nd Conference held at Hyderabad from 4th to 7th March 2006 had resolved unanimously to improve the existing financial assistance to the family of deceased members of Scheme, by increasing the subscription with effect from January 1, 2007, and",
+                paragraph4: "WHEREAS the General Body Meeting of Canara Bank Employee’s Union, at its 22nd Conference held at Hyderabad from 4th to 7th March 2006 had resolved unanimously to improve the existing financial assistance to the family of deceased members of Scheme, by increasing the subscription with effect from January 1, 2007, and",
 
-                paragraph5:"WHEREAS the said General Body Meeting had approved the modifications to the salient features of the said Scheme,",
-               
-                paragraph6:"NOW THEREFORE in pursuance of the aforesaid objectives, the following Rules and Regulations are framed:"
+                paragraph5: "WHEREAS the said General Body Meeting had approved the modifications to the salient features of the said Scheme,",
+
+                paragraph6: "NOW THEREFORE in pursuance of the aforesaid objectives, the following Rules and Regulations are framed:"
             }
             ,
         },
@@ -489,4 +531,153 @@ export const PublicService = {
         ],
     },
 
-};
+    /* ===========================
+    CONTACT US PAGE
+    =========================== */
+    contact: {
+        header: {
+            title: "Contact Us",
+            subtitle: "We're here to help. Reach out to us with any questions or concerns.",
+        },
+
+        form: {
+            title: "Send us a Message",
+
+            fields: {
+                fullName: {
+                    label: "Full Name",
+                    placeholder: "Enter your name",
+                },
+                phone: {
+                    label: "Phone Number",
+                    placeholder: "Enter phone number",
+                },
+                email: {
+                    label: "Email Address",
+                    placeholder: "Enter your email",
+                },
+                subject: {
+                    label: "Subject",
+                    placeholder: "What is this regarding?",
+                },
+                message: {
+                    label: "Message",
+                    placeholder: "Write your message here...",
+                    rows: 5,
+                },
+            },
+
+            submitButton: {
+                label: "Send Message",
+                iconclass: "bi bi-send me-2",
+            },
+        },
+
+        officeInfo: {
+            title: "Office Address",
+
+            address: {
+                label: "Headquarters",
+                iconclass: "bi bi-geo-alt-fill",
+                lines: {
+                    line1: "Krishna Menon Smarakam, Ambu Vilas am Road,",
+                    line2: "Thiruvananthapuram - 695001, Kerala",
+                },
+            },
+
+            phone: {
+                label: "Phone",
+                iconclass: "bi bi-telephone-fill",
+                value: "+91 98765 43210",
+            },
+
+            email: {
+                label: "Email",
+                iconclass: "bi bi-envelope-fill",
+                value: "canarabankemployeesunion@cbfws.org",
+            },
+        },
+
+        officeHours: {
+            title: "Office Hours",
+
+            timings: [
+                {
+                    day: "Monday - Friday",
+                    time: "10:00 AM - 5:00 PM",
+                },
+                {
+                    day: "Saturday",
+                    time: "10:00 AM - 1:00 PM",
+                },
+                {
+                    day: "Sunday",
+                    time: "Closed",
+                },
+            ],
+        },
+    },
+
+    /* ===========================
+    FOOTER
+    =========================== */
+    footer: {
+        brand: {
+            shortName: "CBEU",
+            subtitle: "Family Welfare Scheme",
+            description:
+                "A Unit of Canara Bank Employees' Union, serving retired bank employees and their families since 1962.",
+            logoAlt: "50 Years Logo",
+        },
+
+        contact: {
+            contacthead: "Contact Us",
+            address: {
+                line1: "• Krishna Menon Smarakam, Ambu Vilas am Road,",
+                line2: "Thiruvananthapuram - 695001",
+            },
+            phone: {
+                iconclass: "bi bi-telephone-fill text-gold",
+                value: "+91 98765 43210",
+            },
+            email: {
+                iconclass: "bi bi-envelope-fill text-gold",
+                value: "info@cbfws.org",
+            },
+        },
+        quickhead: "Quick Links",
+        quickLinks: [
+            { label: "About Us", route: "/about-us" },
+            { label: "Rules & Regulations", route: "/rules" },
+            { label: "Downloads", route: "/downloads" },
+            { label: "Claims Settled", route: "/claims" },
+            { label: "Managing Committee", route: "/managing-committee" },
+        ],
+
+        officeHours: {
+            officehead: "Office Hours",
+            weekdays: {
+                label: "Monday - Friday",
+                time: "10:00 AM – 5:00 PM",
+            },
+            saturday: {
+                label: "Saturday",
+                time: "10:00 AM – 1:00 PM",
+            },
+            actionButton: {
+                label: "Schedule a Visit",
+            },
+        },
+
+        bottomBar: {
+            copyright:
+                "© 2025 Canara Bank Employees’ Union - Golden Jubilee Family Welfare Scheme. All rights reserved.",
+            links: [
+                { label: "Privacy Policy", route: "/privacy-policy" },
+                { label: "Terms of Service", route: "/terms" },
+            ],
+        },
+    },
+
+    
+    };

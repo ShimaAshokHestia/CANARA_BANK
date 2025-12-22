@@ -179,6 +179,11 @@ export const API_ENDPOINTS = {
     UPDATE: (id: number) => `${API_BASE_URL}/DailyNews/${id}`,
     DELETE: (id: number) => `${API_BASE_URL}/DailyNews/${id}`,
   },
+
+  //------------------------PUBLIC MODULE----------------------------------------
+  DAYQUOTE_PUBLIC:{
+    GET_ALL: `${API_BASE_URL}/DayQuotePublic`, 
+  }
 };
 
 // ✅ Helper function to get full image URL

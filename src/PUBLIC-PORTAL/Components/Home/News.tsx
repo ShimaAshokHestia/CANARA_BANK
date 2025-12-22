@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { HiOutlineCalendar, HiOutlineArrowRight } from "react-icons/hi";
 import "../../Style/Home/News.css";
 import { Link, useNavigate } from "react-router-dom";
 import { PublicService } from "../../../Services/PublicService";
+import DayQuotePublicService from "../../Services/DayQuotePublic.services";
+import type { DayQuote } from "../../../ADMIN-PORTAL/Types/CMS/DayQuote.types";
 
 // const newsItems = [
 //   {
@@ -29,6 +31,22 @@ import { PublicService } from "../../../Services/PublicService";
 const NewsSection: React.FC = () => {
   const navigate = useNavigate()
   const news = PublicService.home.news
+  // ✅ CHANGED: Add state to store the last quote
+  const [dayQuote, setDayQuote] = useState<DayQuote | null>(null);
+
+  // ✅ CHANGED: Load quote ONCE when this section mounts
+  useEffect(() => {
+    const fetchLastQuote = async () => {
+      try {
+        const quote = await DayQuotePublicService.getLastQuote();
+        setDayQuote(quote);
+      } catch (error) {
+        console.error("Error fetching day quote:", error);
+      }
+    };
+
+    fetchLastQuote();
+  }, []);
   return (
     <section className="py-5 news-section">
       <Container>
@@ -66,11 +84,11 @@ const NewsSection: React.FC = () => {
           <Col lg={4} className="sidebar-wrapper">
             {/* Gold Box */}
             <Card className="p-4 border-0 sidebar-gold shadow-sm">
-              <h4 className="mb-3 fw-bold fs-5">{news.sidebar.quoteTitle}</h4>
+              <h4 className="mb-3 fw-bold fs-5"> {dayQuote?.toDayQuote || news.sidebar.quoteTitle}</h4>
               <p className="mb-4">
-                {news.sidebar.quoteText}
+                  {dayQuote?.unformatedContent || news.sidebar.quoteText}
               </p>
-              <Button className="sidebar-btn-gold w-100">Join the Movement</Button>
+              <Button onClick={() => navigate("/contact-us")} className="sidebar-btn-gold w-100">Join the Movement</Button>
             </Card>
 
             {/* Blue Quick Links */}
@@ -79,7 +97,7 @@ const NewsSection: React.FC = () => {
               <ul className="list-unstyled sidebar-links">
                 {news.sidebar.quickLinks.map((link, index) => (
                   <li key={index}>
-                    <Link className="sidebar-link" to={link.href}>
+                    <Link className="sidebar-link" to={link.path}>
                       <HiOutlineArrowRight /> {link.label}
                     </Link>
                   </li>

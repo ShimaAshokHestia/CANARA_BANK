@@ -6,10 +6,12 @@ import LoginModal from "../Auth/Login";
 import SignupModal from "../Auth/SignUp";
 import ResetPasswordModal from "../Auth/ResetPassword";
 import logo from "../Assets/Images/AIBEA_logo.jpg"
+import { PublicService } from "../../Services/PublicService";
 
 const PublicNavbar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const navbar = PublicService.navbar
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showForgot, setShowForgot] = useState(false);
@@ -25,13 +27,13 @@ const PublicNavbar: React.FC = () => {
 
           {/* LEFT LOGO + TITLE */}
           <Navbar.Brand className="d-flex align-items-center gap-2">
-            <img  src={logo} className="nav-logo" alt="50 Years Logo" />
+            <img src={logo} className="nav-logo" alt={navbar?.brand.logoAlt || "50 Years Logo"} />
             <div className="d-flex flex-column lh-sm">
               <span className="fw-semibold nav-title">
-                Canara Bank Employees’ Union
+                {navbar?.brand.title || " Canara Bank Employees’ Union"}
               </span>
               <span className="nav-subtitle">
-                Golden Jubilee Family Welfare Scheme
+                {navbar?.brand.subtitle || " Golden Jubilee Family Welfare Scheme"}
               </span>
             </div>
           </Navbar.Brand>
@@ -45,61 +47,27 @@ const PublicNavbar: React.FC = () => {
             className="p-3"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title>Menu</Offcanvas.Title>
+              <Offcanvas.Title>{navbar?.brand.menuhead}</Offcanvas.Title>
             </Offcanvas.Header>
 
             <Offcanvas.Body>
               {/* NAV LINKS */}
               <Nav className="mx-auto align-items-center nav-menu">
-                <Nav.Link
-                  className={`nav-item ${isActive("/")}`}
-                  onClick={() => navigate("/")}
-                >
-                  Home
-                </Nav.Link>
-
-                <Nav.Link
-                  className={`nav-item ${isActive("/about-us")}`}
-                  onClick={() => navigate("/about-us")}
-                >
-                  About Us
-                </Nav.Link>
-
-                <Nav.Link
-                  className={`nav-item ${isActive("/rules")}`}
-                  onClick={() => navigate("/rules")}
-                >
-                  Rules & Regulations
-                </Nav.Link>
-
-                <Nav.Link
-                  className={`nav-item ${isActive("/downloads")}`}
-                  onClick={() => navigate("/downloads")}
-                >
-                  Downloads
-                </Nav.Link>
-
-                <Nav.Link
-                  className={`nav-item ${isActive("/managing-committee")}`}
-                  onClick={() => navigate("/managing-committee")}
-                >
-                  Managing Committee
-                </Nav.Link>
-
-                <Nav.Link  className={`nav-item ${isActive("/claims")}`}  onClick={() => navigate("/claims")}>Claims Settled</Nav.Link>
-
-                <Nav.Link
-                  className={`nav-item ${isActive("/contact-us")}`}
-                  onClick={() => navigate("/contact-us")}
-                >
-                  Contact
-                </Nav.Link>
+                {navbar.menu.map((item, index) => (
+                  <Nav.Link
+                    key={index}
+                    className={`nav-item ${isActive(item.route)}`}
+                    onClick={() => navigate(item.route)}
+                  >
+                    {item.label}
+                  </Nav.Link>
+                ))}
               </Nav>
 
               {/* LOGIN BUTTON */}
               <Button onClick={() => setShowLogin(true)} className="login-btn ms-lg-4 mt-3 mt-lg-0">
-                <i className="bi bi-box-arrow-in-right me-1"></i>
-                Members Login
+                <i className={navbar.auth.loginButton.iconclass}></i>
+                {navbar?.auth.loginButton.label}
               </Button>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
@@ -111,10 +79,10 @@ const PublicNavbar: React.FC = () => {
       <div className="contact-strip text-white py-1 px-3">
         <Container className="d-flex justify-content-center align-items-center gap-4 small">
           <span>
-            <i className="bi bi-telephone-fill me-1"></i> +91 98765 43210
+            <i className={navbar?.contactStrip.phone.value}></i> {navbar?.contactStrip.phone.value}
           </span>
           <span>
-            <i className="bi bi-envelope-fill me-1"></i> info@cbfws.org
+            <i className={navbar?.contactStrip.email.iconclass}></i> {navbar?.contactStrip.email.value}
           </span>
         </Container>
       </div>

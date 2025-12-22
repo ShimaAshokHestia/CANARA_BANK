@@ -202,6 +202,19 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
     const rule = fields.find(f => f.name === name)?.rules;
     if (!rule) return true;
     
+    // Special handling for popup fields
+    if (rule.type === "popup") {
+      if (rule.required) {
+        const popupValue = popupHandlers[name]?.value;
+        if (!popupValue || popupValue.trim() === "") {
+          setErrors(prev => ({ ...prev, [name]: `${rule.label} is required` }));
+          return false;
+        }
+      }
+      setErrors(prev => ({ ...prev, [name]: "" }));
+      return true;
+    }
+    
     if ((rule.type === "toggle" || rule.type === "checkbox") && rule.required && !value) {
       setErrors(prev => ({ ...prev, [name]: `${rule.label} is required` }));
       return false;
@@ -222,6 +235,18 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
       
       const rule = f.rules;
       const value = formData[f.name];
+      
+      // Special handling for popup fields
+      if (rule.type === "popup") {
+        if (rule.required) {
+          const popupValue = popupHandlers[f.name]?.value;
+          if (!popupValue || popupValue.trim() === "") {
+            newErrors[f.name] = `${rule.label} is required`;
+            isValid = false;
+          }
+        }
+        return; // Skip other validations for popup fields
+      }
       
       if (rule.required) {
         if ((rule.type === "toggle" || rule.type === "checkbox") && !value) {

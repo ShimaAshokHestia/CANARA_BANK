@@ -8,7 +8,6 @@ import {
   BsPeople,
   BsNewspaper,
   BsBarChart,
-  BsBag,
   BsChevronDown,
   BsListUl,
   BsGeoAlt,
@@ -33,12 +32,12 @@ const Sidebar: React.FC = () => {
   };
 
   const settingsSubMenu = [
-    { label: "Category", path: "/dashboard/settings//category-list", icon: <BsListUl /> },
+    { label: "Category", path: "/dashboard/settings/category-list", icon: <BsListUl /> },
     { label: "States", path: "/dashboard/settings/state-list", icon: <BsGeoAlt /> },
     { label: "User Types", path: "/dashboard/settings/usertype-list", icon: <BsPersonCheck /> },
     { label: "Status", path: "/dashboard/settings/status-list", icon: <BsToggleOn /> },
     { label: "Designation", path: "/dashboard/settings/designation-list", icon: <BsAward /> },
-    { label: "Circles", path: "/dashboard/settings/circles-list", icon: <BsCircle /> },
+    { label: "Circles", path: "/dashboard/settings/circle-list", icon: <BsCircle /> },
     { label: "Branches", path: "/dashboard/settings/branch-list", icon: <BsBuildingGear /> },
     { label: "Company", path: "/dashboard/settings/company-list", icon: <BsBuilding /> },
     { label: "Month", path: "/dashboard/settings/month-list", icon: <BsCalendar3 /> },

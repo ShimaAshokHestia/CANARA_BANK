@@ -2,10 +2,21 @@ import React, { useState } from "react";
 import KiduCreate from "../../Components/KiduCreate";
 import type { Field } from "../../Components/KiduCreate";
 import type { Branch } from "../../Types/Settings/Branch.types";
+import type { State } from "../../Types/Settings/States.types";
+import type { Circle } from "../../Types/Settings/Circle.types";
 import BranchService from "../../Services/Settings/Branch.services";
+import StatePopup from "../Settings/State/StatePopup";
+import CirclePopup from "../Circle/CirclePopup";
+
 
 const BranchCreate: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showStatePopup, setShowStatePopup] = useState(false);
+  const [showCirclePopup, setShowCirclePopup] = useState(false);
+  
+  // Store selected state and circle data
+  const [selectedState, setSelectedState] = useState<State | null>(null);
+  const [selectedCircle, setSelectedCircle] = useState<Circle | null>(null);
 
   const fields: Field[] = [
     {
@@ -71,22 +82,22 @@ const BranchCreate: React.FC = () => {
       },
     },
     {
-      name: "circleId",
+      name: "stateId",
       rules: {
-        type: "number",
-        label: "Circle ID",
+        type: "popup",
+        label: "State",
         required: true,
-        placeholder: "Enter circle ID",
+        placeholder: "Select state",
         colWidth: 4,
       },
     },
     {
-      name: "stateId",
+      name: "circleId",
       rules: {
-        type: "number",
-        label: "State ID",
+        type: "popup",
+        label: "Circle",
         required: true,
-        placeholder: "Enter state ID",
+        placeholder: "Select circle",
         colWidth: 4,
       },
     },
@@ -108,6 +119,18 @@ const BranchCreate: React.FC = () => {
     },
   ];
 
+  // Handle state selection
+  const handleStateSelect = (state: State) => {
+    setSelectedState(state);
+    // Clear circle when state changes
+    setSelectedCircle(null);
+  };
+
+  // Handle circle selection
+  const handleCircleSelect = (circle: Circle) => {
+    setSelectedCircle(circle);
+  };
+
   const handleSubmit = async (formData: Record<string, any>) => {
     setIsLoading(true);
     try {
@@ -119,8 +142,8 @@ const BranchCreate: React.FC = () => {
         address3: formData.address3?.trim() || "",
         district: formData.district?.trim() || "",
         status: Boolean(formData.status),
-        circleId: Number(formData.circleId),
-        stateId: Number(formData.stateId),
+        circleId: selectedCircle?.circleId || 0,
+        stateId: selectedState?.stateId || 0,
         isRegCompleted: Boolean(formData.isRegCompleted),
       };
 
@@ -133,20 +156,55 @@ const BranchCreate: React.FC = () => {
     }
   };
 
+  // Popup handlers for KiduCreate
+  const popupHandlers = {
+    stateId: {
+      value: selectedState?.name || "",
+      onOpen: () => setShowStatePopup(true),
+    },
+    circleId: {
+      value: selectedCircle?.name || "",
+      onOpen: () => {
+        if (!selectedState) {
+          alert("Please select a state first");
+          return;
+        }
+        setShowCirclePopup(true);
+      },
+    },
+  };
+
   return (
-    <KiduCreate
-      title="Create Branch"
-      fields={fields}
-      onSubmit={handleSubmit}
-      submitButtonText="Create Branch"
-      showResetButton
-      loadingState={isLoading}
-      successMessage="Branch created successfully!"
-      errorMessage="Failed to create branch. Please check the details and try again."
-      navigateOnSuccess="/dashboard/settings/branch-list"
-      navigateDelay={1200}
-      themeColor="#18575A"
-    />
+    <>
+      <KiduCreate
+        title="Create Branch"
+        fields={fields}
+        onSubmit={handleSubmit}
+        submitButtonText="Create Branch"
+        showResetButton
+        loadingState={isLoading}
+        successMessage="Branch created successfully!"
+        errorMessage="Failed to create branch. Please check the details and try again."
+        navigateOnSuccess="/dashboard/settings/branch-list"
+        navigateDelay={1200}
+        themeColor="#18575A"
+        popupHandlers={popupHandlers}
+      />
+
+      {/* State Popup */}
+      <StatePopup
+        show={showStatePopup}
+        handleClose={() => setShowStatePopup(false)}
+        onSelect={handleStateSelect}
+      />
+
+      {/* Circle Popup */}
+      <CirclePopup
+        show={showCirclePopup}
+        handleClose={() => setShowCirclePopup(false)}
+        onSelect={handleCircleSelect}
+      />
+    </>
   );
 };
 

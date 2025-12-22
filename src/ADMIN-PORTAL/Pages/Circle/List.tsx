@@ -1,15 +1,14 @@
 import React from "react";
-import type { Circle } from "../../Types/Settings/Circle.types";
 import CircleService from "../../Services/Settings/Circle.services";
+import StateService from "../../Services/Settings/State.services";
 import KiduServerTable from "../../../Components/KiduServerTable";
-
 
 const columns = [
   { key: "circleId", label: "Circle ID", enableSorting: true, type: "text" as const },
   { key: "circleCode", label: "Circle Code", enableSorting: true, type: "text" as const },
   { key: "name", label: "Circle Name", enableSorting: true, type: "text" as const },
   { key: "abbreviation", label: "Abbreviation", enableSorting: true, type: "text" as const },
-  { key: "state", label: "State", enableSorting: true, type: "text" as const },
+  { key: "stateName", label: "State", enableSorting: true, type: "text" as const },
   { key: "isActive", label: "Active", enableSorting: true, type: "checkbox" as const }
 ];
 
@@ -18,18 +17,27 @@ const CircleList: React.FC = () => {
     pageNumber: number;
     pageSize: number;
     searchTerm: string;
-  }): Promise<{ data: Circle[]; total: number }> => {
+  }): Promise<{ data: any[]; total: number }> => {
     try {
-      const circles = await CircleService.getAllCircles();
+      const [circles, states] = await Promise.all([
+        CircleService.getAllCircles(),
+        StateService.getAllStates()
+      ]);
 
-      let filteredCircles = circles;
+      // Map state names to circles
+      const circlesWithStateName = circles.map(circle => ({
+        ...circle,
+        stateName: states.find(s => s.stateId === circle.stateId)?.name || "N/A"
+      }));
+
+      let filteredCircles = circlesWithStateName;
       if (params.searchTerm) {
         const searchLower = params.searchTerm.toLowerCase();
-        filteredCircles = circles.filter(
+        filteredCircles = circlesWithStateName.filter(
           (circle) =>
             circle.name?.toLowerCase().includes(searchLower) ||
             circle.abbreviation?.toLowerCase().includes(searchLower) ||
-            circle.state?.toLowerCase().includes(searchLower) ||
+            circle.stateName?.toLowerCase().includes(searchLower) ||
             circle.circleCode?.toString().includes(params.searchTerm) ||
             circle.circleId?.toString().includes(params.searchTerm)
         );

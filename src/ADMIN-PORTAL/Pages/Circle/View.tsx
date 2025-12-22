@@ -3,7 +3,6 @@ import type { ViewField } from "../../Components/KiduView";
 import CircleService from "../../Services/Settings/Circle.services";
 import KiduView from "../../Components/KiduView";
 
-
 const CircleView: React.FC = () => {
   const fields: ViewField[] = [
     { key: "circleId", label: "Circle ID", icon: "bi-hash" },
@@ -11,14 +10,24 @@ const CircleView: React.FC = () => {
     { key: "name", label: "Circle Name", icon: "bi-geo-alt" },
     { key: "abbreviation", label: "Abbreviation", icon: "bi-text-short" },
     { key: "state", label: "State", icon: "bi-flag" },
-    { key: "isActive", label: "Active", icon: "bi-check-circle" },
     { key: "dateFrom", label: "Date From", icon: "bi-calendar-event" },
-    { key: "dateTo", label: "Date To", icon: "bi-calendar-x" }
+    { key: "dateTo", label: "Date To", icon: "bi-calendar-x" },
+    { key: "isActive", label: "Active", icon: "bi-check-circle" }
   ];
 
   const handleFetch = async (circleId: string) => {
-    const circle = await CircleService.getCircleById(Number(circleId));
-    return circle;
+    try {
+      const circle = await CircleService.getCircleById(Number(circleId));
+      
+      // Return in the format KiduView expects (similar to KiduEdit)
+      return {
+        isSucess: true,
+        value: circle
+      };
+    } catch (error) {
+      console.error("Error fetching circle:", error);
+      throw error;
+    }
   };
 
   const handleDelete = async (circleId: string) => {

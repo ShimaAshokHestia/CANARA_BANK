@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import type { Field } from "../../Components/KiduCreate";
 import type { Circle } from "../../Types/Settings/Circle.types";
+import type { State } from "../../Types/Settings/States.types";
 import CircleService from "../../Services/Settings/Circle.services";
 import KiduCreate from "../../Components/KiduCreate";
+import StatePopup from "../Settings/State/StatePopup";
 
 
 const CircleCreate: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showStatePopup, setShowStatePopup] = useState(false);
+  const [selectedState, setSelectedState] = useState<State | null>(null);
 
   const fields: Field[] = [
     {
@@ -46,7 +50,7 @@ const CircleCreate: React.FC = () => {
     {
       name: "stateId",
       rules: {
-        type: "number",
+        type: "popup",
         label: "State",
         required: true,
         placeholder: "Select state",
@@ -81,14 +85,23 @@ const CircleCreate: React.FC = () => {
     }
   ];
 
+  const handleStateSelect = (state: State) => {
+    setSelectedState(state);
+  };
+
   const handleSubmit = async (formData: Record<string, any>) => {
+    // Validate that state is selected
+    if (!selectedState) {
+      throw new Error("Please select a state");
+    }
+
     setIsLoading(true);
     try {
       const circleData: Omit<Circle, "circleId" | "auditLogs" | "state"> = {
         circleCode: Number(formData.circleCode),
         name: formData.name.trim(),
         abbreviation: formData.abbreviation.trim(),
-        stateId: Number(formData.stateId),
+        stateId: selectedState.stateId,
         dateFrom: formData.dateFrom,
         dateTo: formData.dateTo,
         isActive: Boolean(formData.isActive)
@@ -103,20 +116,46 @@ const CircleCreate: React.FC = () => {
     }
   };
 
+  const popupHandlers = {
+    stateId: {
+      value: selectedState?.name || "",
+      onOpen: () => setShowStatePopup(true)
+    }
+  };
+
+  // Create a custom validation wrapper
+  const handleSubmitWithValidation = async (formData: Record<string, any>) => {
+    // Check if state is selected before proceeding
+    if (!selectedState) {
+      throw new Error("Please select a state");
+    }
+    
+    return handleSubmit(formData);
+  };
+
   return (
-    <KiduCreate
-      title="Create New Circle"
-      fields={fields}
-      onSubmit={handleSubmit}
-      submitButtonText="Create Circle"
-      showResetButton={true}
-      loadingState={isLoading}
-      successMessage="Circle created successfully!"
-      errorMessage="Failed to create circle. Please try again."
-      navigateOnSuccess="/dashboard/settings/circle-list"
-      navigateDelay={1500}
-      themeColor="#18575A"
-    />
+    <>
+      <KiduCreate
+        title="Create New Circle"
+        fields={fields}
+        onSubmit={handleSubmitWithValidation}
+        submitButtonText="Create Circle"
+        showResetButton={true}
+        loadingState={isLoading}
+        successMessage="Circle created successfully!"
+        errorMessage="Failed to create circle. Please try again."
+        navigateOnSuccess="/dashboard/settings/circle-list"
+        navigateDelay={1500}
+        themeColor="#18575A"
+        popupHandlers={popupHandlers}
+      />
+
+      <StatePopup
+        show={showStatePopup}
+        handleClose={() => setShowStatePopup(false)}
+        onSelect={handleStateSelect}
+      />
+    </>
   );
 };
 

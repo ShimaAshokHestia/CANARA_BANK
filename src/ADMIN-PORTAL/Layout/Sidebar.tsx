@@ -72,11 +72,11 @@ const Sidebar: React.FC = () => {
     <>
       {/* Sidebar for medium+ screens */}
       <div
-        className="d-none d-md-flex flex-column rounded-3 align-items-center py-3 position-fixed"
+        className="d-none d-md-flex flex-column align-items-center py-2 position-fixed"
         style={{
           width: hovered ? "220px" : "70px",
           minHeight: "100vh",
-          backgroundColor: "#1e3a5f",
+          backgroundColor: "#0f2a44",
           transition: "width 0.3s",
           zIndex: 1000,
         }}
@@ -84,17 +84,17 @@ const Sidebar: React.FC = () => {
         onMouseLeave={() => setHovered(false)}
       >
         {/* Profile section */}
-        <div className="profile-section text-center mb-4">
+        <div className="profile-section text-center mb-1">
           {hovered ? (
             <p className="mt-2 text-white fw-bold" style={{ fontSize: "15px" }}>
-              Canara Bank
+              Admin Portal
             </p>
           ) : (
             <p className="fw-bolder fs-6 text-white">
-              <span style={{ fontSize: "10px" }}>CB</span>
+              <span style={{ fontSize: "10px" }}></span>
             </p>
           )}
-          <img
+          {/* <img
             src="https://static.vecteezy.com/system/resources/previews/009/734/564/non_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg"
             alt="profile"
             className="rounded-circle mb-2"
@@ -105,7 +105,7 @@ const Sidebar: React.FC = () => {
               transition: "all 0.3s",
               objectFit: "cover",
             }}
-          />
+          /> */}
         </div>
 
         <div
@@ -121,18 +121,18 @@ const Sidebar: React.FC = () => {
           className="admin-sidebar-scroll"
         >
           {/* Navigation items */}
-          <Nav className="flex-column gap-2 w-100">
+          <Nav className="flex-column gap-1 w-100">
             {/* Dashboard Menu */}
             <NavLink
               to="/dashboard"
               end
               className={({ isActive }) =>
-                `d-flex align-items-center gap-2 mx-auto ${hovered ? "ps-4 pe-3" : "justify-content-center"} rounded mt-1 ${isActive ? "bg-white" : ""}`
+                `d-flex align-items-center gap-2 mx-auto ${hovered ? "ps-4 pe-3" : "justify-content-center"} rounded mt-1 ${isActive ? "bg-warning" : ""}`
               }
               style={{
                 fontSize: "15px",
                 textDecoration: "none",
-                padding: "8px 0",
+                padding: "5px 0",
                 width: hovered ? "85%" : "45px",
                 transition: "width 0.3s"
               }}
@@ -140,11 +140,11 @@ const Sidebar: React.FC = () => {
               {({ isActive }) => (
                 <>
                   <BsGridFill
-                    className={isActive ? "text-primary" : "text-white"}
+                    className={isActive ? "text-white" : "text-white"}
                     style={{ fontSize: "20px", minWidth: "20px" }}
                   />
                   {hovered && (
-                    <span className={`fw-bold flex-grow-1 ${isActive ? "text-primary" : "text-white"}`}>
+                    <span className={`fw-bold flex-grow-1 ${isActive ? "text-white" : "text-white"}`}>
                       Dashboard
                     </span>
                   )}
@@ -183,7 +183,7 @@ const Sidebar: React.FC = () => {
                       to={sub.path}
                       end
                       className={({ isActive }) =>
-                        `d-flex align-items-center gap-2 p-2 ms-4 me-3 mb-1 ${isActive ? "bg-white text-primary rounded" : "text-white"}`
+                        `d-flex align-items-center gap-2 p-2 ms-4 me-3 mb-1 ${isActive ? "bg-warning text-white rounded" : "text-white"}`
                       }
                       style={{ fontSize: "13px", textDecoration: "none" }}
                     >
@@ -225,7 +225,7 @@ const Sidebar: React.FC = () => {
                       to={sub.path}
                       end
                       className={({ isActive }) =>
-                        `d-block p-2 ms-4 me-3 mb-1 ${isActive ? "bg-white text-primary rounded" : "text-white"}`
+                        `d-block p-2 ms-4 me-3 mb-1 ${isActive ? "bg-warning text-white rounded" : "text-white"}`
                       }
                       style={{ fontSize: "13px", textDecoration: "none" }}
                     >
@@ -266,7 +266,7 @@ const Sidebar: React.FC = () => {
                       to={sub.path}
                       end
                       className={({ isActive }) =>
-                        `d-block p-2 ms-4 me-3 mb-1 ${isActive ? "bg-white text-primary rounded" : "text-white"}`
+                        `d-block p-2 ms-4 me-3 mb-1 ${isActive ? "bg-warning text-white rounded" : "text-white"}`
                       }
                       style={{ fontSize: "13px", textDecoration: "none" }}
                     >
@@ -307,7 +307,7 @@ const Sidebar: React.FC = () => {
                       to={sub.path}
                       end
                       className={({ isActive }) =>
-                        `d-block p-2 ms-4 me-3 mb-1 ${isActive ? "bg-white text-primary rounded" : "text-white"}`
+                        `d-block p-2 ms-4 me-3 mb-1 ${isActive ? "bg-warning text-white rounded" : "text-white"}`
                       }
                       style={{ fontSize: "13px", textDecoration: "none" }}
                     >
@@ -333,7 +333,7 @@ const Sidebar: React.FC = () => {
                     style={{ fontSize: "20px", minWidth: "20px" }}
                   />
                   {hovered && (
-                    <span className={`fw-bold flex-grow-1 ${isActive ? "text-primary" : "text-white"}`}>
+                    <span className={`fw-bold flex-grow-1 ${isActive ? "text-white" : "text-white"}`}>
                       Reports
                     </span>
                   )}
@@ -379,7 +379,7 @@ const Sidebar: React.FC = () => {
                     style={{ fontSize: "20px", minWidth: "20px" }}
                   />
                   {hovered && (
-                    <span className={`fw-bold flex-grow-1 ${isActive ? "text-primary" : "text-white"}`}>
+                    <span className={`fw-bold flex-grow-1 ${isActive ? "text-white" : "text-white"}`}>
                       Customers
                     </span>
                   )}
@@ -398,8 +398,8 @@ const Sidebar: React.FC = () => {
                 cursor: "pointer",
               }}
             >
-              <BiLogOut style={{ fontSize: "20px" }} />
-              {hovered && <span className="ms-2">Logout</span>}
+              <BiLogOut style={{ fontSize: "20px" , color:"red"}} />
+              {hovered && <span className="ms-2 text-danger">Logout</span>}
             </p>
           </Nav>
         </div>

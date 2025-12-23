@@ -99,7 +99,7 @@ const NavbarComponent: React.FC = () => {
                 fontWeight: 500,
               }}
             >
-              <span style={{ color: "#FF2A2A" }}>Welcome</span>
+              <span style={{ color: "#ec9d0aff" }}>Welcome</span>
               <br />
               {username}
             </p>
@@ -152,7 +152,7 @@ const NavbarComponent: React.FC = () => {
                 borderRadius: "20px",
                 backgroundColor: "white",
                 border: "none",
-                color: "#808080ff"
+                color: "#d20000ff"
               }}
               onClick={handleLogout}
             >

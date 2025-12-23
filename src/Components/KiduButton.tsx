@@ -28,7 +28,7 @@ const KiduButton: React.FC<KiduButtonProps> = ({
     <Button
       className={`fw-bold text-white d-flex justify-content-center align-items-center ${className}`}
       style={{
-        backgroundColor: "#1B3763",
+        backgroundColor: "#173a6a",
         border: "none",
         borderRadius: 6,
         height: 45,

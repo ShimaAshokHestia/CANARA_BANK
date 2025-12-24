@@ -103,10 +103,10 @@ function KiduPopup<T extends Record<string, any>>({
           closeButton 
           style={{ 
             backgroundColor: "#f8f9fa",
-            borderBottom: "2px solid #882626ff"
+            borderBottom: "2px solid #173a6a"
           }}
         >
-          <Modal.Title className="fs-5 fw-bold" style={{ color: "#882626ff" }}>
+          <Modal.Title className="fs-5 fw-bold" style={{ color: "#173a6a" }}>
             {title}
           </Modal.Title>
         </Modal.Header>

@@ -1,4 +1,4 @@
-// src/Services/Public/PublicDailyNews.service.ts
+// src/Services/Public/DailyNewsPublic.services.ts
 
 import type { DailyNews } from "../../ADMIN-PORTAL/Types/CMS/DailyNews.types";
 import { API_ENDPOINTS } from "../../CONSTANTS/API_ENDPOINTS";
@@ -23,17 +23,17 @@ const DailyNewsPublicService = {
   },
 
   /**
-   * Fetches the last N news items, sorted by creation date (newest first)
-   * Filters out deleted items
+   * Fetches the last N news items, sorted by createdOn date (newest first)
+   * Filters out deleted and inactive items
    * @param count - Number of news items to return
    * @returns Promise with array of latest news items
    */
   async getLatestNews(count: number): Promise<DailyNews[]> {
     const allNews = await this.getAllDailyNews();
     
-    // Filter out deleted news and sort by createdOn date (newest first)
+    // Filter active and non-deleted news, then sort by createdOn (newest first)
     return allNews
-      .filter(news => !news.isDeleted && news.isActive)
+      .filter(news => news.isActive && !news.isDeleted)
       .sort((a, b) => {
         const dateA = new Date(a.createdOn).getTime();
         const dateB = new Date(b.createdOn).getTime();
@@ -51,11 +51,11 @@ const DailyNewsPublicService = {
   },
 
   /**
-   * Fetches the last 10 news items for news page display
-   * @returns Promise with array of 10 latest news items
+   * Fetches the last 9 news items for news page display
+   * @returns Promise with array of 9 latest news items
    */
-  async getLatestTenNews(): Promise<DailyNews[]> {
-    return this.getLatestNews(10);
+  async getLatestNineNews(): Promise<DailyNews[]> {
+    return this.getLatestNews(9);
   },
 };
 

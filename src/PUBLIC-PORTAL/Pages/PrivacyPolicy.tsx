@@ -16,16 +16,6 @@ const PrivacyPolicy: React.FC = () => {
                 </Container>
             </section>
 
-            {/* Breadcrumb */}
-            {/* <section className="policy-breadcrumb">
-                <Container>
-                    <Breadcrumb>
-                        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                        <Breadcrumb.Item active>Privacy Policy</Breadcrumb.Item>
-                    </Breadcrumb>
-                </Container>
-            </section> */}
-
             {/* Content Section */}
             <Container className="policy-content">
                 <Card className="policy-card">

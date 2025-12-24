@@ -176,12 +176,12 @@ const KiduAuditLogs: React.FC<AuditTrailsProps> = ({ tableName, recordId }) => {
       </Accordion>
       <style>{`
         .custom-audit-header.accordion-button {
-          background-color: #882626ff !important;
+          background-color: #173a6a !important;
           color: white !important;
           box-shadow: none !important;
         }
         .custom-audit-header.accordion-button:not(.collapsed) {
-          background-color: #882626ff !important;
+          background-color: #173a6a !important;
           color: white !important;
         }
         .custom-audit-header.accordion-button::after {

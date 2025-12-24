@@ -1,76 +1,79 @@
 import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import "../Style/ManagingCommittee.css";
+import { PublicService } from "../../Services/PublicService";
 
-interface Member {
-  name: string;
-  role: string;
-  location?: string;
-  phone?: string;
-  email?: string;
-}
+// interface Member {
+//   name: string;
+//   role: string;
+//   location?: string;
+//   phone?: string;
+//   email?: string;
+// }
 
 const ManagingCommittee: React.FC = () => {
-  const members: Member[] = [
-    {
-      name: "K SRIKRISHNA",
-      role: "President",
-      location: "Thiruvananthapuram",
-      phone: "+91 98765 43210",
-      email: "president@cbfws.org",
-    },
-    {
-      name: "B Ramprakash",
-      role: "General Secretary",
-      location: "Kochi",
-      phone: "+91 98765 43211",
-      email: "secretary@cbfws.org",
-    },
-    {
-      name: "Com. R S Indubhas",
-      role: "Treasurer",
-      location: "Kozhikode",
-      phone: "+91 98765 43212",
-      email: "treasurer@cbfws.org",
-    },
-    {
-      name: "Com. Shamsher Singh",
-      role: "Member",
-      location: "Thrissur",
-      phone: "+91 98765 43213",
-      email: "jscommittee@cbfws.org",
-    },
-    {
-      name: "Com. K. Vijayan",
-      role: "Vice President",
-      location: "Kollam",
-      phone: "+91 98765 43214",
-      email: "vpresident@cbfws.org",
-    },
-    {
-      name: "Com. K. V. Ranga Rao",
-      role: "Member",
-      location: "Kannur",
-      phone: "+91 98765 43215",
-      email: "committee@cbfws.org",
-    },
-  ];
+
+   const managingCommittee = PublicService.managingCommittee
+  // const members: Member[] = [
+  //   {
+  //     name: "K SRIKRISHNA",
+  //     role: "President",
+  //     location: "Thiruvananthapuram",
+  //     phone: "+91 98765 43210",
+  //     email: "president@cbfws.org",
+  //   },
+  //   {
+  //     name: "B Ramprakash",
+  //     role: "General Secretary",
+  //     location: "Kochi",
+  //     phone: "+91 98765 43211",
+  //     email: "secretary@cbfws.org",
+  //   },
+  //   {
+  //     name: "Com. R S Indubhas",
+  //     role: "Treasurer",
+  //     location: "Kozhikode",
+  //     phone: "+91 98765 43212",
+  //     email: "treasurer@cbfws.org",
+  //   },
+  //   {
+  //     name: "Com. Shamsher Singh",
+  //     role: "Member",
+  //     location: "Thrissur",
+  //     phone: "+91 98765 43213",
+  //     email: "jscommittee@cbfws.org",
+  //   },
+  //   {
+  //     name: "Com. K. Vijayan",
+  //     role: "Vice President",
+  //     location: "Kollam",
+  //     phone: "+91 98765 43214",
+  //     email: "vpresident@cbfws.org",
+  //   },
+  //   {
+  //     name: "Com. K. V. Ranga Rao",
+  //     role: "Member",
+  //     location: "Kannur",
+  //     phone: "+91 98765 43215",
+  //     email: "committee@cbfws.org",
+  //   },
+  // ];
 
   return (
     <div className="committee-wrapper">
 
       {/* HEADER SECTION */}
       <div className="committee-header text-center py-4">
-        <h2 className="committee-title">Managing Committee</h2>
+        <h2 className="committee-title">{managingCommittee.header.title}</h2>
         <p className="committee-subtitle">
-          Meet the dedicated team leading the Golden Jubilee Family Welfare Scheme
+         {managingCommittee.header.subtitle}
         </p>
       </div>
 
       <Container className="py-5">
         <Row className="g-4 justify-content-center">
 
-          {members.map((member, index) => (
+          {managingCommittee.members.map((member, index) => (
             <Col key={index} lg={4} md={6} sm={12}>
               <Card className="committee-card p-4 text-center">
 

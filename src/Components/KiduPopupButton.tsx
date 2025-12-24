@@ -14,7 +14,7 @@ const KiduPopupButton: React.FC<KiduPopupButtonProps> = ({ label, onClick }) => 
       onClick={onClick}
       className="d-flex align-items-center justify-content-center gap-2"
       style={{
-        backgroundColor: "#882626ff",
+        backgroundColor: "#173a6a",
         border: "none",
         color: "#fff",
         borderRadius: "8px",

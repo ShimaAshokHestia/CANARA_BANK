@@ -14,7 +14,7 @@ const KiduReset: React.FC<Props> = ({ initialValues, setFormData, setErrors }) =
   };
 
   return (
-    <Button variant="outline-secondary" onClick={handleReset}>
+    <Button variant="outline-warning" onClick={handleReset}>
       Reset
     </Button>
   );

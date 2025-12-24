@@ -1,40 +1,44 @@
 import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import "../Style/Downloads.css";
+import { PublicService } from "../../Services/PublicService";
+import { useNavigate } from "react-router-dom";
 
-interface DownloadItem {
-  title: string;
-  description: string;
-}
+// interface DownloadItem {
+//   title: string;
+//   description: string;
+// }
 
 const Downloads: React.FC = () => {
-  const files: DownloadItem[] = [
-    {
-      title: "APPLICATION FOR MEMBERSHIP",
-      description: "APPLICATION FOR MEMBERSHIP.",
-    },
-    {
-      title: "AUTHORITY LETTER",
-      description: "LETTER AUTHORISING DEDUCTION OF SUBSCRIPTION.",
-    },
-    {
-      title: "RECEIPT",
-      description: "FORM TO ACKNOWLEDGE RECEIPT OF PAYMENT.",
-    },
-    {
-      title: "CLAIM FORM",
-      description: "FORM FOR SUBMITTING THE CLAIM.",
-    },
-  ];
+   const navigate = useNavigate()
+ const downloads = PublicService.downloads
+  // const files: DownloadItem[] = [
+  //   {
+  //     title: "APPLICATION FOR MEMBERSHIP",
+  //     description: "APPLICATION FOR MEMBERSHIP.",
+  //   },
+  //   {
+  //     title: "AUTHORITY LETTER",
+  //     description: "LETTER AUTHORISING DEDUCTION OF SUBSCRIPTION.",
+  //   },
+  //   {
+  //     title: "RECEIPT",
+  //     description: "FORM TO ACKNOWLEDGE RECEIPT OF PAYMENT.",
+  //   },
+  //   {
+  //     title: "CLAIM FORM",
+  //     description: "FORM FOR SUBMITTING THE CLAIM.",
+  //   },
+  // ];
 
   return (
     <div className="downloads-wrapper">
 
       {/* HEADER SECTION */}
       <div className="downloads-header text-center py-4">
-        <h2 className="downloads-title">Downloads</h2>
+        <h2 className="downloads-title">{downloads.header.title}</h2>
         <p className="downloads-subtitle">
-          Access all forms and documents related to the Golden Jubilee Family Welfare Scheme
+        {downloads.header.subtitle}
         </p>
       </div>
 
@@ -46,11 +50,11 @@ const Downloads: React.FC = () => {
             <Card className="downloads-card p-4">
 
               <h5 className="fw-bold mb-4 d-flex align-items-center">
-                <i className="bi bi-folder2-open icon-header me-2"></i>
-                Download Files
+                <i className={downloads.card.iconclass}></i>
+               {downloads.card.title}
               </h5>
 
-              {files.map((file, index) => (
+              {downloads.files.map((file, index) => (
                 <Card key={index} className="file-item-card mb-3 p-3">
                   <div className="d-flex justify-content-between align-items-center">
 
@@ -69,7 +73,7 @@ const Downloads: React.FC = () => {
         </Row>
 
         <div className="text-center mt-4">
-          <button className="support-btn">Contact Support</button>
+          <button onClick={() => navigate("/contact-us")} className="support-btn">{downloads.footer.supportButtonText}</button>
         </div>
       </Container>
     </div>

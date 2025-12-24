@@ -42,7 +42,7 @@ export const PublicService = {
         },
     },
     /* ===========================
-    HOME PAGE (NEW)
+    HOME PAGE 
     =========================== */
     home: {
         hero: {
@@ -175,9 +175,30 @@ export const PublicService = {
             },
         },
     },
+    /* ===========================
+    NEWS PAGE 
+    =========================== */
+    newsPage: {
+        hero: {
+            tag: "Stay Informed",
+            title: "News & Updates",
+            subtitle:
+                "Stay updated with the latest news, announcements, and activities from the Golden Jubilee Family Welfare Scheme.",
+        },
+
+        breadcrumb: {
+            homeLabel: "Home",
+            currentLabel: "News & Updates",
+        },
+
+        states: {
+            loadingText: "Loading news...",
+            emptyText: "No news available at the moment.",
+        },
+    },
 
     /* ===========================
-    ABOUT PAGE (NEW)
+    ABOUT PAGE 
     =========================== */
     about: {
         header: {
@@ -220,8 +241,7 @@ export const PublicService = {
     },
 
     /* ===========================
-    RULES & REGULATIONS (NEW)
-
+    RULES & REGULATIONS 
     =========================== */
     rules: {
         header: {
@@ -260,12 +280,12 @@ export const PublicService = {
             {
                 number: 2,
                 title: "Objects",
-                list: [
-                    "To provide financial assistance to the family/dependents of deceased members in times of distress.",
-                    "To raise/acquire money by subscription or donations.",
-                    "To provide financial aid or loans to members.",
-                    "To adopt measures for the welfare of members as needed.",
-                ],
+                list: {
+                    line1: "To provide financial assistance to the family/dependents of deceased members in times of distress.",
+                    line2: "To raise/acquire money by subscription or donations.",
+                    line3: "To provide financial aid or loans to members.",
+                    line4: "To adopt measures for the welfare of members as needed.",
+                },
             },
             {
                 number: 3,
@@ -277,12 +297,12 @@ export const PublicService = {
             {
                 number: 4,
                 title: "Managing Committee",
-                list: [
-                    "President – General Secretary of Union (Ex Officio)",
-                    "Secretary – Nominated by CC",
-                    "Treasurer – Nominated by CC",
-                    "Four other members – Nominated by CC",
-                ],
+                list: {
+                    line1: "President – General Secretary of Union (Ex Officio)",
+                    line2: "Secretary – Nominated by CC",
+                    line3: "Treasurer – Nominated by CC",
+                    line4: "Four other members – Nominated by CC",
+                },
                 footer:
                     "The Committee shall meet once every six months or more if necessary. Decisions are taken by majority.",
             },
@@ -350,12 +370,12 @@ export const PublicService = {
             {
                 number: 14,
                 title: "Cessation of Membership",
-                list: [
-                    "Non-payment",
-                    "Resignation or expulsion",
-                    "Leaving service",
-                    "Completion of 15 years",
-                ],
+                list: {
+                    line1: "Non-payment",
+                    line2: "Resignation or expulsion",
+                    line3: "Leaving service",
+                    line4: "Completion of 15 years",
+                },
             },
             {
                 number: 15,
@@ -432,7 +452,7 @@ export const PublicService = {
     },
 
     /* ===========================
-    DOWNLOADS (NEW)
+    DOWNLOADS
     =========================== */
     downloads: {
         header: {
@@ -443,7 +463,7 @@ export const PublicService = {
 
         card: {
             title: "Download Files",
-            icon: "bi-folder2-open",
+            iconclass: "bi bi-folder2-open icon-header me-2",
         },
 
         files: [
@@ -471,12 +491,11 @@ export const PublicService = {
 
         footer: {
             supportButtonText: "Contact Support",
-            supportRoute: "/contact",
         },
     },
 
     /* ===========================
-    MANAGING COMMITTEE (NEW)
+    MANAGING COMMITTEE 
     =========================== */
     managingCommittee: {
         header: {
@@ -528,6 +547,49 @@ export const PublicService = {
                 phone: "+91 98765 43215",
                 email: "committee@cbfws.org",
             },
+        ],
+    },
+    /* ===========================
+    CLAIMS PAGE
+    =========================== */
+    claimsPage: {
+        hero: {
+            title: "Claims Settled",
+            subtitle: "Transparency in our commitment to support families",
+        },
+
+        stats: [
+            {
+                icon: "check",
+                value: "1,298",
+                label: "Total Claims Settled",
+            },
+            {
+                icon: "rupee",
+                value: "₹12.98 Cr",
+                label: "Total Amount Disbursed",
+            },
+            {
+                icon: "users",
+                value: "5,000+",
+                label: "Active Members",
+            },
+        ],
+
+        tables: {
+            stateWiseTitle: "CLAIMS - STATE WISE",
+            designationWiseTitle: "CLAIMS - DESIGNATION WISE",
+
+            headers: {
+                name: "Name",
+                total: "Total",
+            },
+        },
+
+        years: [
+            "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013",
+            "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023",
+            "2024", "2025", "2026", "2027", "2028", "2029", "2030"
         ],
     },
 
@@ -679,5 +741,60 @@ export const PublicService = {
         },
     },
 
-    
-    };
+    /* ===========================
+      PRIVACY POLICY PAGE
+      =========================== */
+    privacyPolicy: {
+        hero: {
+            badge: "Your Privacy Matters",
+            title: "Privacy Policy",
+            subtitle:
+                "We are committed to protecting your personal information and your right to privacy.",
+        },
+
+        sections: [
+            {
+                heading1:
+                    "1. Privacy Policy for Canara Bank Employees' Union Golden Jubilee Family Welfare Scheme",
+                paragraphs: {
+                    paragraph1: "At Canara Bank Employees' Union Golden Jubilee Family Welfare Scheme, accessible from https://www.cbeugjfws.co.in/, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Canara Bank Employees' Union Golden Jubilee Family Welfare Scheme and how we use it.",
+
+                    paragraph2: " If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.",
+
+                    paragraph3: "This Privacy Policy applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in Canara Bank Employees' Union Golden Jubilee Family Welfare Scheme. This policy is not applicable to any information collected offline or via channels other than this website."
+                }
+            },
+            {
+                heading2:
+                    "2.Consent",
+                paragraphs: {
+                    paragraph1: "By using our website, you hereby consent to our Privacy Policy and agree to its terms.",
+                }
+            },
+            {
+                heading3:
+                    "3.Information we collect",
+                paragraphs: {
+                    paragraph1: "The personal information that you are asked to provide, and the reasons why you are asked to provide it, will be made clear to you at the point we ask you to provide your personal information. If you contact us directly, we may receive additional information about you such as your name, email address, phone number, the contents of the message and/or attachments you may send us, and any other information you may choose to provide. When you register for an Account, we may ask for your contact information, including items such as name, company name, address, email address, and telephone number.",
+                }
+            },
+
+            {
+                heading3:
+                    "3.Information we collect",
+                lines: {
+                    line1: "Provide, operate, and maintain our website",
+                    line2: "Improve, personalize, and expand our website",
+                    line3: "Understand and analyze how you use our website",
+                    line4: "Develop new products, services, features, and functionality",
+                    line5: "Communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the website, and for marketing and promotional purposes",
+                    line6: "Send you emails",
+                    line7: "Find and prevent fraud",
+                },
+
+            },
+
+        ]
+    }
+
+};

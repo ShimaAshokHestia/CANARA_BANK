@@ -13,14 +13,12 @@ import type { Designation } from "../../../Types/Settings/Designation";
 import BranchPopup from "../../Branch/BranchPopup";
 
 const MemberCreate: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  
   // Popup states
   const [showBranchPopup, setShowBranchPopup] = useState(false);
   const [showDesignationPopup, setShowDesignationPopup] = useState(false);
   const [showCategoryPopup, setShowCategoryPopup] = useState(false);
   const [showStatusPopup, setShowStatusPopup] = useState(false);
-  
+
   // Selected values
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
   const [selectedDesignation, setSelectedDesignation] = useState<Designation | null>(null);
@@ -57,20 +55,11 @@ const MemberCreate: React.FC = () => {
   const toIsoMidnight = (val?: string) => (val ? `${val}T00:00:00` : "");
 
   const handleSubmit = async (formData: Record<string, any>) => {
-    if (!selectedBranch) {
-      throw new Error("Please select a branch");
-    }
-    if (!selectedDesignation) {
-      throw new Error("Please select a designation");
-    }
-    if (!selectedCategory) {
-      throw new Error("Please select a category");
-    }
-    if (!selectedStatus) {
-      throw new Error("Please select a status");
-    }
+    if (!selectedBranch) throw new Error("Please select a branch");
+    if (!selectedDesignation) throw new Error("Please select a designation");
+    if (!selectedCategory) throw new Error("Please select a category");
+    if (!selectedStatus) throw new Error("Please select a status");
 
-    setIsLoading(true);
     try {
       const payload: Omit<Member, "memberId" | "auditLogs"> = {
         staffNo: Number(formData.staffNo),
@@ -110,12 +99,9 @@ const MemberCreate: React.FC = () => {
     } catch (err) {
       console.error("Error creating member:", err);
       throw err;
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  // Popup handlers
   const popupHandlers = {
     branchId: {
       value: selectedBranch ? `${selectedBranch.dpCode} - ${selectedBranch.name}` : "",
@@ -143,7 +129,6 @@ const MemberCreate: React.FC = () => {
         onSubmit={handleSubmit}
         submitButtonText="Create Member"
         showResetButton
-        loadingState={isLoading}
         successMessage="Member created successfully!"
         errorMessage="Failed to create member. Please check the details and try again."
         navigateOnSuccess="/dashboard/member/member-list"
@@ -152,28 +137,25 @@ const MemberCreate: React.FC = () => {
         popupHandlers={popupHandlers}
       />
 
-      <BranchPopup
-        show={showBranchPopup}
-        handleClose={() => setShowBranchPopup(false)}
-        onSelect={setSelectedBranch}
+      <BranchPopup 
+      show={showBranchPopup} 
+      handleClose={() => setShowBranchPopup(false)} 
+      onSelect={setSelectedBranch} 
       />
-
-      <DesignationPopup
-        show={showDesignationPopup}
-        handleClose={() => setShowDesignationPopup(false)}
-        onSelect={setSelectedDesignation}
+      <DesignationPopup 
+      show={showDesignationPopup} 
+      handleClose={() => setShowDesignationPopup(false)} 
+      onSelect={setSelectedDesignation} 
       />
-
-      <CategoryPopup
-        show={showCategoryPopup}
-        handleClose={() => setShowCategoryPopup(false)}
-        onSelect={setSelectedCategory}
+      <CategoryPopup 
+      show={showCategoryPopup} 
+      handleClose={() => setShowCategoryPopup(false)} 
+      onSelect={setSelectedCategory} 
       />
-
-      <StatusPopup
-        show={showStatusPopup}
-        handleClose={() => setShowStatusPopup(false)}
-        onSelect={setSelectedStatus}
+      <StatusPopup 
+      show={showStatusPopup} 
+      handleClose={() => setShowStatusPopup(false)} 
+      onSelect={setSelectedStatus} 
       />
     </>
   );

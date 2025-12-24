@@ -6,14 +6,19 @@ import type { RefundContribution } from "../../../Types/Claims/Refund.types";
 import RefundContributionService from "../../../Services/Claims/Refund.services";
 import type { State } from "../../../Types/Settings/States.types";
 import StatePopup from "../../Settings/State/StatePopup";
+import type { Designation } from "../../../Types/Settings/Designation";
+import DesignationPopup from "../../Settings/Designation/DesignationPopup";
 
 
 const RefundContributionCreate: React.FC = () => {
    //const [isLoading, setIsLoading] = useState(false);
     const [showStatePopup, setShowStatePopup] = useState(false);
+    const[showDesignationPopup,setShowDesignationPopup]=useState(false);
+    
     const [selectedState, setSelectedState] = useState<State | null>(null);
-  
-  const fields: Field[] = [
+    const[selectedDesignation,setSelectedDesignation]=useState<Designation|null>(null);
+ 
+    const fields: Field[] = [
     { name: "staffNo", rules: { type: "number", label: "Staff No", required: true, colWidth: 4 } },
     { name: "stateId", rules: { type: "popup", label: "State ID", required: true, colWidth: 4 } },
     { name: "designationId", rules: { type: "popup", label: "Designation ID", required: true, colWidth: 4 } },
@@ -29,12 +34,12 @@ const RefundContributionCreate: React.FC = () => {
     { name: "yearOF", rules: { type: "number", label: "Year Of", required: true, colWidth: 4 } },
   ];
 
- const handleStateSelect = (state: State) => {
-    setSelectedState(state);
-  };
+//const toIso = (val?: string) => (val ? `${val}T00:00:00` : "");
 
   const handleSubmit = async (formData: Record<string, any>) => {
-    const payload: Omit<RefundContribution, "refundContributionId" | "auditLogs"> = {
+   
+    try{
+      const payload: Omit<RefundContribution, "refundContributionId" | "auditLogs"> = {
       staffNo: Number(formData.staffNo),
       stateId: Number(formData.stateId),
       designationId: Number(formData.designationId),
@@ -52,16 +57,24 @@ const RefundContributionCreate: React.FC = () => {
       lastContribution: Number(formData.lastContribution || 0),
       yearOF: Number(formData.yearOF),
     };
-
     await RefundContributionService.createRefundContribution(payload);
+    } catch(err){
+      console.error("Error creating Refund Contribution:", err);
+      throw err;
+    } 
   };
 
-  const popupHandlers = {
-    stateId: {
-      value: selectedState?.name || "",
-      onOpen: () => setShowStatePopup(true)
-    }
-  };
+ const popupHandlers = {
+  stateId: {
+    value: selectedState?.stateId?.toString() || "",
+    onOpen: () => setShowStatePopup(true),
+  },
+  designationId: {
+    value: selectedDesignation?.designationId?.toString() || "",
+    onOpen: () => setShowDesignationPopup(true),
+  },
+};
+
   
   return (
     
@@ -70,16 +83,23 @@ const RefundContributionCreate: React.FC = () => {
         title="Create Refund Contribution"
         fields={fields}
         onSubmit={handleSubmit}
+        submitButtonText="Create Refund Contribution"
+        showResetButton
         successMessage="Refund Contribution created successfully!"
         errorMessage="Failed to create Refund Contribution. Please try again."
         navigateOnSuccess="/dashboard/claims/refundcontribution-list"
         themeColor="#18575A"
-        popupHandlers={popupHandlers}
+         popupHandlers={popupHandlers}
       />
         <StatePopup
         show={showStatePopup}
         handleClose={() => setShowStatePopup(false)}
-        onSelect={handleStateSelect}
+        onSelect={setSelectedState}
+      />
+      <DesignationPopup
+        show={showDesignationPopup}
+        handleClose={() => setShowDesignationPopup(false)}
+        onSelect={setSelectedDesignation}
       />
     </>
     

@@ -8,121 +8,30 @@ import BranchService from "../../Services/Settings/Branch.services";
 import StatePopup from "../Settings/State/StatePopup";
 import CirclePopup from "../Circle/CirclePopup";
 
-
 const BranchCreate: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [showStatePopup, setShowStatePopup] = useState(false);
   const [showCirclePopup, setShowCirclePopup] = useState(false);
-  
+
   // Store selected state and circle data
   const [selectedState, setSelectedState] = useState<State | null>(null);
   const [selectedCircle, setSelectedCircle] = useState<Circle | null>(null);
 
   const fields: Field[] = [
-    {
-      name: "dpCode",
-      rules: {
-        type: "number",
-        label: "DP Code",
-        required: true,
-        placeholder: "Enter DP code (e.g., 501)",
-        colWidth: 4,
-      },
-    },
-    {
-      name: "name",
-      rules: {
-        type: "text",
-        label: "Branch Name",
-        required: true,
-        minLength: 2,
-        maxLength: 150,
-        placeholder: "Enter branch name (e.g., Gandhipuram Branch)",
-        colWidth: 4,
-      },
-    },
-    {
-      name: "address1",
-      rules: {
-        type: "text",
-        label: "Address Line 1",
-        required: true,
-        placeholder: "Enter address line 1",
-        colWidth: 4,
-      },
-    },
-    {
-      name: "address2",
-      rules: {
-        type: "text",
-        label: "Address Line 2",
-        required: false,
-        placeholder: "Enter address line 2",
-        colWidth: 4,
-      },
-    },
-    {
-      name: "address3",
-      rules: {
-        type: "text",
-        label: "Address Line 3",
-        required: false,
-        placeholder: "Enter address line 3",
-        colWidth: 4,
-      },
-    },
-    {
-      name: "district",
-      rules: {
-        type: "text",
-        label: "District",
-        required: true,
-        placeholder: "Enter district (e.g., Coimbatore)",
-        colWidth: 4,
-      },
-    },
-    {
-      name: "stateId",
-      rules: {
-        type: "popup",
-        label: "State",
-        required: true,
-        placeholder: "Select state",
-        colWidth: 4,
-      },
-    },
-    {
-      name: "circleId",
-      rules: {
-        type: "popup",
-        label: "Circle",
-        required: true,
-        placeholder: "Select circle",
-        colWidth: 4,
-      },
-    },
-    {
-      name: "status",
-      rules: {
-        type: "toggle",
-        label: "Active",
-        required: false,
-      },
-    },
-    {
-      name: "isRegCompleted",
-      rules: {
-        type: "toggle",
-        label: "Registration Completed",
-        required: false,
-      },
-    },
+    { name: "dpCode", rules: { type: "number", label: "DP Code", required: true, placeholder: "Enter DP code (e.g., 501)", colWidth: 4 } },
+    { name: "name", rules: { type: "text", label: "Branch Name", required: true, minLength: 2, maxLength: 150, placeholder: "Enter branch name (e.g., Gandhipuram Branch)", colWidth: 4 } },
+    { name: "address1", rules: { type: "text", label: "Address Line 1", required: true, placeholder: "Enter address line 1", colWidth: 4 } },
+    { name: "address2", rules: { type: "text", label: "Address Line 2", required: false, placeholder: "Enter address line 2", colWidth: 4 } },
+    { name: "address3", rules: { type: "text", label: "Address Line 3", required: false, placeholder: "Enter address line 3", colWidth: 4 } },
+    { name: "district", rules: { type: "text", label: "District", required: true, placeholder: "Enter district (e.g., Coimbatore)", colWidth: 4 } },
+    { name: "stateId", rules: { type: "popup", label: "State", required: true, placeholder: "Select state", colWidth: 4 } },
+    { name: "circleId", rules: { type: "popup", label: "Circle", required: true, placeholder: "Select circle", colWidth: 4 } },
+    { name: "status", rules: { type: "toggle", label: "Active", required: false } },
+    { name: "isRegCompleted", rules: { type: "toggle", label: "Registration Completed", required: false } },
   ];
 
   // Handle state selection
   const handleStateSelect = (state: State) => {
     setSelectedState(state);
-    // Clear circle when state changes
     setSelectedCircle(null);
   };
 
@@ -132,7 +41,6 @@ const BranchCreate: React.FC = () => {
   };
 
   const handleSubmit = async (formData: Record<string, any>) => {
-    setIsLoading(true);
     try {
       const payload: Omit<Branch, "branchId" | "auditLogs"> = {
         dpCode: Number(formData.dpCode),
@@ -151,8 +59,6 @@ const BranchCreate: React.FC = () => {
     } catch (err) {
       console.error("Error creating branch:", err);
       throw err;
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -182,7 +88,6 @@ const BranchCreate: React.FC = () => {
         onSubmit={handleSubmit}
         submitButtonText="Create Branch"
         showResetButton
-        loadingState={isLoading}
         successMessage="Branch created successfully!"
         errorMessage="Failed to create branch. Please check the details and try again."
         navigateOnSuccess="/dashboard/settings/branch-list"

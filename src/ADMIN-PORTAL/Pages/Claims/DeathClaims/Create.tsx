@@ -3,15 +3,28 @@ import type { Field } from "../../../Components/KiduCreate";
 import type { DeathClaim } from "../../../Types/Claims/DeathClaims.type";
 import DeathClaimService from "../../../Services/Claims/DeathClaims.services";
 import KiduCreate from "../../../Components/KiduCreate";
+import MemberPopup from "../../Contributions/Member/MemberPopup";
+import StatePopup from "../../Settings/State/StatePopup";
+import DesignationPopup from "../../Settings/Designation/DesignationPopup";
+import type { Member } from "../../../Types/Contributions/Member.types";
+import type { State } from "../../../Types/Settings/States.types";
+import type { Designation } from "../../../Types/Settings/Designation";
 
 
 const DeathClaimCreate: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
+
+  const[showMemberPopup,setShowMemberPopup]=useState(false);
+  const[showStatePopup,setShowStatePopup]=useState(false);
+  const[showDesignationPopup,setShowDesignationPopup]=useState(false);
+
+  const[selectedMember,setSelectedMember]=useState<Member|null>(null);
+  const[selectedState,setSelectedState]=useState<State|null>(null);
+  const[selectedDesignation,setSelectedDesignation]=useState<Designation|null>(null);
 
   const fields: Field[] = [
-    { name: "memberId", rules: { type: "number", label: "Member ID", required: true, colWidth: 3 } },
-    { name: "stateId", rules: { type: "number", label: "State ID", required: true, colWidth: 3 } },
-    { name: "designationId", rules: { type: "number", label: "Designation ID", required: true, colWidth: 3 } },
+    { name: "memberId", rules: { type: "popup", label: "Member ID", required: true, colWidth: 3 } },
+    { name: "stateId", rules: { type: "popup", label: "State ID", required: true, colWidth: 3 } },
+    { name: "designationId", rules: { type: "popup", label: "Designation ID", required: true, colWidth: 3 } },
 
     { name: "deathDate", rules: { type: "date", label: "Death Date", required: true, colWidth: 4 } },
     { name: "nominee", rules: { type: "text", label: "Nominee Name", required: true, colWidth: 4 } },
@@ -29,7 +42,16 @@ const DeathClaimCreate: React.FC = () => {
   const toIso = (val?: string) => (val ? `${val}T00:00:00` : "");
 
   const handleSubmit = async (formData: Record<string, any>) => {
-    setIsLoading(true);
+    
+    if(!selectedMember){
+      throw new Error("Please select a member");
+    }
+    if(!selectedState){
+      throw new Error("Please select a state");
+    }
+    if(!selectedDesignation){
+      throw new Error("Please select a designation");
+    }
     try {
       const payload: Omit<DeathClaim, "deathClaimId"> = {
         memberId: Number(formData.memberId),
@@ -50,25 +72,56 @@ const DeathClaimCreate: React.FC = () => {
     } catch (err) {
       console.error("Error creating death claim:", err);
       throw err;
-    } finally {
-      setIsLoading(false);
     }
   };
 
+const popupHandlers = {
+    memberId: {
+      value: selectedMember?.memberId?.toString() || "",
+      onOpen: () => setShowMemberPopup(true),
+    },
+    stateId: {
+      value: selectedState?.stateId?.toString() || "",
+      onOpen: () => setShowStatePopup(true),
+    },
+    designationId: {
+      value: selectedDesignation?.designationId?.toString() || "",
+      onOpen: () => setShowDesignationPopup(true),
+    },
+}
+
   return (
-    <KiduCreate
-      title="Create Death Claim"
-      fields={fields}
-      onSubmit={handleSubmit}
-      submitButtonText="Create Death Claim"
-      showResetButton
-      loadingState={isLoading}
-      successMessage="Death claim created successfully!"
-      errorMessage="Failed to create death claim. Please try again."
-      navigateOnSuccess="/dashboard/claims/deathclaims-list"
-      navigateDelay={1200}
-      themeColor="#18575A"
-    />
+   <>
+      <KiduCreate
+        title="Create Death Claim"
+        fields={fields}
+        onSubmit={handleSubmit}
+        submitButtonText="Create Death Claim"
+        showResetButton
+        successMessage="Death claim created successfully!"
+        errorMessage="Failed to create death claim. Please try again."
+        navigateOnSuccess="/dashboard/claims/deathclaims-list"
+        navigateDelay={1200}
+        themeColor="#18575A"
+        popupHandlers={popupHandlers}
+      />
+      {/* Member Popup */}
+      <MemberPopup
+        show={showMemberPopup}
+        handleClose={() => setShowMemberPopup(false)}
+        onSelect={setSelectedMember}
+      />
+      <StatePopup
+        show={showStatePopup}
+        handleClose={() => setShowStatePopup(false)}
+        onSelect={setSelectedState}
+      />
+      <DesignationPopup
+        show={showDesignationPopup}
+        handleClose={() => setShowDesignationPopup(false)}
+        onSelect={setSelectedDesignation}
+      />
+   </>
   );
 };
 

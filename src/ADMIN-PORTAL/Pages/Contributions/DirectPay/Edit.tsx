@@ -1,14 +1,20 @@
 // src/Pages/Contributions/DirectPay/Edit.tsx
-import React from "react";
+import React, { useState } from "react";
 import type { Field } from "../../../Components/KiduCreate";
 import DirectPaymentService from "../../../Services/Contributions/Directpayment.services";
 import type { DirectPayment } from "../../../Types/Contributions/Directpayment.types";
 import KiduEdit from "../../../Components/KiduEdit";
+import type { Member } from "../../../Types/Contributions/Member.types";
+import MemberPopup from "../Member/MemberPopup";
 
 
 const DirectPaymentEdit: React.FC = () => {
+
+   const[showMemberPopup,setShowMemberPopup]=useState(false);
+    const[selectedMember,setSelectedMember]=useState<Member|null>(null);
+   
   const fields: Field[] = [
-    { name: "memberId", rules: { type: "number", label: "Member ID", required: true, colWidth: 4 } },
+    { name: "memberId", rules: { type: "popup", label: "Member ID", required: true, colWidth: 4 } },
     { name: "amount", rules: { type: "number", label: "Amount", required: true, colWidth: 4 } },
     { name: "paymentDate", rules: { type: "date", label: "Payment Date", required: true, colWidth: 4 } },
     { name: "paymentMode", rules: { type: "text", label: "Payment Mode", required: true, colWidth: 4 } },
@@ -33,19 +39,32 @@ const DirectPaymentEdit: React.FC = () => {
 
     await DirectPaymentService.updateDirectPayment(Number(id), payload);
   };
-
+  const popupHandlers={
+    memberId:{
+      value:selectedMember?.name||"",
+      onOpen:()=>setShowMemberPopup(true),
+    },
+  }
   return (
-    <KiduEdit
-      title="Edit Direct Payment"
-      fields={fields}
-      onFetch={handleFetch}
-      onUpdate={handleUpdate}
-      paramName="directPaymentId"
-      navigateBackPath="/dashboard/contributions/directpayment-list"
-      successMessage="Direct Payment updated successfully!"
-      auditLogConfig={{ tableName: "DirectPayment", recordIdField: "directPaymentId" }}
-      themeColor="#18575A"
-    />
+<>
+      <KiduEdit
+        title="Edit Direct Payment"
+        fields={fields}
+        onFetch={handleFetch}
+        onUpdate={handleUpdate}
+        paramName="directPaymentId"
+        navigateBackPath="/dashboard/contributions/directpayment-list"
+        successMessage="Direct Payment updated successfully!"
+        auditLogConfig={{ tableName: "DirectPayment", recordIdField: "directPaymentId" }}
+        themeColor="#18575A"
+         popupHandlers={popupHandlers}
+      />
+       <MemberPopup
+        show={showMemberPopup}
+        handleClose={() => setShowMemberPopup(false)}
+        onSelect={setSelectedMember}
+      /> 
+</>
   );
 };
 

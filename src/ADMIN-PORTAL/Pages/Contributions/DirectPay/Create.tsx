@@ -1,14 +1,20 @@
 // src/Pages/Contributions/DirectPay/Create.tsx
-import React from "react";
+import React, { useState } from "react";
 import type { Field } from "../../../Components/KiduCreate";
 import type { DirectPayment } from "../../../Types/Contributions/Directpayment.types";
 import DirectPaymentService from "../../../Services/Contributions/Directpayment.services";
 import KiduCreate from "../../../Components/KiduCreate";
+import type { Member } from "../../../Types/Contributions/Member.types";
+import MemberPopup from "../Member/MemberPopup";
 
 
 const DirectPaymentCreate: React.FC = () => {
+  
+  const[showMemberPopup,setShowMemberPopup]=useState(false);
+  const[selectedMember,setSelectedMember]=useState<Member|null>(null);
+ 
   const fields: Field[] = [
-    { name: "memberId", rules: { type: "number", label: "Member ID", required: true, colWidth: 4 } },
+    { name: "memberId", rules: { type: "popup", label: "Member ID", required: true, colWidth: 4 } },
     { name: "amount", rules: { type: "number", label: "Amount", required: true, colWidth: 4 } },
     { name: "paymentDate", rules: { type: "date", label: "Payment Date", required: true, colWidth: 4 } },
     { name: "paymentMode", rules: { type: "text", label: "Payment Mode", required: true, colWidth: 4 } },
@@ -34,15 +40,29 @@ const DirectPaymentCreate: React.FC = () => {
     await DirectPaymentService.createDirectPayment(payload);
   };
 
+  const popupHandlers={
+    memberId:{
+      value:selectedMember?.name||"",
+      onOpen:()=>setShowMemberPopup(true),
+    },
+  }
   return (
-    <KiduCreate
-      title="Create Direct Payment"
-      fields={fields}
-      onSubmit={handleSubmit}
-      successMessage="Direct Payment created successfully!"
-      navigateOnSuccess="/dashboard/contributions/directpayment-list"
-      themeColor="#18575A"
-    />
+   <>
+      <KiduCreate
+        title="Create Direct Payment"
+        fields={fields}
+        onSubmit={handleSubmit}
+        successMessage="Direct Payment created successfully!"
+        navigateOnSuccess="/dashboard/contributions/directpayment-list"
+        themeColor="#18575A"
+         popupHandlers={popupHandlers}
+      />
+      <MemberPopup
+        show={showMemberPopup}
+        handleClose={() => setShowMemberPopup(false)}
+        onSelect={setSelectedMember}
+      />
+   </>
   );
 };
 

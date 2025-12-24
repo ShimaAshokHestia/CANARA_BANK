@@ -1,112 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import KiduEdit from "../../Components/KiduEdit";
 import type { Field } from "../../Components/KiduEdit";
 import type { Branch } from "../../Types/Settings/Branch.types";
 import BranchService from "../../Services/Settings/Branch.services";
+import type { State } from "../../Types/Settings/States.types";
+import type { Circle } from "../../Types/Settings/Circle.types";
+import StatePopup from "../Settings/State/StatePopup";
+import CirclePopup from "../Circle/CirclePopup";
 
 const BranchEdit: React.FC = () => {
-  const fields: Field[] = [
-    {
-      name: "branchId",
-      rules: {
-        type: "number",
-        label: "Branch ID",
-        required: false,
-        disabled: true,
-        colWidth: 3,
-      },
-    },
-    {
-      name: "dpCode",
-      rules: {
-        type: "number",
-        label: "DP Code",
-        required: true,
-        colWidth: 3,
-      },
-    },
-    {
-      name: "name",
-      rules: {
-        type: "text",
-        label: "Branch Name",
-        required: true,
-        minLength: 2,
-        maxLength: 150,
-        colWidth: 6,
-      },
-    },
-    {
-      name: "address1",
-      rules: {
-        type: "text",
-        label: "Address Line 1",
-        required: true,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "address2",
-      rules: {
-        type: "text",
-        label: "Address Line 2",
-        required: false,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "address3",
-      rules: {
-        type: "text",
-        label: "Address Line 3",
-        required: false,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "district",
-      rules: {
-        type: "text",
-        label: "District",
-        required: true,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "circleId",
-      rules: {
-        type: "number",
-        label: "Circle ID",
-        required: true,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "stateId",
-      rules: {
-        type: "number",
-        label: "State ID",
-        required: true,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "status",
-      rules: {
-        type: "toggle",
-        label: "Active",
-        required: false,
-      },
-    },
-    {
-      name: "isRegCompleted",
-      rules: {
-        type: "toggle",
-        label: "Registration Completed",
-        required: false,
-      },
-    },
-  ];
+
+const [showStatePopup, setShowStatePopup] = useState(false);
+  const [showCirclePopup, setShowCirclePopup] = useState(false);
+
+  // Store selected state and circle data
+  const [selectedState, setSelectedState] = useState<State | null>(null);
+  const [selectedCircle, setSelectedCircle] = useState<Circle | null>(null);
+
+ const fields: Field[] = [
+  { name: "branchId", rules: { type: "number", label: "Branch ID", required: false, disabled: true, colWidth: 3 } },
+  { name: "dpCode", rules: { type: "number", label: "DP Code", required: true, colWidth: 3 } },
+  { name: "name", rules: { type: "text", label: "Branch Name", required: true, minLength: 2, maxLength: 150, colWidth: 6 } },
+  { name: "address1", rules: { type: "text", label: "Address Line 1", required: true, colWidth: 4 } },
+  { name: "address2", rules: { type: "text", label: "Address Line 2", required: false, colWidth: 4 } },
+  { name: "address3", rules: { type: "text", label: "Address Line 3", required: false, colWidth: 4 } },
+  { name: "district", rules: { type: "text", label: "District", required: true, colWidth: 4 } },
+   { name: "stateId", rules: { type: "popup", label: "State ID", required: true, colWidth: 4 } },
+  { name: "circleId", rules: { type: "popup", label: "Circle ID", required: true, colWidth: 4 } },
+  { name: "status", rules: { type: "toggle", label: "Active", required: false } },
+  { name: "isRegCompleted", rules: { type: "toggle", label: "Registration Completed", required: false } },
+];
+
+ // Handle state selection
+  const handleStateSelect = (state: State) => {
+    setSelectedState(state);
+    setSelectedCircle(null);
+  };
+
+  // Handle circle selection
+  const handleCircleSelect = (circle: Circle) => {
+    setSelectedCircle(circle);
+  };
 
   // Fetch a branch by ID (service returns CustomResponse<Branch>)
   const handleFetch = async (branchId: string) => {
@@ -143,25 +77,59 @@ const BranchEdit: React.FC = () => {
     }
   };
 
+    // Popup handlers for KiduCreate
+  const popupHandlers = {
+    stateId: {
+      value: selectedState?.name || "",
+      onOpen: () => setShowStatePopup(true),
+    },
+    circleId: {
+      value: selectedCircle?.name || "",
+      onOpen: () => {
+        if (!selectedState) {
+          alert("Please select a state first");
+          return;
+        }
+        setShowCirclePopup(true);
+      },
+    },
+  };
+
   return (
-    <KiduEdit
-      title="Edit Branch"
-      fields={fields}
-      onFetch={handleFetch}
-      onUpdate={handleUpdate}
-      submitButtonText="Update Branch"
-      showResetButton
-      successMessage="Branch updated successfully!"
-      errorMessage="Failed to update branch. Please try again."
-      paramName="branchId"
-      navigateBackPath="/dashboard/settings/branch-list"
-      loadingText="Loading Branch..."
-      auditLogConfig={{
-        tableName: "Branch",
-        recordIdField: "branchId",
-      }}
-      themeColor="#18575A"
-    />
+   <>
+      <KiduEdit
+        title="Edit Branch"
+        fields={fields}
+        onFetch={handleFetch}
+        onUpdate={handleUpdate}
+        submitButtonText="Update Branch"
+        showResetButton
+        successMessage="Branch updated successfully!"
+        errorMessage="Failed to update branch. Please try again."
+        paramName="branchId"
+        navigateBackPath="/dashboard/settings/branch-list"
+        loadingText="Loading Branch..."
+        auditLogConfig={{
+          tableName: "Branch",
+          recordIdField: "branchId",
+        }}
+        themeColor="#18575A"
+         popupHandlers={popupHandlers}
+      />
+        {/* State Popup */}
+      <StatePopup
+        show={showStatePopup}
+        handleClose={() => setShowStatePopup(false)}
+        onSelect={handleStateSelect}
+      />
+
+      {/* Circle Popup */}
+      <CirclePopup
+        show={showCirclePopup}
+        handleClose={() => setShowCirclePopup(false)}
+        onSelect={handleCircleSelect}
+      />
+   </>
   );
 };
 

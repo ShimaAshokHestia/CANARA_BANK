@@ -1,216 +1,49 @@
 // src/components/MainPage/MainPageEdit.tsx
-import React from "react";
+import React, { useState } from "react";
 import KiduEdit from "../../Components/KiduEdit";
 import type { Field } from "../../Components/KiduEdit";
 import type { MainPage } from "../../Types/CMS/MainPage.types";
 import MainPageService from "../../Services/CMS/MainPage.services";
+import type { Company } from "../../Types/Settings/Company.types";
+import CompanyPopup from "../Settings/Company/CompanyPopup";
 
 const MainPageEdit: React.FC = () => {
-  const fields: Field[] = [
-    {
-      name: "mainPageId",
-      rules: {
-        type: "number",
-        label: "Main Page ID",
-        required: false,
-        disabled: true,
-        colWidth: 3,
-      },
-    },
-    {
-      name: "companyId",
-      rules: {
-        type: "number",
-        label: "Company ID",
-        required: true,
-        colWidth: 3,
-      },
-    },
-    {
-      name: "companyName",
-      rules: {
-        type: "text",
-        label: "Company Name",
-        required: true,
-        minLength: 2,
-        maxLength: 150,
-        colWidth: 6,
-      },
-    },
 
-    {
-      name: "mainText",
-      rules: {
-        type: "textarea",
-        label: "Main Text",
-        required: true,
-        colWidth: 12,
-      },
-    },
-    {
-      name: "slogan",
-      rules: {
-        type: "text",
-        label: "Slogan",
-        required: true,
-        minLength: 1,
-        maxLength: 200,
-        colWidth: 12,
-      },
-    },
+ const[showCompanyPopup,setShowCompanyPopup]=useState(false);
+  const[selectedCompany,setSelectedCompany]=useState<Company|null>(null);
+ 
 
-    {
-      name: "corouselImage1",
-      rules: {
-        type: "text",
-        label: "Carousel Image 1 (URL/path)",
-        required: false,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "corouselImage2",
-      rules: {
-        type: "text",
-        label: "Carousel Image 2 (URL/path)",
-        required: false,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "corouselImage3",
-      rules: {
-        type: "text",
-        label: "Carousel Image 3 (URL/path)",
-        required: false,
-        colWidth: 4,
-      },
-    },
+ const fields: Field[] = [
+  { name: "mainPageId", rules: { type: "number", label: "Main Page ID", required: false, disabled: true, colWidth: 3 } },
+  { name: "companyId", rules: { type: "number", label: "Company ID", required: true, colWidth: 3 } },
+  { name: "companyName", rules: { type: "text", label: "Company Name", required: true, minLength: 2, maxLength: 150, colWidth: 6 } },
 
-    {
-      name: "logoImage1",
-      rules: {
-        type: "text",
-        label: "Logo Image 1 (URL/path)",
-        required: false,
-        colWidth: 6,
-      },
-    },
-    {
-      name: "logoImage2",
-      rules: {
-        type: "text",
-        label: "Logo Image 2 (URL/path)",
-        required: false,
-        colWidth: 6,
-      },
-    },
+  { name: "mainText", rules: { type: "textarea", label: "Main Text", required: true, colWidth: 12 } },
+  { name: "slogan", rules: { type: "text", label: "Slogan", required: true, minLength: 1, maxLength: 200, colWidth: 12 } },
 
-    {
-      name: "contactDesc1",
-      rules: {
-        type: "text",
-        label: "Contact Desc 1",
-        required: false,
-        colWidth: 6,
-      },
-    },
-    {
-      name: "contactDesc2",
-      rules: {
-        type: "text",
-        label: "Contact Desc 2",
-        required: false,
-        colWidth: 6,
-      },
-    },
+  { name: "corouselImage1", rules: { type: "text", label: "Carousel Image 1 (URL/path)", required: false, colWidth: 4 } },
+  { name: "corouselImage2", rules: { type: "text", label: "Carousel Image 2 (URL/path)", required: false, colWidth: 4 } },
+  { name: "corouselImage3", rules: { type: "text", label: "Carousel Image 3 (URL/path)", required: false, colWidth: 4 } },
 
-    {
-      name: "contactLine1",
-      rules: {
-        type: "text",
-        label: "Contact Line 1",
-        required: false,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "contactLine2",
-      rules: {
-        type: "text",
-        label: "Contact Line 2",
-        required: false,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "contactLine3",
-      rules: {
-        type: "text",
-        label: "Contact Line 3",
-        required: false,
-        colWidth: 4,
-      },
-    },
+  { name: "logoImage1", rules: { type: "text", label: "Logo Image 1 (URL/path)", required: false, colWidth: 6 } },
+  { name: "logoImage2", rules: { type: "text", label: "Logo Image 2 (URL/path)", required: false, colWidth: 6 } },
 
-    {
-      name: "phonenum",
-      rules: {
-        type: "text",
-        label: "Phone",
-        required: true,
-        minLength: 5,
-        maxLength: 20,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "faxnum",
-      rules: {
-        type: "text",
-        label: "Fax Number",
-        required: false,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "website",
-      rules: {
-        type: "text",
-        label: "Website",
-        required: true,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "email",
-      rules: {
-        type: "email",
-        label: "Email",
-        required: true,
-        colWidth: 4,
-      },
-    },
+  { name: "contactDesc1", rules: { type: "text", label: "Contact Desc 1", required: false, colWidth: 6 } },
+  { name: "contactDesc2", rules: { type: "text", label: "Contact Desc 2", required: false, colWidth: 6 } },
 
-    {
-      name: "rulesRegulation",
-      rules: {
-        type: "textarea",
-        label: "Rules & Regulations",
-        required: false,
-        colWidth: 12,
-      },
-    },
-    {
-      name: "dayQuote",
-      rules: {
-        type: "text",
-        label: "Day Quote",
-        required: false,
-        colWidth: 12,
-      },
-    },
-  ];
+  { name: "contactLine1", rules: { type: "text", label: "Contact Line 1", required: false, colWidth: 4 } },
+  { name: "contactLine2", rules: { type: "text", label: "Contact Line 2", required: false, colWidth: 4 } },
+  { name: "contactLine3", rules: { type: "text", label: "Contact Line 3", required: false, colWidth: 4 } },
+
+  { name: "phonenum", rules: { type: "text", label: "Phone", required: true, minLength: 5, maxLength: 20, colWidth: 4 } },
+  { name: "faxnum", rules: { type: "text", label: "Fax Number", required: false, colWidth: 4 } },
+  { name: "website", rules: { type: "text", label: "Website", required: true, colWidth: 4 } },
+  { name: "email", rules: { type: "email", label: "Email", required: true, colWidth: 4 } },
+
+  { name: "rulesRegulation", rules: { type: "textarea", label: "Rules & Regulations", required: false, colWidth: 12 } },
+  { name: "dayQuote", rules: { type: "text", label: "Day Quote", required: false, colWidth: 12 } },
+];
+
 
   // Service getById returns the entity directly (not CustomResponse).
   // If your KiduEdit expects { value }, wrap it like below.
@@ -250,26 +83,39 @@ const handleFetch = async (mainPageId: string) => {   try {     const response =
 
     await MainPageService.updateMainPage(Number(mainPageId), payload);
   };
-
+ const popupHandlers={
+    companyId:{
+      value:selectedCompany?.comapanyName||"",
+      onOpen:()=>setShowCompanyPopup(true),
+    }
+  }
   return (
-    <KiduEdit
-      title="Edit Main Page"
-      fields={fields}
-      onFetch={handleFetch}
-      onUpdate={handleUpdate}
-      submitButtonText="Update Main Page"
-      showResetButton
-      successMessage="Main page updated successfully!"
-      errorMessage="Failed to update main page. Please try again."
-      paramName="mainPageId"
-      navigateBackPath="/dashboard/cms/mainpage-list"
-      loadingText="Loading Main Page..."
-      auditLogConfig={{
-        tableName: "MainPages",
-        recordIdField: "mainPageId",
-      }}
-      themeColor="#18575A"
-    />
+    <>
+      <KiduEdit
+        title="Edit Main Page"
+        fields={fields}
+        onFetch={handleFetch}
+        onUpdate={handleUpdate}
+        submitButtonText="Update Main Page"
+        showResetButton
+        successMessage="Main page updated successfully!"
+        errorMessage="Failed to update main page. Please try again."
+        paramName="mainPageId"
+        navigateBackPath="/dashboard/cms/mainpage-list"
+        loadingText="Loading Main Page..."
+        auditLogConfig={{
+          tableName: "MainPages",
+          recordIdField: "mainPageId",
+        }}
+        themeColor="#18575A"
+        popupHandlers={popupHandlers}
+      />
+       <CompanyPopup
+        show={showCompanyPopup}
+        handleClose={() => setShowCompanyPopup(false)}
+        onSelect={setSelectedCompany}
+      /> 
+    </>
   );
 };
 

@@ -8,14 +8,11 @@ import KiduServerTable from "../../../../Components/KiduServerTable";
 const columns = [
   { key: "deathClaimId", label: "Claim ID", enableSorting: true, type: "text" as const },
   { key: "memberId", label: "Member ID", enableSorting: true, type: "text" as const },
-
+  { key: "stateId", label: "State ID", enableSorting: true, type: "text" as const },
+  { key: "designationId", label: "Designation ID", enableSorting: true, type: "text" as const },
   { key: "deathDate", label: "Death Date", enableSorting: true, type: "date" as const },
-  { key: "dddate", label: "DD Date", enableSorting: true, type: "date" as const },
-
   { key: "nominee", label: "Nominee Name", enableSorting: true, type: "text" as const },
   { key: "nomineeRelation", label: "Nominee Relation", enableSorting: true, type: "text" as const },
-  { key: "ddno", label: "DD No", enableSorting: true, type: "text" as const },
-
   { key: "amount", label: "Amount", enableSorting: true, type: "text" as const },
   { key: "lastContribution", label: "Last Contribution", enableSorting: true, type: "text" as const },
   { key: "yearOF", label: "Year Of", enableSorting: true, type: "text" as const },
@@ -29,27 +26,24 @@ const DeathClaimList: React.FC = () => {
   }): Promise<{ data: DeathClaim[]; total: number }> => {
     try {
       const claims = await DeathClaimService.getAllDeathClaims();
+      let filtered = claims;
 
-   let filtered = claims;
+      if (params.searchTerm && params.searchTerm.trim() !== "") {
+        const searchLower = params.searchTerm.toLowerCase();
 
-if (params.searchTerm && params.searchTerm.trim() !== "") {
-  const searchLower = params.searchTerm.toLowerCase();
-
-  filtered = claims.filter((claim) =>
-    String(claim.deathClaimId ?? "").includes(params.searchTerm) ||
-    String(claim.memberId ?? "").includes(params.searchTerm) ||
-    String(claim.nominee ?? "").toLowerCase().includes(searchLower) ||
-    String(claim.nomineeRelation ?? "").toLowerCase().includes(searchLower) ||
-    String(claim.nomineeIDentity ?? "").toLowerCase().includes(searchLower) ||
-    String(claim.ddno ?? "").toLowerCase().includes(searchLower) ||
-    String(claim.amount ?? "").includes(params.searchTerm) ||
-    String(claim.lastContribution ?? "").includes(params.searchTerm) ||
-    String(claim.yearOF ?? "").includes(params.searchTerm) ||
-    String(claim.deathDate ?? "").toLowerCase().includes(searchLower) ||
-    String(claim.dddate ?? "").toLowerCase().includes(searchLower)
-  );
-}
-
+        filtered = claims.filter((claim) =>
+          String(claim.deathClaimId ?? "").includes(params.searchTerm) ||
+          String(claim.memberId ?? "").includes(params.searchTerm) ||
+          String(claim.stateId ?? "").includes(params.searchTerm) ||
+          String(claim.designationId ?? "").includes(params.searchTerm) ||
+          String(claim.nominee ?? "").toLowerCase().includes(searchLower) ||
+          String(claim.nomineeRelation ?? "").toLowerCase().includes(searchLower) ||
+          String(claim.amount ?? "").includes(params.searchTerm) ||
+          String(claim.lastContribution ?? "").includes(params.searchTerm) ||
+          String(claim.yearOF ?? "").includes(params.searchTerm) ||
+          String(claim.deathDate ?? "").toLowerCase().includes(searchLower)
+        );
+      }
 
       const start = (params.pageNumber - 1) * params.pageSize;
       const end = start + params.pageSize;
@@ -74,11 +68,11 @@ if (params.searchTerm && params.searchTerm.trim() !== "") {
       addRoute="/dashboard/claims/deathclaims-create"
       editRoute="/dashboard/claims/deathclaims-edit"
       viewRoute="/dashboard/claims/deathclaims-view"
-      showAddButton={true}
-      showExport={true}
-      showSearch={true}
-      showActions={true}
-      showTitle={true}
+      showAddButton
+      showExport
+      showSearch
+      showActions
+      showTitle
       fetchData={fetchData}
       rowsPerPage={10}
     />

@@ -22,16 +22,19 @@ const BranchService = {
     return response;
   },
 
-  async createBranch(
-    data: Omit<Branch, "branchId" | "auditLogs">
-  ): Promise<Branch> {
-    const response = await HttpService.callApi<CustomResponse<Branch>>(
-      API_ENDPOINTS.BRANCH.CREATE,
-      "POST",
-      data
-    );
-    return response.value;
-  },
+ // src/services/Settings/Branch.services.ts
+
+async createBranch(
+  data: Partial<Omit<Branch, "branchId" | "auditLogs">>
+): Promise<Branch> {
+  const response = await HttpService.callApi<CustomResponse<Branch>>(
+    API_ENDPOINTS.BRANCH.CREATE,
+    "POST",
+    data
+  );
+  return response.value;
+},
+
 
   async updateBranch(
     id: number,

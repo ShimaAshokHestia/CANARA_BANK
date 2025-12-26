@@ -27,6 +27,7 @@ const StatusList: React.FC = () => {
         const searchLower = params.searchTerm.toLowerCase();
         filteredStatuses = statuses.filter(
           (status) =>
+            status.statusId?.toString().includes(searchLower) ||
             status.name?.toLowerCase().includes(searchLower) ||
             status.abbreviation?.toLowerCase().includes(searchLower) ||
             status.description?.toLowerCase().includes(searchLower) ||

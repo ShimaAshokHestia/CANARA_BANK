@@ -32,15 +32,15 @@ const MemberEdit: React.FC = () => {
     { name: "name", rules: { type: "text", label: "Name", required: true, minLength: 2, maxLength: 150, colWidth: 6 } }, // ✅ minLength
 
     { name: "genderId", rules: { type: "number", label: "Gender ID", required: true, colWidth: 3 } },
-    { name: "designationId", rules: { type: "number", label: "Designation ID", required: true, colWidth: 3 } },
-    { name: "categoryId", rules: { type: "number", label: "Category ID", required: true, colWidth: 3 } },
-    { name: "branchId", rules: { type: "number", label: "Branch ID", required: true, colWidth: 3 } },
+    { name: "designationId", rules: { type: "popup", label: "Designation ID", required: true, colWidth: 3 } },
+    { name: "categoryId", rules: { type: "popup", label: "Category ID", required: true, colWidth: 3 } },
+    { name: "branchId", rules: { type: "popup", label: "Branch ID", required: true, colWidth: 3 } },
 
     { name: "dob", rules: { type: "date", label: "Date of Birth", required: true, colWidth: 4 } },
     { name: "doj", rules: { type: "date", label: "Date of Joining", required: true, colWidth: 4 } },
     { name: "dojtoScheme", rules: { type: "date", label: "DOJ to Scheme", required: true, colWidth: 4 } },
 
-    { name: "statusId", rules: { type: "number", label: "Status ID", required: true, colWidth: 3 } },
+    { name: "statusId", rules: { type: "popup", label: "Status ID", required: true, colWidth: 3 } },
     { name: "isRegCompleted", rules: { type: "toggle", label: "Registration Completed", required: false } },
 
    // { name: "imageId", rules: { type: "number", label: "Image ID", required: false, colWidth: 3 } },

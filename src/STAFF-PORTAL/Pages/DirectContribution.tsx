@@ -5,7 +5,6 @@ import type { AccountDirectEntry } from "../Types/AccountDirectEntry.types";
 import AccountDirectEntryService from "../Services/AccountDirectEntry.services";
 import KiduValidation, { ValidationMessage } from "../../Components/KiduValidation";
 
-
 const fields = {
   name: { label: "Staff Name" },
   memberId: { label: "Staff Num" },

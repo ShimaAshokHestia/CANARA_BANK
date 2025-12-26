@@ -22,8 +22,8 @@ const ManagingCommitteeView: React.FC = () => {
       onFetch={(id) => ManagingCommitteeService.getManagingCommitteeById(Number(id))}
       onDelete={(id) => ManagingCommitteeService.deleteManagingCommittee(Number(id))}
       paramName="managingComiteeId"
-      editRoute="/dashboard/cms/managing-committee-edit"
-      listRoute="/dashboard/cms/managing-committee-list"
+      editRoute="/dashboard/cms/manage-committe-edit"
+      listRoute="/dashboard/cms/manage-committe-list"
       auditLogConfig={{ tableName: "ManagingComitee", recordIdField: "managingComiteeId" }}
       themeColor="#18575A"
     />

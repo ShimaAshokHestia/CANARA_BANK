@@ -3,10 +3,14 @@ import type { Field } from "../../Components/KiduCreate";
 import type { ManagingCommittee } from "../../Types/CMS/ManagingCommittee.types";
 import ManagingCommitteeService from "../../Services/CMS/ManagingCommittee.services";
 import KiduCreate from "../../Components/KiduCreate";
+import type { Company } from "../../Types/Settings/Company.types";
+import CompanyPopup from "../Settings/Company/CompanyPopup";
 
 const ManagingCommitteeCreate: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
 
+   const[showCompanyPopup,setShowCompanyPopup]=useState(false);
+   const[selectedCompany,setSelectedCompany]=useState<Company|null>(null);
+      
   const fields: Field[] = [
     { name: "managingComitteeName", rules: { type: "text", label: "Name", required: true, colWidth: 6 } },
     { name: "position", rules: { type: "text", label: "Position", required: true, colWidth: 6 } },
@@ -19,7 +23,6 @@ const ManagingCommitteeCreate: React.FC = () => {
   ];
 
   const handleSubmit = async (formData: Record<string, any>) => {
-    setIsLoading(true);
     try {
       const data: Omit<ManagingCommittee, "managingComiteeId" | "auditLogs"> = {
         managingComitteeName: formData.managingComitteeName.trim(),
@@ -33,23 +36,37 @@ const ManagingCommitteeCreate: React.FC = () => {
       };
 
       await ManagingCommitteeService.createManagingCommittee(data);
-    } finally {
-      setIsLoading(false);
+    } catch (error) {
+      throw error;
     }
   };
 
+   const popupHandlers={
+    companyId:{
+      value:selectedCompany?.comapanyName||"",
+      onOpen:()=>setShowCompanyPopup(true),
+    }
+  }
+
   return (
-    <KiduCreate
-      title="Create Managing Committee Member"
-      fields={fields}
-      onSubmit={handleSubmit}
-      submitButtonText="Create"
-      loadingState={isLoading}
-      successMessage="Managing committee member created successfully!"
-      errorMessage="Failed to create managing committee member"
-      navigateOnSuccess="/dashboard/cms/managing-committee-list"
-      themeColor="#18575A"
-    />
+   <>
+      <KiduCreate
+        title="Create Managing Committee Member"
+        fields={fields}
+        onSubmit={handleSubmit}
+        submitButtonText="Create"
+        successMessage="Managing committee member created successfully!"
+        errorMessage="Failed to create managing committee member"
+        navigateOnSuccess="/dashboard/cms/manage-committe-list"
+        themeColor="#18575A"
+        popupHandlers={popupHandlers}
+      />
+   <CompanyPopup
+      show={showCompanyPopup}
+      handleClose={()=>setShowCompanyPopup(false)}
+      onSelect={setSelectedCompany}
+      />
+   </>
   );
 };
 

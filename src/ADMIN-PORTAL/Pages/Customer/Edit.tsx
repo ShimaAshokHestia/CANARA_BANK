@@ -1,96 +1,30 @@
 // src/components/Customer/CustomerEdit.tsx
-import React from "react";
+import React, { useState } from "react";
 import KiduEdit from "../../Components/KiduEdit";
 import type { Field } from "../../Components/KiduEdit";
 import defaultCustomerImage from "../../Assets/Images/profile.jpg"; // fallback avatar
 import CustomerService from "../../Services/Customers/Customers.services";
 import type { Customer } from "../../Types/Customers/Customers.types";
+import type { Company } from "../../Types/Settings/Company.types";
+import CompanyPopup from "../Settings/Company/CompanyPopup";
 
 const CustomerEdit: React.FC = () => {
+
+   const[showCompanyPopup,setShowCompanyPopup]=useState(false);
+   const[selectedCompany,setSelectedCompany]=useState<Company|null>(null);
+      
   // Define form fields similar to UserEdit but for customers
-  const fields: Field[] = [
-    {
-      name: "customerName",
-      rules: {
-        type: "text",
-        label: "Customer Name",
-        required: true,
-        minLength: 3,
-        maxLength: 50,
-        placeholder: "Enter customer name",
-        colWidth: 6
-      }
-    },
-    {
-      name: "customerEmail",
-      rules: {
-        type: "email",
-        label: "Email Address",
-        required: true,
-        placeholder: "Enter email address",
-        colWidth: 6
-      }
-    },
-    {
-      name: "phoneNumber",
-      rules: {
-        type: "number",
-        label: "Phone Number",
-        required: true,
-        minLength: 10,
-        maxLength: 10,
-        placeholder: "Enter 10-digit phone number",
-        colWidth: 4
-      }
-    },
-    {
-      name: "companyId",
-      rules: {
-        type: "number",
-        label: "Company ID",
-        required: true,
-        placeholder: "Enter company ID",
-        colWidth: 4
-      }
-    },
-    {
-      name: "createAt",
-      rules: {
-        type: "date",
-        label: "Created At",
-        required: false,
-        colWidth: 4,
-        disabled: true // Creation date not editable
-      }
-    },
-    {
-      name: "address",
-      rules: {
-        type: "textarea",
-        label: "Address",
-        required: false,
-        placeholder: "Enter address",
-        colWidth: 12
-      }
-    },
-    // Toggles
-    {
-      name: "isActive",
-      rules: {
-        type: "toggle",
-        label: "Is Active",
-        required: false
-      }
-    },
-    {
-      name: "islocked",
-      rules: {
-        type: "toggle",
-        label: "Is Locked",
-        required: false
-      }
-    }
-  ];
+ const fields: Field[] = [
+  { name: "customerName", rules: { type: "text", label: "Customer Name", required: true, minLength: 3, maxLength: 50, placeholder: "Enter customer name", colWidth: 6 } },
+  { name: "customerEmail", rules: { type: "email", label: "Email Address", required: true, placeholder: "Enter email address", colWidth: 6 } },
+  { name: "phoneNumber", rules: { type: "number", label: "Phone Number", required: true, minLength: 10, maxLength: 10, placeholder: "Enter 10-digit phone number", colWidth: 4 } },
+  { name: "companyId", rules: { type: "popup", label: "Company ID", required: true, placeholder: "Enter company ID", colWidth: 4 } },
+  { name: "createAt", rules: { type: "date", label: "Created At", required: false, colWidth: 4, disabled: true } },
+  { name: "address", rules: { type: "textarea", label: "Address", required: false, placeholder: "Enter address", colWidth: 12 } },
+  { name: "isActive", rules: { type: "toggle", label: "Is Active", required: false } },
+  { name: "islocked", rules: { type: "toggle", label: "Is Locked", required: false } },
+];
+
 
   // Fetch customer data by ID
   const handleFetch = async (customerId: string) => {
@@ -127,35 +61,50 @@ const CustomerEdit: React.FC = () => {
     }
   };
 
+   const popupHandlers={
+    companyId:{
+      value:selectedCompany?.comapanyName||"",
+      onOpen:()=>setShowCompanyPopup(true),
+    }
+  }
+
   return (
-    <KiduEdit
-      title="Edit Customer"
-      fields={fields}
-      onFetch={handleFetch}
-      onUpdate={handleUpdate}
-      submitButtonText="Update Customer"
-      showResetButton={true}
-      successMessage="Customer updated successfully!"
-      errorMessage="Failed to update customer. Please try again."
-      paramName="customerId"
-      navigateBackPath="/dashboard/customer-list"
-      loadingText="Loading Customer..."
-      imageConfig={{
-        fieldName: "profileImage",
-        defaultImage: defaultCustomerImage,
-        label: "Profile Picture",
-        required: false,
-        showNameField: "customerName",
-        showIdField: "customerId",
-        showLastLoginField: "lastlogin", // change if your model uses another name
-        editable: false
-      }}
-      auditLogConfig={{
-        tableName: "Customer",
-        recordIdField: "customerId"
-      }}
-      themeColor="#18575A"
-    />
+   <>
+      <KiduEdit
+        title="Edit Customer"
+        fields={fields}
+        onFetch={handleFetch}
+        onUpdate={handleUpdate}
+        submitButtonText="Update Customer"
+        showResetButton={true}
+        successMessage="Customer updated successfully!"
+        errorMessage="Failed to update customer. Please try again."
+        paramName="customerId"
+        navigateBackPath="/dashboard/customer-list"
+        loadingText="Loading Customer..."
+        imageConfig={{
+          fieldName: "profileImage",
+          defaultImage: defaultCustomerImage,
+          label: "Profile Picture",
+          required: false,
+          showNameField: "customerName",
+          showIdField: "customerId",
+          showLastLoginField: "lastlogin", // change if your model uses another name
+          editable: false
+        }}
+        auditLogConfig={{
+          tableName: "Customer",
+          recordIdField: "customerId"
+        }}
+        themeColor="#18575A"
+        popupHandlers={popupHandlers}
+      />
+      <CompanyPopup
+      show={showCompanyPopup}
+      handleClose={()=>setShowCompanyPopup(false)}
+      onSelect={setSelectedCompany}
+      />
+   </>
   );
 };
 

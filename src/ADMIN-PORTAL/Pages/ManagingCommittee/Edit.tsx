@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import type { Field } from "../../Components/KiduCreate";
 import ManagingCommitteeService from "../../Services/CMS/ManagingCommittee.services";
 import type { ManagingCommittee } from "../../Types/CMS/ManagingCommittee.types";
 import KiduEdit from "../../Components/KiduEdit";
+import type { Company } from "../../Types/Settings/Company.types";
+import CompanyPopup from "../Settings/Company/CompanyPopup";
 
 
 const ManagingCommitteeEdit: React.FC = () => {
+
+    const[showCompanyPopup,setShowCompanyPopup]=useState(false);
+    const[selectedCompany,setSelectedCompany]=useState<Company|null>(null);
+      
   const fields: Field[] = [
     { name: "managingComitteeName", rules: { type: "text", label: "Name", required: true, colWidth: 6 } },
     { name: "position", rules: { type: "text", label: "Position", required: true, colWidth: 6 } },
@@ -36,17 +42,32 @@ const ManagingCommitteeEdit: React.FC = () => {
     await ManagingCommitteeService.updateManagingCommittee(Number(id), data);
   };
 
+    const popupHandlers={
+    companyId:{
+      value:selectedCompany?.comapanyName||"",
+      onOpen:()=>setShowCompanyPopup(true),
+    }
+  }
+
   return (
-    <KiduEdit
-      title="Edit Managing Committee Member"
-      fields={fields}
-      onFetch={handleFetch}
-      onUpdate={handleUpdate}
-      paramName="managingComiteeId"
-      navigateBackPath="/dashboard/cms/managing-committee-list"
-      auditLogConfig={{ tableName: "ManagingComitee", recordIdField: "managingComiteeId" }}
-      themeColor="#18575A"
-    />
+   <>
+      <KiduEdit
+        title="Edit Managing Committee Member"
+        fields={fields}
+        onFetch={handleFetch}
+        onUpdate={handleUpdate}
+        paramName="managingComiteeId"
+        navigateBackPath="/dashboard/cms/manage-committe-list"
+        auditLogConfig={{ tableName: "ManagingComitee", recordIdField: "managingComiteeId" }}
+        themeColor="#18575A"
+        popupHandlers={popupHandlers}
+      />
+      <CompanyPopup
+      show={showCompanyPopup}
+      handleClose={()=>setShowCompanyPopup(false)}
+      onSelect={setSelectedCompany}
+      />
+   </>
   );
 };
 

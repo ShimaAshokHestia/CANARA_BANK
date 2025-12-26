@@ -18,7 +18,8 @@ import {
   BsBuildingGear,
   BsPersonFillGear,
   BsBuilding,
-  BsCalendar3
+  BsCalendar3,
+  BsBag
 } from "react-icons/bs";
 import { FaFileInvoice } from "react-icons/fa6";
 import { BiLogOut } from "react-icons/bi";
@@ -343,28 +344,6 @@ const Sidebar: React.FC = () => {
               )}
             </NavLink>
 
-            {/* Products Menu */}
-            {/* <NavLink
-              to="/dashboard/products"
-              className={({ isActive }) =>
-                `d-flex align-items-center gap-2 w-100 ${hovered ? "ps-4 pe-3" : "justify-content-center"} rounded mt-2 ${isActive ? "bg-white" : ""}`
-              }
-              style={{ fontSize: "15px", textDecoration: "none", padding: "8px 0" }}
-            >
-              {({ isActive }) => (
-                <>
-                  <BsBag
-                    className={isActive ? "text-primary" : "text-white"}
-                    style={{ fontSize: "20px", minWidth: "20px" }}
-                  />
-                  {hovered && (
-                    <span className={`fw-bold flex-grow-1 ${isActive ? "text-primary" : "text-white"}`}>
-                      Products
-                    </span>
-                  )}
-                </>
-              )}
-            </NavLink> */}
 
             {/* Customers Menu */}
             <NavLink
@@ -383,6 +362,29 @@ const Sidebar: React.FC = () => {
                   {hovered && (
                     <span className={`fw-bold flex-grow-1 ${isActive ? "text-white" : "text-white"}`}>
                       Customers
+                    </span>
+                  )}
+                </>
+              )}
+            </NavLink>
+
+             {/* Approval Menu */}
+            <NavLink
+              to="/dashboard/approval"
+              className={({ isActive }) =>
+                `d-flex align-items-center gap-2 w-100 ${hovered ? "ps-4 pe-3" : "justify-content-center"} rounded mt-2 ${isActive ? "bg-white" : ""}`
+              }
+              style={{ fontSize: "13px", textDecoration: "none", padding: "8px 0" }}
+            >
+              {({ isActive }) => (
+                <>
+                  <BsBag
+                    className={isActive ? "text-primary" : "text-white"}
+                    style={{ fontSize: "20px", minWidth: "20px" }}
+                  />
+                  {hovered && (
+                    <span className={`fw-bold flex-grow-1 ${isActive ? "text-primary" : "text-white"}`}>
+                      Approval
                     </span>
                   )}
                 </>

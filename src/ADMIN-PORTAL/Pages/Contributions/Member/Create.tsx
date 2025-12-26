@@ -41,8 +41,8 @@ const MemberCreate: React.FC = () => {
     { name: "statusId", rules: { type: "popup", label: "Status", required: true, colWidth: 3 } },
     { name: "isRegCompleted", rules: { type: "toggle", label: "Registration Completed", required: false } },
 
-    { name: "imageId", rules: { type: "number", label: "Image ID", required: false, colWidth: 3 } },
-    { name: "profileImageSrc", rules: { type: "text", label: "Profile Image Src", required: false, colWidth: 6, placeholder: "e.g., profile_rahul123.png" } },
+   // { name: "imageId", rules: { type: "number", label: "Image ID", required: false, colWidth: 3 } },
+    { name: "profileImageSrc", rules: { type: "text", label: "Profile Image Src", required: false, colWidth: 3, placeholder: "e.g., profile_rahul123.png" } },
 
     { name: "nominee", rules: { type: "text", label: "Nominee Name", required: false, colWidth: 4 } },
     { name: "nomineeRelation", rules: { type: "text", label: "Nominee Relation", required: false, colWidth: 4 } },

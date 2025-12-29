@@ -57,81 +57,48 @@ const DeathClaimEdit: React.FC = () => {
 };
 
 
-
-  // const handleUpdate = async (claimId: string, formData: Record<string, any>) => {
-
-  //    if(!selectedMember){
-  //     throw new Error("Please select a member");
-  //   }
-  //   if(!selectedState){
-  //     throw new Error("Please select a state");
-  //   }
-  //   if(!selectedDesignation){
-  //     throw new Error("Please select a designation");
-  //   }
-
-    // ✅ Do NOT include deathClaimId in the body (it's in the URL path)
-    // const payload: Omit<DeathClaim, "deathClaimId"> = {
-    //   memberId: Number(formData.memberId),
-    //   stateId: Number(formData.stateId),
-    //   designationId: Number(formData.designationId),
-    //   deathDate: toIso(formData.deathDate),
-    //   nominee: formData.nominee?.trim() || "",
-    //   nomineeRelation: formData.nomineeRelation?.trim() || "",
-    //   nomineeIDentity: formData.nomineeIDentity?.trim() || "",
-    //   ddno: formData.ddno?.trim() || "",
-    //   dddate: toIso(formData.dddate),
-    //   amount: Number(formData.amount),
-    //   lastContribution: Number(formData.lastContribution),
-    //   yearOF: Number(formData.yearOF),
-    // };
-//     const payload: Omit<DeathClaim, "deathClaimId"> = {
-//   memberId: selectedMember.memberId,
-//   stateId: selectedState.stateId,
-//   designationId: selectedDesignation.designationId,
-//   deathDate: toIso(formData.deathDate),
-//   nominee: formData.nominee?.trim() || "",
-//   nomineeRelation: formData.nomineeRelation?.trim() || "",
-//   nomineeIDentity: formData.nomineeIDentity?.trim() || "",
-//   ddno: formData.ddno?.trim() || "",
-//   dddate: toIso(formData.dddate),
-//   amount: Number(formData.amount),
-//   lastContribution: Number(formData.lastContribution),
-//   yearOF: Number(formData.yearOF),
-// };
-
-
-//     return await DeathClaimService.updateDeathClaim(Number(claimId), payload);
-//   };
-
 const handleUpdate = async (claimId: string, formData: Record<string, any>) => {
-  if (!selectedMember) throw new Error("Please select a member");
-  if (!selectedState) throw new Error("Please select a state");
-  if (!selectedDesignation) throw new Error("Please select a designation");
+  if (!selectedMember) {
+    throw new Error("Please select a member");
+  }
+  if (!selectedState) {
+    throw new Error("Please select a state");
+  }
+  if (!selectedDesignation) {
+    throw new Error("Please select a designation");
+  }
 
-  const payload: Omit<DeathClaim, "deathClaimId"> = {
-    memberId: selectedMember.memberId,
-    stateId: selectedState.stateId,
-    designationId: selectedDesignation.designationId,
-    deathDate: toIso(formData.deathDate),
-    nominee: formData.nominee?.trim() || "",
-    nomineeRelation: formData.nomineeRelation?.trim() || "",
-    nomineeIDentity: formData.nomineeIDentity?.trim() || "",
-    ddno: formData.ddno?.trim() || "",
-    dddate: toIso(formData.dddate),
-    amount: Number(formData.amount),
-    lastContribution: Number(formData.lastContribution),
-    yearOF: Number(formData.yearOF),
-  };
+  try {
+    const deathClaimData: Omit<DeathClaim, "auditLogs"> = {
+      deathClaimId: Number(claimId),
 
-  await DeathClaimService.updateDeathClaim(Number(claimId), payload);
+      // 🔹 popup-driven IDs
+      memberId: selectedMember.memberId,
+      stateId: selectedState.stateId,
+      designationId: selectedDesignation.designationId,
 
-  // 🔑 THIS IS THE MISSING PIECE
-  return {
-    ...formData,
-    ...payload,
-    deathClaimId: Number(claimId),
-  };
+      // 🔹 normal editable fields (FROM formData ONLY)
+      deathDate: formData.deathDate,
+      nominee: formData.nominee.trim(),
+      nomineeRelation: formData.nomineeRelation.trim(),
+      nomineeIDentity: formData.nomineeIDentity?.trim() || "",
+
+      ddno: formData.ddno.trim(),
+      dddate: formData.dddate,
+
+      amount: Number(formData.amount),
+      lastContribution: Number(formData.lastContribution),
+      yearOF: Number(formData.yearOF),
+    };
+
+    await DeathClaimService.updateDeathClaim(
+      Number(claimId),
+      deathClaimData
+    );
+  } catch (error) {
+    console.error("Error updating death claim:", error);
+    throw error;
+  }
 };
 
 

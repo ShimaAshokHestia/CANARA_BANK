@@ -22,23 +22,29 @@ const DirectPaymentCreate: React.FC = () => {
     { name: "remarks", rules: { type: "textarea", label: "Remarks", colWidth: 12 } }
   ];
 
-  const handleSubmit = async (formData: Record<string, any>) => {
-    const payload: Omit<DirectPayment, "directPaymentId" | "auditLogs"> = {
-      memberId: Number(formData.memberId),
-      amount: Number(formData.amount),
-      paymentDate: formData.paymentDate,
-      paymentDatestring: formData.paymentDate,
-      paymentMode: formData.paymentMode.trim(),
-      referenceNo: formData.referenceNo.trim(),
-      remarks: formData.remarks || "",
-      createdByUserId: 0,
-      createdDate: new Date().toISOString(),
-      createdDatestring: new Date().toISOString(),
-      isDeleted: false
-    };
+ const handleSubmit = async (formData: Record<string, any>) => {
+  if (!selectedMember) {
+    throw new Error("Please select a member");
+  }
 
-    await DirectPaymentService.createDirectPayment(payload);
+  const payload: Omit<DirectPayment, "directPaymentId" | "auditLogs"> = {
+    memberId: selectedMember.memberId, // ✅ FIX
+    amount: Number(formData.amount),
+    paymentDate: formData.paymentDate,
+    paymentDatestring: formData.paymentDate,
+    paymentMode: formData.paymentMode.trim(),
+    referenceNo: formData.referenceNo.trim(),
+    remarks: formData.remarks || "",
+    createdByUserId: 0,
+    createdDate: new Date().toISOString(),
+    createdDatestring: new Date().toISOString(),
+    isDeleted: false,
   };
+
+  const response = await DirectPaymentService.createDirectPayment(payload);
+  console.log(response);
+};
+
 
   const popupHandlers={
     memberId:{

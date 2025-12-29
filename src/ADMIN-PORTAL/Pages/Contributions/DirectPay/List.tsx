@@ -18,6 +18,7 @@ const DirectPaymentList: React.FC = () => {
 
     const filtered = params.searchTerm
       ? data.filter(d =>
+          d.directPaymentId.toString().includes(params.searchTerm) ||
           d.memberId.toString().includes(params.searchTerm) ||
           d.referenceNo.toLowerCase().includes(params.searchTerm.toLowerCase())
         )

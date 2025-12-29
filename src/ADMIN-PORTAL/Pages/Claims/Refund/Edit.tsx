@@ -20,7 +20,7 @@ const RefundContributionEdit: React.FC = () => {
      
   const fields: Field[] = [
     { name: "refundContributionId", rules: { type: "number", label: "Refund Contribution ID", required: false, disabled: true, colWidth: 3 } },
-    { name: "staffNo", rules: { type: "number", label: "Staff No", required: true, colWidth: 3 } },
+   // { name: "staffNo", rules: { type: "number", label: "Staff No", required: true, colWidth: 3 } },
     { name: "stateId", rules: { type: "popup", label: "State ID", required: true, colWidth: 3 } },
     { name: "designationId", rules: { type: "popup", label: "Designation ID", required: true, colWidth: 3 } },
     { name: "refundNO", rules: { type: "text", label: "Refund No", required: true, colWidth: 3 } },

@@ -1,52 +1,72 @@
 // src/Pages/Contributions/DirectPay/Edit.tsx
 import React, { useState } from "react";
-import type { Field } from "../../../Components/KiduCreate";
+import type { Field } from "../../../Components/KiduEdit";
+import KiduEdit from "../../../Components/KiduEdit";
 import DirectPaymentService from "../../../Services/Contributions/Directpayment.services";
 import type { DirectPayment } from "../../../Types/Contributions/Directpayment.types";
-import KiduEdit from "../../../Components/KiduEdit";
 import type { Member } from "../../../Types/Contributions/Member.types";
 import MemberPopup from "../Member/MemberPopup";
 
-
 const DirectPaymentEdit: React.FC = () => {
+  const [showMemberPopup, setShowMemberPopup] = useState(false);
+  const [selectedMember, setSelectedMember] = useState<Member | null>(null);
 
-   const[showMemberPopup,setShowMemberPopup]=useState(false);
-    const[selectedMember,setSelectedMember]=useState<Member|null>(null);
-   
   const fields: Field[] = [
-    { name: "memberId", rules: { type: "popup", label: "Member ID", required: true, colWidth: 4 } },
+    { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4 } },
     { name: "amount", rules: { type: "number", label: "Amount", required: true, colWidth: 4 } },
     { name: "paymentDate", rules: { type: "date", label: "Payment Date", required: true, colWidth: 4 } },
     { name: "paymentMode", rules: { type: "text", label: "Payment Mode", required: true, colWidth: 4 } },
     { name: "referenceNo", rules: { type: "text", label: "Reference No", required: true, colWidth: 4 } },
-    { name: "remarks", rules: { type: "textarea", label: "Remarks", colWidth: 12 } }
+    { name: "remarks", rules: { type: "textarea", label: "Remarks", colWidth: 12 } },
   ];
 
+  // ✅ CRITICAL FIX
   const handleFetch = async (id: string) => {
-    return await DirectPaymentService.getDirectPaymentById(Number(id));
+    const response = await DirectPaymentService.getDirectPaymentById(Number(id));
+
+    if (response.value?.memberId) {
+      setSelectedMember({
+        memberId: response.value.memberId,
+        name: `Member ID: ${response.value.memberId}`, // 🔥 IMPORTANT
+      } as Member);
+    }
+
+    return response;
   };
 
-  const handleUpdate = async (id: string, formData: Record<string, any>) => {
-    const payload: Partial<DirectPayment> = {
-      memberId: Number(formData.memberId),
-      amount: Number(formData.amount),
-      paymentDate: formData.paymentDate,
-      paymentDatestring: formData.paymentDate,
-      paymentMode: formData.paymentMode.trim(),
-      referenceNo: formData.referenceNo.trim(),
-      remarks: formData.remarks || ""
-    };
-
-    await DirectPaymentService.updateDirectPayment(Number(id), payload);
-  };
-  const popupHandlers={
-    memberId:{
-      value:selectedMember?.name||"",
-      onOpen:()=>setShowMemberPopup(true),
-    },
+ const handleUpdate = async (id: string, formData: Record<string, any>) => {
+  if (!selectedMember) {
+    throw new Error("Please select a member");
   }
+
+  const payload: Omit<DirectPayment, "auditLogs"> = {
+    directPaymentId: Number(id), // 🔥 REQUIRED (SAME AS CIRCLE)
+    memberId: selectedMember.memberId,
+    amount: Number(formData.amount),
+    paymentDate: formData.paymentDate,
+    paymentDatestring: formData.paymentDate,
+    paymentMode: formData.paymentMode.trim(),
+    referenceNo: formData.referenceNo.trim(),
+    remarks: formData.remarks?.trim() || "",
+    createdByUserId: 0,            // backend may require
+    createdDate: new Date().toISOString(),
+    createdDatestring: new Date().toISOString(),
+    isDeleted: false,
+  };
+
+  await DirectPaymentService.updateDirectPayment(Number(id), payload);
+};
+
+
+  const popupHandlers = {
+    memberId: {
+      value: selectedMember?.name ?? "",
+      onOpen: () => setShowMemberPopup(true),
+    },
+  };
+
   return (
-<>
+    <>
       <KiduEdit
         title="Edit Direct Payment"
         fields={fields}
@@ -55,16 +75,21 @@ const DirectPaymentEdit: React.FC = () => {
         paramName="directPaymentId"
         navigateBackPath="/dashboard/contributions/directpayment-list"
         successMessage="Direct Payment updated successfully!"
+        errorMessage="Failed to update Direct Payment"
         auditLogConfig={{ tableName: "DirectPayment", recordIdField: "directPaymentId" }}
         themeColor="#18575A"
-         popupHandlers={popupHandlers}
+        popupHandlers={popupHandlers}
       />
-       <MemberPopup
+
+      <MemberPopup
         show={showMemberPopup}
         handleClose={() => setShowMemberPopup(false)}
-        onSelect={setSelectedMember}
-      /> 
-</>
+        onSelect={(member) => {
+          setSelectedMember(member); // real name comes from popup
+          setShowMemberPopup(false);
+        }}
+      />
+    </>
   );
 };
 

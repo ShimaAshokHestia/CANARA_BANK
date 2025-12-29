@@ -19,7 +19,7 @@ const RefundContributionCreate: React.FC = () => {
     const[selectedDesignation,setSelectedDesignation]=useState<Designation|null>(null);
  
     const fields: Field[] = [
-    { name: "staffNo", rules: { type: "number", label: "Staff No", required: true, colWidth: 4 } },
+   // { name: "staffNo", rules: { type: "number", label: "Staff No", required: true, colWidth: 4 } },
     { name: "stateId", rules: { type: "popup", label: "State ID", required: true, colWidth: 4 } },
     { name: "designationId", rules: { type: "popup", label: "Designation ID", required: true, colWidth: 4 } },
     { name: "refundNO", rules: { type: "text", label: "Refund No", required: true, colWidth: 4 } },

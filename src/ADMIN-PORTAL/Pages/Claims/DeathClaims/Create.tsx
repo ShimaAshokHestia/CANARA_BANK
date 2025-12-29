@@ -41,39 +41,32 @@ const DeathClaimCreate: React.FC = () => {
 
   const toIso = (val?: string) => (val ? `${val}T00:00:00` : "");
 
-  const handleSubmit = async (formData: Record<string, any>) => {
-    
-    if(!selectedMember){
-      throw new Error("Please select a member");
-    }
-    if(!selectedState){
-      throw new Error("Please select a state");
-    }
-    if(!selectedDesignation){
-      throw new Error("Please select a designation");
-    }
-    try {
-      const payload: Omit<DeathClaim, "deathClaimId"> = {
-        memberId: Number(formData.memberId),
-        stateId: Number(formData.stateId),
-        designationId: Number(formData.designationId),
-        deathDate: toIso(formData.deathDate),
-        nominee: formData.nominee?.trim() || "",
-        nomineeRelation: formData.nomineeRelation?.trim() || "",
-        nomineeIDentity: formData.nomineeIDentity?.trim() || "",
-        ddno: formData.ddno?.trim() || "",
-        dddate: toIso(formData.dddate),
-        amount: Number(formData.amount),
-        lastContribution: Number(formData.lastContribution),
-        yearOF: Number(formData.yearOF),
-      };
+ const handleSubmit = async (formData: Record<string, any>) => {
+  if (!selectedMember) throw new Error("Please select a member");
+  if (!selectedState) throw new Error("Please select a state");
+  if (!selectedDesignation) throw new Error("Please select a designation");
 
-      await DeathClaimService.createDeathClaim(payload);
-    } catch (err) {
-      console.error("Error creating death claim:", err);
-      throw err;
-    }
+  const payload: Omit<DeathClaim, "deathClaimId"> = {
+    // ✅ FIXED: use selected objects
+    memberId: selectedMember.memberId,
+    stateId: selectedState.stateId,
+    designationId: selectedDesignation.designationId,
+
+    deathDate: toIso(formData.deathDate),
+    nominee: formData.nominee?.trim() || "",
+    nomineeRelation: formData.nomineeRelation?.trim() || "",
+    nomineeIDentity: formData.nomineeIDentity?.trim() || "",
+    ddno: formData.ddno?.trim() || "",
+    dddate: toIso(formData.dddate),
+
+    amount: Number(formData.amount),
+    lastContribution: Number(formData.lastContribution),
+    yearOF: Number(formData.yearOF),
   };
+
+  await DeathClaimService.createDeathClaim(payload);
+};
+
 
 const popupHandlers = {
     memberId: {

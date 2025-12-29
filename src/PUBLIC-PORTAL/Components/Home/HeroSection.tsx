@@ -1,12 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Button } from "react-bootstrap";
 import { HiArrowRight } from "react-icons/hi";
 import heroImage from "../../Assets/Images/Hero-image.jpg";
 import "../../Style/Home/Hero.css";
-import { PublicService } from "../../../Services/PublicService";
+import type { PublicPageConfig } from "../../Types/PublicPage.types";
+import PublicPageConfigService from "../../Services/Publicpage.services";
 
 const HeroSection: React.FC = () => {
-  const hero = PublicService.home.hero
+  //const hero = PublicService.home.hero
+  const [config, setConfig] = useState<PublicPageConfig | null>(null);
+
+  useEffect(() => {
+    const loadHeroConfig = async () => {
+      try {
+        const data = await PublicPageConfigService.getPublicPageConfig();
+        setConfig(data[0]); // CMS returns single record in array
+      } catch (error) {
+        console.error("Failed to load hero config:", error);
+      }
+    };
+
+    loadHeroConfig();
+  }, []);
+
+  
+
+  // 🔹 Map API → existing structure (NO UI change)
+  const hero = {
+    badge: config?.homeHeroBadge,
+    title: {
+      line1: config?.homeHeroLine1,
+      highlight: config?.homeHeroHighlight,
+      line3: config?.homeHeroLine3,
+    },
+    description: config?.homeHeroDescription,
+    image: {
+      alt: config?.homeHeroImageAlt,
+    },
+    buttons: {
+      primary: {
+        label: config?.homePrimaryBtnLabel,
+        route: config?.homePrimaryBtnRoute,
+      },
+      secondary: {
+        label: config?.homeSecondaryBtnLabel,
+        route: config?.homeSecondaryBtnRoute,
+      },
+    },
+  };
   return (
     <section id="home" className="hero-section position-relative d-flex align-items-center">
       
@@ -24,7 +65,7 @@ const HeroSection: React.FC = () => {
       <Container className="position-relative text-white py-3 hero-content">
         <div className="hero-inner">
           <span className="hero-badge">
-            {/* ✨   Celebrating 50 Years of Service */} {hero.badge}
+            {/* ✨   Celebrating 50 Years of Service */} ✨{hero.badge}
           </span>
 
           <h1 className="hero-title">

@@ -1,67 +1,219 @@
-// src/ADMIN-PORTAL/Types/CMS/PublicPage.types.ts
+// src/ADMIN-PORTAL/Types/CMS/PublicPageConfig.types.ts
 
-export interface NavbarMenuItem {
-  label: string;
-  route: string;
-}
+export interface PublicPageConfig {
+    publicPageId: number;
 
-export interface FeatureItem {
-  icon: string;
-  title: string;
-  description: string;
-}
+    /* =======================
+       NAVBAR
+       ======================= */
+    navBrandTitle: string;
+    navBrandSubTitle: string;
+    navLogoUrl: string;
+    navLogoAlt: string;
+    navMenuHead: boolean;
 
-export interface FooterQuickLink {
-  label: string;
-  route: string;
-}
+    navHomeLabel: string;
+    navAboutLabel: string;
+    navRulesLabel: string;
+    navDownloadsLabel: string;
+    navCommitteeLabel: string;
+    navClaimsLabel: string;
+    navContactLabel: string;
 
-export interface FooterOfficeHours {
-  weekdays: string;
-  saturday: string;
-  sunday: string;
-}
+    navLoginLabel: string;
+    navLoginIcon: string;
 
-export interface PublicPage {
-  publicPageId: number;
+    navPhoneIcon: string;
+    navPhoneValue: string;
+    navEmailIcon: string;
+    navEmailValue: string;
 
-  /* Navbar */
-  navbarTitle: string;
-  navbarSubTitle: string;
-  navbarLogoAlt: string;
-  navbarMenuHead: string;
-  navbarMenuJson: string; // stored as JSON string
-  navbarLoginLabel: string;
-  navbarLoginIconClass: string;
-  navbarPhone: string;
-  navbarEmail: string;
+    /* =======================
+       HOME – HERO
+       ======================= */
+    homeHeroBadge: string;
+    homeHeroTitle: string;
+    homeHeroLine1: string;
+    homeHeroHighlight: string;
+    homeHeroLine3: string;
+    homeHeroDescription: string;
 
-  /* Hero Section */
-  heroBadge: string;
-  heroTitleLine1: string;
-  heroTitleHighlight: string;
-  heroTitleLine3: string;
-  heroDescription: string;
-  heroPrimaryBtnLabel: string;
-  heroPrimaryBtnRoute: string;
-  heroSecondaryBtnLabel: string;
-  heroSecondaryBtnRoute: string;
+    homePrimaryBtnLabel: string;
+    homePrimaryBtnRoute: string;
+    homeSecondaryBtnLabel: string;
+    homeSecondaryBtnRoute: string;
 
-  /* Features Section */
-  featuresHeadingLabel: string;
-  featuresHeadingTitle: string;
-  featuresHeadingSubtitle: string;
-  featuresItemsJson: string; // stored as JSON string
+    homeHeroImageUrl: string;
+    homeHeroImageAlt: string;
 
-  /* Footer */
-  footerShortName: string;
-  footerSubtitle: string;
-  footerDescription: string;
-  footerAddress1: string;
-  footerAddress2: string;
-  footerPhone: string;
-  footerEmail: string;
-  footerQuickLinksJson: string; // stored as JSON string
-  footerOfficeHoursJson: string; // stored as JSON string
-  footerBottomBarText: string;
+    /* =======================
+       HOME – FEATURES
+       ======================= */
+    homeFeatureHeading: string;
+    homeFeatureLabel: string;
+    homeFeatureTitle: string;
+    homeFeatureSubTitle: string;
+    homeFeatureItemsJson: string; // JSON string
+
+    /* =======================
+       HOME – ABOUT
+       ======================= */
+    homeAboutLabel: string;
+    homeAboutTitle: string;
+    homeAboutParagraph: string;
+
+    /* =======================
+       NEWS PAGE
+       ======================= */
+    newsHeroTitle: string;
+    newsHeroSubTitle: string;
+    newsBreadcrumbHomeLabel: string;
+    newsBreadcrumbCurrentLabel: string;
+    newsLoadingText: string;
+    newsEmptyText: string;
+    newsItemsJson: string; // JSON string
+    newsSidebarQuoteTitle: string;
+    newsSidebarQuoteText: string;
+    newsQuickLinksJson: string; // JSON string
+
+    /* =======================
+       ABOUT PAGE
+       ======================= */
+    aboutHeaderTitle: string;
+    aboutHeaderSubTitle: string;
+
+    aboutMissionTitle: string;
+    aboutMissionIcon: string;
+    aboutMissionDescription: string;
+
+    aboutVisionTitle: string;
+    aboutVisionIcon: string;
+    aboutVisionDescription: string;
+
+    aboutHistoryTitle: string;
+    aboutHistoryIcon: string;
+    aboutHistoryPara1: string;
+    aboutHistoryPara2: string;
+    aboutHistoryPara3: string;
+    aboutHistoryPara4: string;
+    aboutHistoryPara5: string;
+
+    /* =======================
+       RULES PAGE
+       ======================= */
+    rulesHeaderTitle: string;
+    rulesHeaderSubTitle: string;
+
+    rulesPreambleTitle: string;
+    rulesPreamblePara1: string;
+    rulesPreamblePara2: string;
+    rulesPreamblePara3: string;
+    rulesPreamblePara4: string;
+    rulesPreamblePara5: string;
+
+    rulesSectionsJson: string; // JSON string
+
+    /* =======================
+       DOWNLOADS PAGE
+       ======================= */
+    downloadsHeaderTitle: string;
+    downloadsHeaderSubTitle: string;
+    downloadItemsJson: string; // JSON string
+
+    /* =======================
+       COMMITTEE PAGE
+       ======================= */
+    committeeHeaderTitle: string;
+    committeeHeaderSubTitle: string;
+    committeeMembersJson: string; // JSON string
+
+    /* =======================
+       CLAIMS PAGE
+       ======================= */
+    claimsHeroTitle: string;
+    claimsHeroSubTitle: string;
+
+    claimsStat1Icon: string;
+    claimsStat1Value: string;
+    claimsStat1Label: string;
+
+    claimsStat2Icon: string;
+    claimsStat2Value: string;
+    claimsStat2Label: string;
+
+    claimsStat3Icon: string;
+    claimsStat3Value: string;
+    claimsStat3Label: string;
+
+    claimsTableHeadersJson: string; // JSON string
+    claimsYearsRange: string;
+
+    /* =======================
+       CONTACT PAGE
+       ======================= */
+    contactHeaderTitle: string;
+    contactHeaderSubTitle: string;
+
+    contactFullNameLabel: string;
+    contactPhoneLabel: string;
+    contactEmailLabel: string;
+    contactSubjectLabel: string;
+    contactMessageLabel: string;
+    contactSubmitButtonLabel: string;
+
+    officeTitle: string;
+    officeAddress: string;
+    officePhone: string;
+    officeEmail: string;
+    officeHoursTitle: string;
+    officeDay1Time: string;
+    officeDay2Time: string;
+    officeDay3Time: string;
+
+    /* =======================
+       FOOTER
+       ======================= */
+    footerBrandShortName: string;
+    footerBrandSubTitle: string;
+    footerBrandDescription: string;
+    footerLogoAlt: string;
+
+    footerAddressLine1: string;
+    footerAddressLine2: string;
+
+    footerPhoneIcon: string;
+    footerPhoneValue: string;
+    footerEmailIcon: string;
+    footerEmailValue: string;
+
+    footerQuickLinksJson: string; // JSON string
+    footerOfficeHoursJson: string; // JSON string
+    footerCopyrightText: string;
+
+    /* =======================
+       PRIVACY POLICY
+       ======================= */
+    privacyHeroBadge: string;
+    privacyHeroTitle: string;
+    privacyHeroSubTitle: string;
+
+    privacyHeading1: string;
+    privacyPara1: string;
+    privacyPara2: string;
+
+    privacyHeading2: string;
+    privacyPara3: string;
+
+    privacyHeading3: string;
+    privacyLine1: string;
+    privacyLine2: string;
+    privacyLine3: string;
+    privacyLine4: string;
+    privacyLine5: string;
+    privacyLine6: string;
+
+    /* =======================
+       STATUS
+       ======================= */
+    isActive: boolean;
 }

@@ -8,7 +8,7 @@ import DailyNewsPublicService from "../Services/DailyNewsPublic.services";
 import { PublicService } from "../../Services/PublicService";
 
 const News: React.FC = () => {
- const news = PublicService.newsPage
+  const news = PublicService.newsPage
   const [newsItems, setNewsItems] = useState<DailyNews[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -46,7 +46,7 @@ const News: React.FC = () => {
         <Container>
           <span>
             <Link to="/" className="breadcrumb-link">
-             {news.breadcrumb.homeLabel}
+              {news.breadcrumb.homeLabel}
             </Link>{" "}
             › <span className="breadcrumb-active">{news.breadcrumb.currentLabel}</span>
           </span>
@@ -77,7 +77,10 @@ const News: React.FC = () => {
 
                       <h5 className="news-heading">{item.title}</h5>
 
-                      <p className="news-excerpt">{item.description}</p>
+                      <p className="news-excerpt">
+                        {item.description?.length > 150 ? item.description.slice(0, 150) + "..." : item.description}
+                      </p>
+
                     </Card.Body>
                   </Card>
                 </Col>

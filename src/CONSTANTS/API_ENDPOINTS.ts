@@ -193,7 +193,7 @@ export const API_ENDPOINTS = {
   },
 
   PUBLIC_PAGE: {
-    GET_ALL_HOME: `${API_BASE_URL}/PublicPage/public/home`,
+    GET_ALL: `${API_BASE_URL}/PublicPage/public/home`,
   },
 
   //-------------------------STAFF MODULE------------------------------

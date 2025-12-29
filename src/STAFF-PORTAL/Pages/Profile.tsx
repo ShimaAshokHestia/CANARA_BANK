@@ -6,29 +6,9 @@ import type { Member } from "../../ADMIN-PORTAL/Types/Contributions/Member.types
 import MemberService from "../../ADMIN-PORTAL/Services/Contributions/Member.services";
 
 const Profile: React.FC = () => {
-
   const navigate = useNavigate()
-  // 🔹 UI-only mock data (replace later with API/context)
-  // const user = {
-  //   staffNo: "4957",
-  //   name: "SHRI G C POOJARY",
-  //   gender: "Male",
-  //   designation: "Single Window Operator",
-  //   category: "test1123",
-  //   dateOfBirth: "07 February 1945",
-  //   dateOfJoin: "07 May 1965",
-  //   dpCode: "8004",
-  //   dateFrom: "03 May 2003",
-  //   dateTo: "",
-  //   retirementDate: "",
-  //   status: "Retired",
-  //   nominee: "",
-  //   nomineeRelationship: "",
-  // };
-// 🔹 API user state
+ // 🔹 API user state
   const [user, setUser] = useState<Member | null>(null);
-
-
 
  // 🔹 Fields configuration (labels + keys only)
   const fields = [

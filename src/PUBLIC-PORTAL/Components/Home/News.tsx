@@ -54,7 +54,7 @@ const NewsSection: React.FC = () => {
                     </div>
 
                     <h6 className="news-title fs-5">{item.title}</h6>
-                    <p className="news-text">{item.description}</p>
+                    <p className="news-text"> {item.description?.length > 150 ? item.description.slice(0, 150) + "..." : item.description}</p>
                   </Card>
                 </Col>
               ))}

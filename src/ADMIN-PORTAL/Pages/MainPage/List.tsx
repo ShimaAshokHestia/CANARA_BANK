@@ -7,7 +7,7 @@ import KiduServerTable from "../../../Components/KiduServerTable";
 const columns = [
   { key: "mainPageId", label: "ID", enableSorting: true, type: "text" as const },
   { key: "companyId", label: "Company ID", enableSorting: true, type: "text" as const },
-  { key: "companyName", label: "Company Name", enableSorting: true, type: "text" as const },
+  //{ key: "companyName", label: "Company Name", enableSorting: true, type: "text" as const },
   { key: "website", label: "Website", enableSorting: false, type: "text" as const },
   { key: "email", label: "Email", enableSorting: false, type: "text" as const },
   { key: "rulesRegulation", label: "Rules & Regulations", enableSorting: false, type: "text" as const },

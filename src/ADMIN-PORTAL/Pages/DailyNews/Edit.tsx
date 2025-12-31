@@ -19,41 +19,19 @@ const DailyNewsEdit: React.FC = () => {
     { name: "isActive", rules: { type: "toggle", label: "Active", colWidth: 6 } },
   ];
 
-  const handleFetch = async (dailyNewsId: string) => {
-  try {
-    console.log("🔍 Fetching daily news with ID:", dailyNewsId);
-    
-    const data = await DailyNewsService.getDailyNewsById(Number(dailyNewsId));
-    
-    console.log("✅ Fetched data:", data);
+  // 🔹 FETCH
+  const handleFetch = async (id: string) => {
+    const response = await DailyNewsService.getDailyNewsById(Number(id));
+    const news = response.value;
 
-    // Check if data exists
-    if (!data) {
-      throw new Error("No data returned from API");
+    if (news) {
+      setSelectedCompany({ companyId: news.companyId } as Company);
     }
 
-    // init popup
-    setSelectedCompany({
-      companyId: data.companyId,
-      comapanyName: `Company ID: ${data.companyId}`,
-    } as Company);
+    return response;
+  };
 
-    // 🔥 THIS IS MANDATORY
-    return {
-      isSuccess: true,
-      value: data,
-    };
-  } catch (error) {
-    console.error("❌ Error fetching daily news:", error);
-    
-    // Return error response
-    return {
-      isSuccess: false,
-      error: error instanceof Error ? error.message : "Failed to fetch daily news",
-    };
-  }
-};
-
+  // 🔹 UPDATE
   const handleUpdate = async (id: string, formData: Record<string, any>) => {
     if (!selectedCompany) throw new Error("Please select a company");
 
@@ -75,9 +53,10 @@ const DailyNewsEdit: React.FC = () => {
     await DailyNewsService.updateDailyNews(Number(id), payload);
   };
 
+  // ✅ FIXED POPUP HANDLER
   const popupHandlers = {
     companyId: {
-      value: selectedCompany?.comapanyName ?? "",
+      value: selectedCompany?.companyId?.toString() || "",
       actualValue: selectedCompany?.companyId,
       onOpen: () => setShowCompanyPopup(true),
     },
@@ -100,8 +79,8 @@ const DailyNewsEdit: React.FC = () => {
       <CompanyPopup
         show={showCompanyPopup}
         handleClose={() => setShowCompanyPopup(false)}
-        onSelect={(c) => {
-          setSelectedCompany(c);
+        onSelect={(company) => {
+          setSelectedCompany(company);
           setShowCompanyPopup(false);
         }}
       />

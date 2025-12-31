@@ -15,14 +15,9 @@ const DailyNewsView: React.FC = () => {
   ];
 
 const handleFetch = async (id: string) => {
-  const data = await DailyNewsService.getDailyNewsById(Number(id));
-
-  // 🔥 THIS IS MANDATORY
-  return {
-    isSuccess: true,
-    value: data,
-  };
+  return DailyNewsService.getDailyNewsById(Number(id));
 };
+
 
   const handleDelete = async (id: string) => {
     await DailyNewsService.deleteDailyNews(Number(id));
@@ -39,6 +34,10 @@ const handleFetch = async (id: string) => {
       paramName="dailyNewsId"
       auditLogConfig={{ tableName: "DailyNews", recordIdField: "dailyNewsId" }}
       themeColor="#18575A"
+      loadingText="Loading daily news details..."
+      showEditButton={true}
+      showDeleteButton={true}
+      deleteConfirmMessage="Are you sure you want to delete this daily news? This action cannot be undone."
     />
   );
 };

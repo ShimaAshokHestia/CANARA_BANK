@@ -101,6 +101,7 @@ const KiduServerTable: React.FC<KiduServerTableProps> = ({
           searchTerm: search,
         });
 
+        // Reverse the data to show latest records first
         setData((result.data || []).reverse());
         setTotal(result.total || 0);
       } catch (err: any) {

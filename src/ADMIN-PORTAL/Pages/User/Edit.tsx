@@ -4,32 +4,45 @@ import KiduEdit from "../../Components/KiduEdit";
 import type { Field } from "../../Components/KiduEdit";
 import type { User } from "../../Types/Settings/User.types";
 import UserService from "../../Services/Settings/User.services";
-import defaultUserImage from "../../Assets/Images/profile.jpg"; // Add your default user image
+import defaultUserImage from "../../Assets/Images/profile.jpg";
 import CompanyPopup from "../Settings/Company/CompanyPopup";
 import type { Company } from "../../Types/Settings/Company.types";
+import { useParams } from "react-router-dom";
 
 const UserEdit: React.FC = () => {
-   const [showCompanyPopup, setShowCompanyPopup] = useState(false);
-      const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+  useParams<{ userId: string; }>();
+  const [showCompanyPopup, setShowCompanyPopup] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
 
-  // Define form fields matching UserCreate
- const fields: Field[] = [
-  { name: "userName", rules: { type: "text", label: "User Name", required: true, minLength: 3, maxLength: 50, placeholder: "Enter user name", colWidth: 6 } },
-  { name: "userEmail", rules: { type: "email", label: "Email Address", required: true, placeholder: "Enter email address", colWidth: 6 } },
-  { name: "phoneNumber", rules: { type: "number", label: "Phone Number", required: true, minLength: 10, maxLength: 10, placeholder: "Enter 10-digit phone number", colWidth: 4 } },
-  { name: "companyId", rules: { type: "number", label: "Company ID", required: true, placeholder: "Enter company ID", colWidth: 4 } },
-  { name: "createAt", rules: { type: "date", label: "Created At", required: false, colWidth: 4, disabled: true } },
-  { name: "address", rules: { type: "textarea", label: "Address", required: false, placeholder: "Enter address", colWidth: 12 } },
-  { name: "isActive", rules: { type: "toggle", label: "Is Active", required: false } },
-  { name: "islocked", rules: { type: "toggle", label: "Is Locked", required: false } },
-];
-
+  // Define form fields matching the backend structure
+  const fields: Field[] = [
+    { name: "userName", rules: { type: "text", label: "User Name", required: true, minLength: 3, maxLength: 50, placeholder: "Enter user name", colWidth: 6 } },
+    { name: "userEmail", rules: { type: "email", label: "Email Address", required: true, placeholder: "Enter email address", colWidth: 6 } },
+    { name: "phoneNumber", rules: { type: "text", label: "Phone Number", required: true, minLength: 10, maxLength: 10, placeholder: "Enter 10-digit phone number", colWidth: 4 } },
+    { name: "role", rules: { type: "text", label: "Role", required: true, placeholder: "Enter user role", colWidth: 4 } },
+    { name: "companyId", rules: { type: "popup", label: "Company", required: true, colWidth: 4 } },
+    { name: "createAt", rules: { type: "date", label: "Created At", required: false, colWidth: 4, disabled: true } },
+    { name: "address", rules: { type: "textarea", label: "Address", required: false, placeholder: "Enter address", colWidth: 12 } },
+    { name: "isActive", rules: { type: "toggle", label: "Is Active", required: false } },
+    { name: "islocked", rules: { type: "toggle", label: "Is Locked", required: false } },
+  ];
 
   // Fetch user data by ID
   const handleFetch = async (userId: string) => {
     try {
-      // UserService.getUserById now returns CustomResponse<User>
       const response = await UserService.getUserById(Number(userId));
+      
+      // Set the selected company from the fetched user data
+      // You'll need to fetch company details if needed
+      if (response.value.companyId) {
+        // If you have a CompanyService, fetch the company details here
+        // For now, we'll just set a placeholder
+        setSelectedCompany({
+          companyId: response.value.companyId,
+          comapanyName: `Company ${response.value.companyId}` // Placeholder
+        } as Company);
+      }
+      
       return response;
     } catch (error: any) {
       console.error("Error fetching user:", error);
@@ -40,36 +53,44 @@ const UserEdit: React.FC = () => {
   // Handle form update
   const handleUpdate = async (userId: string, formData: Record<string, any>) => {
     try {
-      // Transform form data to match User type
-      const userData: Omit<User, 'auditLogs'> = {
-        userId: Number(userId),
+      if (!selectedCompany) {
+        throw new Error("Please select a company");
+      }
+
+      // Prepare update data - only include fields that can be updated
+      const updateData: Partial<Omit<User, 'userId' | 'auditLogs'>> = {
         userName: formData.userName.trim(),
         userEmail: formData.userEmail.trim(),
         phoneNumber: formData.phoneNumber.trim(),
         address: formData.address?.trim() || "",
-        passwordHash: formData.passwordHash || "", // Keep existing if not changed
+        role: formData.role.trim(),
         isActive: Boolean(formData.isActive),
         islocked: Boolean(formData.islocked),
-        createAt: formData.createAt || new Date().toISOString(),
-        lastlogin: formData.lastlogin || null,
-        companyId: Number(formData.companyId),
+        companyId: selectedCompany.companyId,
       };
 
-      await UserService.updateUser(Number(userId), userData);
+      // Only include passwordHash if it's being changed
+      if (formData.passwordHash && formData.passwordHash.trim() !== "") {
+        updateData.passwordHash = formData.passwordHash;
+      }
+
+      await UserService.updateUser(Number(userId), updateData);
       
     } catch (error: any) {
       console.error("Error updating user:", error);
       throw error;
     }
   };
-const popupHandlers = {
-   companyId: {
-      value: selectedCompany?.comapanyName || "",
+
+  const popupHandlers = {
+    companyId: {
+      value: selectedCompany?.comapanyName ?? "",
       onOpen: () => setShowCompanyPopup(true),
     },
-  }
+  };
+
   return (
-   <>
+    <>
       <KiduEdit
         title="Edit User"
         fields={fields}
@@ -87,10 +108,10 @@ const popupHandlers = {
           defaultImage: defaultUserImage,
           label: "Profile Picture",
           required: false,
-          showNameField: "userName", // Show user name under image
-          showIdField: "userId", // Show user ID
-          showLastLoginField: "lastlogin", // Show last login
-          editable: false // Set to false to disable upload functionality
+          showNameField: "userName",
+          showIdField: "userId",
+          showLastLoginField: "lastlogin",
+          editable: false
         }}
         auditLogConfig={{
           tableName: "User",
@@ -99,12 +120,16 @@ const popupHandlers = {
         themeColor="#18575A"
         popupHandlers={popupHandlers}
       />
-       <CompanyPopup
+      
+      <CompanyPopup
         show={showCompanyPopup}
         handleClose={() => setShowCompanyPopup(false)}
-        onSelect={setSelectedCompany}
+        onSelect={(company) => {
+          setSelectedCompany(company);
+          setShowCompanyPopup(false);
+        }}
       />   
-   </>
+    </>
   );
 };
 

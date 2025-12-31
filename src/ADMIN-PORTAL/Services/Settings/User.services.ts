@@ -18,7 +18,7 @@ const UserService = {
       API_ENDPOINTS.USER.GET_BY_ID(id),
       'GET'
     );
-    return response; // Return full response, not just value
+    return response;
   },
 
   async createUser(data: Omit<User, 'userId' | 'auditLogs'>): Promise<User> {

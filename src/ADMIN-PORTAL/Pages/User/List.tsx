@@ -3,7 +3,6 @@ import type { User } from "../../Types/Settings/User.types";
 import UserService from "../../Services/Settings/User.services";
 import KiduServerTable from "../../../Components/KiduServerTable";
 
-
 const columns = [
   { key: "userId", label: "User ID", enableSorting: true, type: "text" as const },
   { key: "userName", label: "User Name", enableSorting: true, type: "text" as const },
@@ -32,9 +31,13 @@ const UserList: React.FC = () => {
             user.userEmail?.toLowerCase().includes(searchLower) ||
             user.phoneNumber?.toLowerCase().includes(searchLower) ||
             user.address?.toLowerCase().includes(searchLower) ||
+            user.role?.toLowerCase().includes(searchLower) ||
             user.userId.toString().includes(searchLower)
         );
       }
+
+      // Sort by userId in descending order (latest first)
+      filteredUsers.sort((a, b) => b.userId - a.userId);
 
       // Calculate pagination
       const startIndex = (params.pageNumber - 1) * params.pageSize;

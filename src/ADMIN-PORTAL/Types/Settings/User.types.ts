@@ -1,48 +1,18 @@
-// src/types/User.types.ts
-// import type { AuditTrails } from "../../../Types/AuditLog.types";
-
-// export interface User {
-//   userId: number;
-//   userName: string;
-//   userEmail: string;
-//   phoneNumber: string;
-//   address: string;
-//   passwordHash?: string; 
-//   isActive: boolean;
-//   islocked: boolean;
-//   createAt: Date | string;
-//   lastlogin: Date | string | null;
-//   companyId: number;
-//   auditLogs?: AuditTrails[];
-// }
-
 // src/Types/Settings/User.types.ts
 import type { AuditTrails } from "../../../Types/AuditLog.types";
 
 export interface User {
   userId: number;
-
-  // Basic identity
   userName: string;
   userEmail: string;
   phoneNumber: string;
-
-  // Optional fields (not always returned)
-  address?: string;
-  companyId?: number;
-  companyName?: string;
-
-  // Auth / security
-  passwordHash?: string;
-  role?: string;
-  islocked?: boolean;
-
-  // Status
+  address: string;
+  passwordHash?: string; 
   isActive: boolean;
-
-  // Audit & timestamps
-  createdAt?: Date | string;
-  lastLogin?: Date | string;
-
+  islocked: boolean;
+  createAt: Date | string;  // Backend uses 'createAt' (no 'd')
+  lastlogin: Date | string | null;  // Backend uses lowercase 'lastlogin'
+  role: string;  // Missing from your type
+  companyId: number;
   auditLogs?: AuditTrails[];
 }

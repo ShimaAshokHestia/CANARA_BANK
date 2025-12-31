@@ -16,6 +16,7 @@ const UserCreate: React.FC = () => {
     { name: "userEmail", rules: { type: "email", label: "Email Address", required: true, colWidth: 4 } },
     { name: "phoneNumber", rules: { type: "text", label: "Phone Number", required: true, minLength: 10, maxLength: 10, colWidth: 4 } },
     { name: "passwordHash", rules: { type: "password", label: "Password", required: true, minLength: 8, colWidth: 4 } },
+    { name: "role", rules: { type: "text", label: "Role", required: true, colWidth: 4 } },
     { name: "companyId", rules: { type: "popup", label: "Company", required: true, colWidth: 4 } },
     { name: "address", rules: { type: "textarea", label: "Address", colWidth: 4 } },
     { name: "isActive", rules: { type: "toggle", label: "Is Active" } },
@@ -27,20 +28,20 @@ const UserCreate: React.FC = () => {
       throw new Error("Please select a company");
     }
 
-   const userData: Omit<User, "userId" | "auditLogs"> = {
-  userName: formData.userName.trim(),
-  userEmail: formData.userEmail.trim(),
-  phoneNumber: formData.phoneNumber.trim(),
-  address: formData.address?.trim() || "",
-  passwordHash: formData.passwordHash,
-  isActive: Boolean(formData.isActive),
-  islocked: Boolean(formData.islocked),
-  companyId: selectedCompany.companyId,
-  companyName: selectedCompany.comapanyName,
-  createdAt: new Date().toISOString(),
-};
-
-
+    const userData: Omit<User, "userId" | "auditLogs"> = {
+      userName: formData.userName.trim(),
+      userEmail: formData.userEmail.trim(),
+      phoneNumber: formData.phoneNumber.trim(),
+      address: formData.address?.trim() || "",
+      passwordHash: formData.passwordHash,
+      isActive: Boolean(formData.isActive),
+      islocked: Boolean(formData.islocked),
+      createAt: new Date().toISOString(),  // Changed from 'createdAt'
+      lastlogin: null,  // Changed from 'lastLogin'
+      role: formData.role.trim(),  // Added role field
+      companyId: selectedCompany.companyId,
+    };
+    
     await UserService.createUser(userData);
   };
 

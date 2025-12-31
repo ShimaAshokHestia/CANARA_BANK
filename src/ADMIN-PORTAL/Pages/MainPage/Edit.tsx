@@ -53,25 +53,44 @@ const MainPageEdit: React.FC = () => {
     return response;
   };
 
- const handleUpdate = async (id: string, formData: Record<string, any>) => {
+
+const handleUpdate = async (id: string, formData: Record<string, any>) => {
   if (!selectedCompany) {
     throw new Error("Please select a company");
   }
 
-  const company = selectedCompany; 
 
-  const payload: Omit<MainPage, "auditLogs"> = {
-    mainPageId: Number(id),
-    companyId: company.companyId,   
-
-    mainText: formData.mainText?.trim(),
-    slogan: formData.slogan?.trim(),
-  };
+const payload = {
+  mainPageId: Number(id),
+  companyId: selectedCompany.companyId,
+  mainText: formData.mainText?.trim() || "",
+  slogan: formData.slogan?.trim() || "",
+  corouselImage1: formData.corouselImage1?.trim() || "",
+  corouselImage2: formData.corouselImage2?.trim() || "",
+  corouselImage3: formData.corouselImage3?.trim() || "",
+  
+  logoImage1: formData.logoImage1?.trim() || "",
+  logoImage2: formData.logoImage2?.trim() || "",
+  
+  contactDesc1: formData.contactDesc1?.trim() || "",
+  contactDesc2: formData.contactDesc2?.trim() || "",
+  
+  contactLine1: formData.contactLine1?.trim() || "",
+  contactLine2: formData.contactLine2?.trim() || "",
+  contactLine3: formData.contactLine3?.trim() || "",
+  
+  phonenum: formData.phonenum?.trim() || "",
+  faxnum: formData.faxnum?.trim() || "",
+  website: formData.website?.trim() || "",
+  email: formData.email?.trim() || "",
+  
+  rulesRegulation: formData.rulesRegulation?.trim() || "",
+  dayQuote: formData.dayQuote?.trim() || "",
+ 
+} as Omit<MainPage, "auditLogs">;
 
   await MainPageService.updateMainPage(Number(id), payload);
 };
-
-
   const popupHandlers = {
     companyId: {
       value: selectedCompany?.companyId?.toString() || "",

@@ -43,49 +43,49 @@ const MainPageCreate: React.FC = () => {
   ];
 
   const handleSubmit = async (formData: Record<string, any>) => {
-    try {
-      const email = (formData.email || "").trim();
-      const phone = (formData.phonenum || "").trim();
+  if (!selectedCompany) {
+    throw new Error("Please select a company");
+  }
 
-      if (!email.includes("@")) throw new Error("Please provide a valid email address.");
-      if (phone.length < 5) throw new Error("Please provide a valid phone number.");
+  const email = (formData.email || "").trim();
+  const phone = (formData.phonenum || "").trim();
 
-      const payload: Omit<MainPage, "mainPageId" | "auditLogs"> = {
-        companyId: Number(formData.companyId),
-        companyName: (formData.companyName || "").trim(),
-        mainText: (formData.mainText || "").trim(),
-        slogan: (formData.slogan || "").trim(),
-        corouselImage1: (formData.corouselImage1 || "").trim(),
-        corouselImage2: (formData.corouselImage2 || "").trim(),
-        corouselImage3: (formData.corouselImage3 || "").trim(),
-        logoImage1: (formData.logoImage1 || "").trim(),
-        logoImage2: (formData.logoImage2 || "").trim(),
-        contactDesc1: (formData.contactDesc1 || "").trim(),
-        contactDesc2: (formData.contactDesc2 || "").trim(),
-        contactLine1: (formData.contactLine1 || "").trim(),
-        contactLine2: (formData.contactLine2 || "").trim(),
-        contactLine3: (formData.contactLine3 || "").trim(),
-        phonenum: phone,
-        faxnum: (formData.faxnum || "").trim(),
-        website: (formData.website || "").trim(),
-        email,
-        rulesRegulation: (formData.rulesRegulation || "").trim(),
-        dayQuote: (formData.dayQuote || "").trim(),
-      };
+  if (!email.includes("@")) throw new Error("Please provide a valid email address.");
+  if (phone.length < 5) throw new Error("Please provide a valid phone number.");
 
-      await MainPageService.createMainPage(payload);
-    } catch (err) {
-      console.error("Error creating main page:", err);
-      throw err;
-    }
+  const payload: Omit<MainPage, "mainPageId" | "auditLogs"> = {
+    companyId: selectedCompany.companyId,           
+    companyName: selectedCompany.comapanyName || "", 
+    mainText: (formData.mainText || "").trim(),
+    slogan: (formData.slogan || "").trim(),
+    corouselImage1: (formData.corouselImage1 || "").trim(),
+    corouselImage2: (formData.corouselImage2 || "").trim(),
+    corouselImage3: (formData.corouselImage3 || "").trim(),
+    logoImage1: (formData.logoImage1 || "").trim(),
+    logoImage2: (formData.logoImage2 || "").trim(),
+    contactDesc1: (formData.contactDesc1 || "").trim(),
+    contactDesc2: (formData.contactDesc2 || "").trim(),
+    contactLine1: (formData.contactLine1 || "").trim(),
+    contactLine2: (formData.contactLine2 || "").trim(),
+    contactLine3: (formData.contactLine3 || "").trim(),
+    phonenum: phone,
+    faxnum: (formData.faxnum || "").trim(),
+    website: (formData.website || "").trim(),
+    email,
+    rulesRegulation: (formData.rulesRegulation || "").trim(),
+    dayQuote: (formData.dayQuote || "").trim(),
   };
 
-  const popupHandlers={
-    companyId:{
-      value:selectedCompany?.comapanyName||"",
-      onOpen:()=>setShowCompanyPopup(true),
-    }
+  await MainPageService.createMainPage(payload);
+};
+
+const popupHandlers = {
+  companyId: {
+    value: selectedCompany?.comapanyName || "",  
+    actualValue: selectedCompany?.companyId,    
+    onOpen: () => setShowCompanyPopup(true),
   }
+}
   return (
   <>
       <KiduCreate

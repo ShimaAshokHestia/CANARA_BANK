@@ -26,7 +26,7 @@ const MemberCreate: React.FC = () => {
   const [selectedStatus, setSelectedStatus] = useState<Status | null>(null);
 
   const fields: Field[] = [
-    { name: "staffNo", rules: { type: "number", label: "Staff No", required: true, colWidth: 3 } },
+    { name: "staffNo", rules: { type: "dropdown", label: "Staff No", required: true, colWidth: 3 } },
     { name: "name", rules: { type: "text", label: "Name", required: true, minLength: 2, maxLength: 150, colWidth: 6 } },
     { name: "genderId", rules: { type: "number", label: "Gender ID", required: true, colWidth: 3 } },
 

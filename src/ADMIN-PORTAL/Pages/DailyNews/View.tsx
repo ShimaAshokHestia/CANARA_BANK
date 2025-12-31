@@ -17,13 +17,12 @@ const DailyNewsView: React.FC = () => {
 const handleFetch = async (id: string) => {
   const data = await DailyNewsService.getDailyNewsById(Number(id));
 
-  // 🔥 THIS IS THE FIX
+  // 🔥 THIS IS MANDATORY
   return {
     isSuccess: true,
     value: data,
   };
 };
-
 
   const handleDelete = async (id: string) => {
     await DailyNewsService.deleteDailyNews(Number(id));

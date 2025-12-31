@@ -19,21 +19,40 @@ const DailyNewsEdit: React.FC = () => {
     { name: "isActive", rules: { type: "toggle", label: "Active", colWidth: 6 } },
   ];
 
- const handleFetch = async (id: string) => {
-  const data = await DailyNewsService.getDailyNewsById(Number(id));
+  const handleFetch = async (dailyNewsId: string) => {
+  try {
+    console.log("🔍 Fetching daily news with ID:", dailyNewsId);
+    
+    const data = await DailyNewsService.getDailyNewsById(Number(dailyNewsId));
+    
+    console.log("✅ Fetched data:", data);
 
-  setSelectedCompany({
-    companyId: data.companyId,
-    comapanyName: `Company ID: ${data.companyId}`,
-  } as Company);
+    // Check if data exists
+    if (!data) {
+      throw new Error("No data returned from API");
+    }
 
-  // 🔥 THIS IS THE FIX
-  return {
-    isSuccess: true,
-    value: data,
-  };
+    // init popup
+    setSelectedCompany({
+      companyId: data.companyId,
+      comapanyName: `Company ID: ${data.companyId}`,
+    } as Company);
+
+    // 🔥 THIS IS MANDATORY
+    return {
+      isSuccess: true,
+      value: data,
+    };
+  } catch (error) {
+    console.error("❌ Error fetching daily news:", error);
+    
+    // Return error response
+    return {
+      isSuccess: false,
+      error: error instanceof Error ? error.message : "Failed to fetch daily news",
+    };
+  }
 };
-
 
   const handleUpdate = async (id: string, formData: Record<string, any>) => {
     if (!selectedCompany) throw new Error("Please select a company");

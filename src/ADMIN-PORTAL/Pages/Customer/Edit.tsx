@@ -2,109 +2,102 @@
 import React, { useState } from "react";
 import KiduEdit from "../../Components/KiduEdit";
 import type { Field } from "../../Components/KiduEdit";
-import defaultCustomerImage from "../../Assets/Images/profile.jpg"; // fallback avatar
+import defaultCustomerImage from "../../Assets/Images/profile.jpg";
 import CustomerService from "../../Services/Customers/Customers.services";
 import type { Customer } from "../../Types/Customers/Customers.types";
 import type { Company } from "../../Types/Settings/Company.types";
 import CompanyPopup from "../Settings/Company/CompanyPopup";
 
 const CustomerEdit: React.FC = () => {
+  const [showCompanyPopup, setShowCompanyPopup] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
 
-   const[showCompanyPopup,setShowCompanyPopup]=useState(false);
-   const[selectedCompany,setSelectedCompany]=useState<Company|null>(null);
-      
-  // Define form fields similar to UserEdit but for customers
- const fields: Field[] = [
-  { name: "customerName", rules: { type: "text", label: "Customer Name", required: true, minLength: 3, maxLength: 50, placeholder: "Enter customer name", colWidth: 6 } },
-  { name: "customerEmail", rules: { type: "email", label: "Email Address", required: true, placeholder: "Enter email address", colWidth: 6 } },
-  { name: "phoneNumber", rules: { type: "number", label: "Phone Number", required: true, minLength: 10, maxLength: 10, placeholder: "Enter 10-digit phone number", colWidth: 4 } },
-  { name: "companyId", rules: { type: "popup", label: "Company ID", required: true, placeholder: "Enter company ID", colWidth: 4 } },
-  { name: "createAt", rules: { type: "date", label: "Created At", required: false, colWidth: 4, disabled: true } },
-  { name: "address", rules: { type: "textarea", label: "Address", required: false, placeholder: "Enter address", colWidth: 12 } },
-  { name: "isActive", rules: { type: "toggle", label: "Is Active", required: false } },
-  { name: "islocked", rules: { type: "toggle", label: "Is Locked", required: false } },
-];
+  const fields: Field[] = [
+    { name: "customerId", rules: { type: "number", label: "Customer ID", disabled: true, colWidth: 3 } },
+    { name: "customerName", rules: { type: "text", label: "Customer Name", required: true, colWidth: 6 } },
+    { name: "customerEmail", rules: { type: "email", label: "Email", required: true, colWidth: 6 } },
+    { name: "customerPhone", rules: { type: "number", label: "Phone", required: true, colWidth: 4 } },
+    { name: "companyId", rules: { type: "popup", label: "Company ID", required: true, colWidth: 4 } },
+    { name: "createdAt", rules: { type: "date", label: "Created At", disabled: true, colWidth: 4 } },
+    { name: "customerAddress", rules: { type: "textarea", label: "Address", colWidth: 12 } },
+    { name: "isActive", rules: { type: "toggle", label: "Active" } },
+    { name: "isDeleted", rules: { type: "toggle", label: "Deleted" } },
+  ];
 
+  // 🔹 FETCH
+  const handleFetch = async (id: string) => {
+    const response = await CustomerService.getCustomerById(Number(id));
+    const customer = response.value;
 
-  // Fetch customer data by ID
-  const handleFetch = async (customerId: string) => {
-    try {
-      const response = await CustomerService.getCustomerById(Number(customerId));
-      return response;
-    } catch (error: any) {
-      console.error("Error fetching customer:", error);
-      throw error;
+    if (customer) {
+      // ✅ hydrate popup state
+      setSelectedCompany({ companyId: customer.companyId } as Company);
     }
+
+    return response;
   };
 
-  // Update customer
-  const handleUpdate = async (customerId: string, formData: Record<string, any>) => {
-    try {
-      // Adapt to your Customer type; omit fields your API doesn't accept
-      const customerData: Omit<Customer, "auditLogs"> = {
-        customerId: Number(customerId),
-        customerName: formData.customerName?.trim(),
-        customerEmail: formData.customerEmail?.trim(),
-        phoneNumber: formData.phoneNumber?.trim(),
-        address: formData.address?.trim() || "",
-        isActive: Boolean(formData.isActive),
-        islocked: Boolean(formData.islocked),
-        createAt: formData.createAt || new Date().toISOString(),
-        lastlogin: formData.lastlogin || null, // if your model uses a different field, adjust here
-        companyId: Number(formData.companyId)
-      } as unknown as Omit<Customer, "auditLogs">;
-
-      await CustomerService.updateCustomer(Number(customerId), customerData);
-    } catch (error: any) {
-      console.error("Error updating customer:", error);
-      throw error;
+  // 🔹 UPDATE
+  const handleUpdate = async (id: string, formData: Record<string, any>) => {
+    if (!selectedCompany) {
+      throw new Error("Please select a company");
     }
+
+    const payload: Omit<Customer, "auditLogs"> = {
+      customerId: Number(id),
+      customerName: formData.customerName.trim(),
+      customerEmail: formData.customerEmail.trim(),
+      customerPhone: String(formData.customerPhone),
+      customerAddress: formData.customerAddress?.trim() || "",
+      dob: formData.dob || null,
+      nationalilty: formData.nationalilty || "",
+      createdAt: formData.createdAt,
+      isActive: Boolean(formData.isActive),
+      isDeleted: Boolean(formData.isDeleted),
+      companyId: selectedCompany.companyId, // ✅ popup value
+    };
+
+    await CustomerService.updateCustomer(Number(id), payload);
   };
 
-   const popupHandlers={
-    companyId:{
-      value:selectedCompany?.comapanyName||"",
-      onOpen:()=>setShowCompanyPopup(true),
-    }
-  }
+  // ✅ CRITICAL FIX HERE
+  const popupHandlers = {
+    companyId: {
+      value: selectedCompany?.companyId?.toString() || "",
+      actualValue: selectedCompany?.companyId,   // ✅ REQUIRED
+      onOpen: () => setShowCompanyPopup(true),
+    },
+  };
 
   return (
-   <>
+    <>
       <KiduEdit
         title="Edit Customer"
         fields={fields}
         onFetch={handleFetch}
         onUpdate={handleUpdate}
-        submitButtonText="Update Customer"
-        showResetButton={true}
-        successMessage="Customer updated successfully!"
-        errorMessage="Failed to update customer. Please try again."
         paramName="customerId"
         navigateBackPath="/dashboard/customer-list"
-        loadingText="Loading Customer..."
         imageConfig={{
           fieldName: "profileImage",
           defaultImage: defaultCustomerImage,
           label: "Profile Picture",
-          required: false,
-          showNameField: "customerName",
-          showIdField: "customerId",
-          showLastLoginField: "lastlogin", // change if your model uses another name
-          editable: false
+          editable: false,
         }}
-        auditLogConfig={{
-          tableName: "Customer",
-          recordIdField: "customerId"
-        }}
+        auditLogConfig={{ tableName: "Customer", recordIdField: "customerId" }}
         themeColor="#18575A"
         popupHandlers={popupHandlers}
       />
+
       <CompanyPopup
-      show={showCompanyPopup}
-      handleClose={()=>setShowCompanyPopup(false)}
-      onSelect={setSelectedCompany}
+        show={showCompanyPopup}
+        handleClose={() => setShowCompanyPopup(false)}
+        onSelect={(company) => {
+          setSelectedCompany(company);   // ✅ update state
+          setShowCompanyPopup(false);    // ✅ close popup
+        }}
       />
-   </>
+    </>
   );
 };
 

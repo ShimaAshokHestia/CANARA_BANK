@@ -12,7 +12,7 @@ import KiduSubmit from "./KiduSubmit";
 
 // ==================== TYPES ====================
 export interface FieldRule {
-  type: "text" | "number" | "email" | "password" | "select" | "textarea" | "popup" | "date" | "radio" | "url" | "checkbox" | "toggle" | "rowbreak";
+  type: "text" | "number" | "email" | "password" | "select" | "textarea" | "popup" | "date" | "radio" | "url" | "checkbox" | "toggle" | "rowbreak" | "dropdown";
   label: string;
   required?: boolean;
   minLength?: number;
@@ -322,154 +322,165 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
   };
 
   // ==================== RENDER FORM CONTROLS ====================
-  const renderFormControl = (field: Field) => {
-    const { name, rules } = field;
-    const { type, placeholder } = rules;
-    const fieldPlaceholder = placeholder || `Enter ${rules.label.toLowerCase()}`;
-    
-    switch (type) {
-      case "popup": {
-        const popup = popupHandlers[name];
-        return (
-          <InputGroup>
-            <Form.Control
-              type="text"
-              value={popup?.value || ""}
-              placeholder={`Select ${rules.label}`}
-              readOnly
-              isInvalid={!!errors[name]}
-            />
-            <Button variant="outline-secondary" onClick={popup?.onOpen}>
-              <BsSearch />
-            </Button>
-          </InputGroup>
-        );
-      }
+ const renderFormControl = (field: Field) => {
+  const { name, rules } = field;
+  const { type, placeholder } = rules;
+  const fieldPlaceholder = placeholder || `Enter ${rules.label.toLowerCase()}`;
 
-      case "password":
-        return (
-          <InputGroup>
-            <Form.Control
-              type={showPasswords[name] ? "text" : "password"}
-              name={name}
-              autoComplete="new-password"
-              placeholder={fieldPlaceholder}
-              value={formData[name]}
-              onChange={handleChange}
-              onBlur={() => handleBlur(name)}
-              isInvalid={!!errors[name]}
-            />
-            <Button
-              variant="outline-secondary"
-              onClick={() => togglePasswordVisibility(name)}
-            >
-              {showPasswords[name] ? <FaEyeSlash /> : <FaEye />}
-            </Button>
-          </InputGroup>
-        );
+  switch (type) {
 
-      case "select": {
-        const fieldOptions = options[name] || [];
-        return (
-          <Form.Select
-            name={name}
-            value={formData[name]}
-            onChange={handleChange}
-            onBlur={() => handleBlur(name)}
-            isInvalid={!!errors[name]}
-          >
-            <option value="">Select {rules.label}</option>
-            {fieldOptions.map((opt: any, idx: number) => {
-              const optValue = typeof opt === "object" ? opt.value : opt;
-              const optLabel = typeof opt === "object" ? opt.label : opt;
-              return (
-                <option key={idx} value={optValue}>
-                  {optLabel}
-                </option>
-              );
-            })}
-          </Form.Select>
-        );
-      }
-
-      case "textarea":
-        return (
+    /* ---------- POPUP ---------- */
+    case "popup": {
+      const popup = popupHandlers[name];
+      return (
+        <InputGroup>
           <Form.Control
-            as="textarea"
-            rows={3}
-            name={name}
-            placeholder={fieldPlaceholder}
-            value={formData[name]}
-            onChange={handleChange}
-            onBlur={() => handleBlur(name)}
+            type="text"
+            value={popup?.value || ""}
+            placeholder={`Select ${rules.label}`}
+            readOnly
             isInvalid={!!errors[name]}
           />
-        );
-
-      case "radio": {
-        const fieldOptions = options[name] || [];
-        return (
-          <div className="d-flex flex-wrap gap-3">
-            {fieldOptions.map((opt: any, idx: number) => {
-              const optValue = typeof opt === "object" ? opt.value : opt;
-              const optLabel = typeof opt === "object" ? opt.label : opt;
-              return (
-                <Form.Check
-                  key={idx}
-                  type="radio"
-                  id={`${name}-${idx}`}
-                  name={name}
-                  label={optLabel}
-                  value={optValue}
-                  checked={formData[name] === optValue}
-                  onChange={handleChange}
-                />
-              );
-            })}
-          </div>
-        );
-      }
-
-      case "checkbox":
-        return (
-          <Form.Check
-            type="checkbox"
-            id={name}
-            name={name}
-            label={rules.label}
-            checked={!!formData[name]}
-            onChange={handleChange}
-          />
-        );
-
-      case "date":
-        return (
-          <Form.Control
-            type="date"
-            name={name}
-            value={formData[name]}
-            onChange={handleChange}
-            onBlur={() => handleBlur(name)}
-            isInvalid={!!errors[name]}
-          />
-        );
-
-      default:
-        return (
-          <Form.Control
-            type={type === "number" ? "tel" : type}
-            name={name}
-            autoComplete={type === "email" ? "email" : "off"}
-            placeholder={fieldPlaceholder}
-            value={formData[name]}
-            onChange={handleChange}
-            onBlur={() => handleBlur(name)}
-            isInvalid={!!errors[name]}
-            maxLength={rules.maxLength}
-          />
-        );
+          <Button variant="outline-secondary" onClick={popup?.onOpen}>
+            <BsSearch />
+          </Button>
+        </InputGroup>
+      );
     }
-  };
+
+    /* ---------- PASSWORD ---------- */
+    case "password":
+      return (
+        <InputGroup>
+          <Form.Control
+            type={showPasswords[name] ? "text" : "password"}
+            name={name}
+            autoComplete="new-password"
+            placeholder={fieldPlaceholder}
+            value={formData[name]}
+            onChange={handleChange}
+            onBlur={() => handleBlur(name)}
+            isInvalid={!!errors[name]}
+          />
+          <Button
+            variant="outline-secondary"
+            onClick={() => togglePasswordVisibility(name)}
+          >
+            {showPasswords[name] ? <FaEyeSlash /> : <FaEye />}
+          </Button>
+        </InputGroup>
+      );
+
+    /* ---------- SELECT ---------- */
+    case "select":
+    case "dropdown": {
+      const fieldOptions = options[name] || [];
+      return (
+        <Form.Select
+          name={name}
+          value={formData[name]}
+          onChange={handleChange}
+          onBlur={() => handleBlur(name)}
+          isInvalid={!!errors[name]}
+        >
+          <option value="">Select {rules.label}</option>
+          {fieldOptions.map((opt: any, idx: number) => {
+            const optValue = typeof opt === "object" ? opt.value : opt;
+            const optLabel = typeof opt === "object" ? opt.label : opt;
+            return (
+              <option key={idx} value={optValue}>
+                {optLabel}
+              </option>
+            );
+          })}
+        </Form.Select>
+      );
+    }
+
+    /* ---------- TEXTAREA ---------- */
+    case "textarea":
+      return (
+        <Form.Control
+          as="textarea"
+          rows={3}
+          name={name}
+          placeholder={fieldPlaceholder}
+          value={formData[name]}
+          onChange={handleChange}
+          onBlur={() => handleBlur(name)}
+          isInvalid={!!errors[name]}
+        />
+      );
+
+    /* ---------- RADIO ---------- */
+    case "radio": {
+      const fieldOptions = options[name] || [];
+      return (
+        <div className="d-flex flex-wrap gap-3">
+          {fieldOptions.map((opt: any, idx: number) => {
+            const optValue = typeof opt === "object" ? opt.value : opt;
+            const optLabel = typeof opt === "object" ? opt.label : opt;
+            return (
+              <Form.Check
+                key={idx}
+                type="radio"
+                id={`${name}-${idx}`}
+                name={name}
+                label={optLabel}
+                value={optValue}
+                checked={formData[name] === optValue}
+                onChange={handleChange}
+              />
+            );
+          })}
+        </div>
+      );
+    }
+
+    /* ---------- CHECKBOX ---------- */
+    case "checkbox":
+      return (
+        <Form.Check
+          type="checkbox"
+          id={name}
+          name={name}
+          label={rules.label}
+          checked={!!formData[name]}
+          onChange={handleChange}
+        />
+      );
+
+    /* ---------- DATE ---------- */
+    case "date":
+      return (
+        <Form.Control
+          type="date"
+          name={name}
+          value={formData[name]}
+          onChange={handleChange}
+          onBlur={() => handleBlur(name)}
+          isInvalid={!!errors[name]}
+        />
+      );
+
+    /* ---------- DEFAULT ---------- */
+    default:
+      return (
+        <Form.Control
+          type={type === "number" ? "tel" : type}
+          name={name}
+          autoComplete={type === "email" ? "email" : "off"}
+          placeholder={fieldPlaceholder}
+          value={formData[name]}
+          onChange={handleChange}
+          onBlur={() => handleBlur(name)}
+          isInvalid={!!errors[name]}
+          maxLength={rules.maxLength}
+        />
+      );
+  }
+};
+
 
   // ==================== RENDER FIELD ====================
   const renderField = (field: Field, index: number) => {

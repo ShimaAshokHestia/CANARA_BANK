@@ -9,9 +9,9 @@ const columns = [
   { key: "staffNo", label: "Staff No", enableSorting: true, type: "text" as const },
   { key: "name", label: "Name", enableSorting: true, type: "text" as const },
   // { key: "genderId", label: "Gender ID", enableSorting: true, type: "text" as const },
-  // { key: "designationId", label: "Designation ID", enableSorting: true, type: "text" as const },
-  // { key: "categoryId", label: "Category ID", enableSorting: true, type: "text" as const },
-  // { key: "branchId", label: "Branch ID", enableSorting: true, type: "text" as const },
+   { key: "designationId", label: "Designation ID", enableSorting: true, type: "text" as const },
+   { key: "categoryId", label: "Category ID", enableSorting: true, type: "text" as const },
+   { key: "branchId", label: "Branch ID", enableSorting: true, type: "text" as const },
 
   // { key: "dobString", label: "DOB", enableSorting: false, type: "text" as const },
   // { key: "dojString", label: "DOJ", enableSorting: false, type: "text" as const },

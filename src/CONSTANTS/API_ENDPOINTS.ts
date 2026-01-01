@@ -186,10 +186,20 @@ export const API_ENDPOINTS = {
     UPDATE: (id: number) => `${API_BASE_URL}/DirectPayment/${id}`,
     DELETE: (id: number) => `${API_BASE_URL}/DirectPayment/${id}`,
   },
+
+   ACCOUNT_DIRECT_ENTRY: {
+    GET_ALL: `${API_BASE_URL}/AccountDirecyEntry`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/AccountDirecyEntry/${id}`,
+    CREATE: `${API_BASE_URL}/AccountDirecyEntry`,
+    UPDATE: (id: number) => `${API_BASE_URL}/AccountDirecyEntry/${id}`,
+    DELETE: (id: number) => `${API_BASE_URL}/AccountDirecyEntry/${id}`,
+  },
   //------------------------PUBLIC MODULE----------------------------------------
   PUBLIC: {
     GET_ALL_DAYQUOTE: `${API_BASE_URL}/Public/dayquotes`,
     GET_ALL_DAILYNEWS: `${API_BASE_URL}/Public/dailynews`,
+    GET_ALL_MANAGINGCOMMITEE: `${API_BASE_URL}/Public/managingCommitee`,
+    GET_ALL_PUBLICPAGE: `${API_BASE_URL}/Public/publicpage`,
   },
 
   PUBLIC_PAGE: {
@@ -197,13 +207,7 @@ export const API_ENDPOINTS = {
   },
 
   //-------------------------STAFF MODULE------------------------------
-  ACCOUNT_DIRECT_ENTRY: {
-    GET_ALL: `${API_BASE_URL}/AccountDirecyEntry`,
-    GET_BY_ID: (id: number) => `${API_BASE_URL}/AccountDirecyEntry/${id}`,
-    CREATE: `${API_BASE_URL}/AccountDirecyEntry`,
-    UPDATE: (id: number) => `${API_BASE_URL}/AccountDirecyEntry/${id}`,
-    DELETE: (id: number) => `${API_BASE_URL}/AccountDirecyEntry/${id}`,
-  }
+ 
 };
 
 // ✅ Helper function to get full image URL

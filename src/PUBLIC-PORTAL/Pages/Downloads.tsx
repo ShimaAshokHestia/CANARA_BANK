@@ -10,8 +10,8 @@ import { useNavigate } from "react-router-dom";
 // }
 
 const Downloads: React.FC = () => {
-   const navigate = useNavigate()
- const downloads = PublicService.downloads
+  const navigate = useNavigate()
+  const downloads = PublicService.downloads
   // const files: DownloadItem[] = [
   //   {
   //     title: "APPLICATION FOR MEMBERSHIP",
@@ -38,7 +38,7 @@ const Downloads: React.FC = () => {
       <div className="downloads-header text-center py-4">
         <h2 className="downloads-title">{downloads.header.title}</h2>
         <p className="downloads-subtitle">
-        {downloads.header.subtitle}
+          {downloads.header.subtitle}
         </p>
       </div>
 
@@ -46,12 +46,12 @@ const Downloads: React.FC = () => {
         <Row className="g-4 justify-content-center">
 
           {/* CARD COLUMN */}
-          <Col lg={6} md={10}>
+          <Col lg={12} md={10}>
             <Card className="downloads-card p-4">
 
               <h5 className="fw-bold mb-4 d-flex align-items-center">
                 <i className={downloads.card.iconclass}></i>
-               {downloads.card.title}
+                {downloads.card.title}
               </h5>
 
               {downloads.files.map((file, index) => (
@@ -63,7 +63,8 @@ const Downloads: React.FC = () => {
                       <p className="file-desc">{file.description}</p>
                     </div>
 
-                    <i className="bi bi-download file-download-icon"></i>
+                    <i className="bi bi-download file-download-icon" role="button"
+                      title="Download file" onClick={() => window.open(file.fileUrl, "_blank")}></i>
                   </div>
                 </Card>
               ))}

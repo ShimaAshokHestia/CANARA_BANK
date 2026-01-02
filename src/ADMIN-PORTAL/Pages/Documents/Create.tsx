@@ -34,7 +34,7 @@ const DocumentCreate: React.FC = () => {
         errorMessage="Failed to upload document"
         navigateOnSuccess="/dashboard/cms/documents-list"
          navigateDelay={1500}
-        themeColor="#18575A"
+        themeColor="#0f2a44"
       />
     </>
   );

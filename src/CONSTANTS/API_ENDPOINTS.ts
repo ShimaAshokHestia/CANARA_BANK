@@ -200,6 +200,7 @@ export const API_ENDPOINTS = {
     GET_ALL_DAILYNEWS: `${API_BASE_URL}/Public/dailynews`,
     GET_ALL_MANAGINGCOMMITEE: `${API_BASE_URL}/Public/managingCommitee`,
     GET_ALL_PUBLICPAGE: `${API_BASE_URL}/Public/publicpage`,
+    GET_ALL_ATTACHMENTS: `${API_BASE_URL}/Public/attachment`,
   },
 
   PUBLIC_PAGE: {

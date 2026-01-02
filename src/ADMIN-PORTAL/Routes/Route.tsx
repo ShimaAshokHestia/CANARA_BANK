@@ -113,6 +113,10 @@ import DailyNewsCreate from '../Pages/DailyNews/Create';
 import DailyNewsEdit from '../Pages/DailyNews/Edit';
 import DailyNewsView from '../Pages/DailyNews/View';
 
+//Document
+import DocumentList from '../Pages/Documents/List';
+import DocumentCreate from '../Pages/Documents/Create';
+
 //Direct Pay
 import DirectPaymentList from '../Pages/Contributions/DirectPay/List';
 import DirectPaymentCreate from '../Pages/Contributions/DirectPay/Create';
@@ -124,9 +128,6 @@ import AccountDirectEntryList from '../Pages/Contributions/AccountDirectEntry/Li
 import AccountDirectEntryCreate from '../Pages/Contributions/AccountDirectEntry/Create';
 import AccountDirectEntryEdit from '../Pages/Contributions/AccountDirectEntry/Edit';
 import AccountDirectEntryView from '../Pages/Contributions/AccountDirectEntry/View';
-
-
-
 
 
 export default function AdminRoutes() {
@@ -221,44 +222,50 @@ export default function AdminRoutes() {
         <Route path='/dashboard/contributions/member-edit/:memberId' element={<MemberEdit />} />
         <Route path='/dashboard/contributions/member-view/:memberId' element={<MemberView />} />
 
-         {/* Refund */}
-         <Route path='/dashboard/claims/refundcontribution-list' element={<RefundContributionList/>}/>
-         <Route path='/dashboard/claims/refundcontribution-create' element={<RefundContributionCreate/>}/>
-         <Route path='/dashboard/claims/refundcontribution-edit/:refundContributionId' element={<RefundContributionEdit/>}/>
-         <Route path='/dashboard/claims/refundcontribution-view/:refundContributionId' element={<RefundContributionView/>}/>
+        {/* Refund */}
+        <Route path='/dashboard/claims/refundcontribution-list' element={<RefundContributionList />} />
+        <Route path='/dashboard/claims/refundcontribution-create' element={<RefundContributionCreate />} />
+        <Route path='/dashboard/claims/refundcontribution-edit/:refundContributionId' element={<RefundContributionEdit />} />
+        <Route path='/dashboard/claims/refundcontribution-view/:refundContributionId' element={<RefundContributionView />} />
 
         {/* Death Claims */}
-         <Route path='/dashboard/claims/deathclaims-list' element={<DeathClaimList/>}/>
-         <Route path='/dashboard/claims/deathclaims-create' element={<DeathClaimCreate/>}/>
-         <Route path='/dashboard/claims/deathclaims-edit/:deathClaimId' element={<DeathClaimEdit/>}/>
-         <Route path='/dashboard/claims/deathclaims-view/:deathClaimId' element={<DeathClaimView/>}/>
+        <Route path='/dashboard/claims/deathclaims-list' element={<DeathClaimList />} />
+        <Route path='/dashboard/claims/deathclaims-create' element={<DeathClaimCreate />} />
+        <Route path='/dashboard/claims/deathclaims-edit/:deathClaimId' element={<DeathClaimEdit />} />
+        <Route path='/dashboard/claims/deathclaims-view/:deathClaimId' element={<DeathClaimView />} />
 
-         {/* Day Quote */}
-         <Route path='/dashboard/cms/dayquote-list' element={<DayQuoteList/>}/>
-         <Route path='/dashboard/cms/dayquote-create' element={<DayQuoteCreate/>}/>
-         <Route path='/dashboard/cms/dayquote-edit/:dayQuoteId' element={<DayQuoteEdit/>}/>
-         <Route path='/dashboard/cms/dayquote-view/:dayQuoteId' element={<DayQuoteView/>}/>
+        {/* Day Quote */}
+        <Route path='/dashboard/cms/dayquote-list' element={<DayQuoteList />} />
+        <Route path='/dashboard/cms/dayquote-create' element={<DayQuoteCreate />} />
+        <Route path='/dashboard/cms/dayquote-edit/:dayQuoteId' element={<DayQuoteEdit />} />
+        <Route path='/dashboard/cms/dayquote-view/:dayQuoteId' element={<DayQuoteView />} />
 
-         {/* Daily News */}
-          <Route path='/dashboard/cms/dailynews-list' element={<DailyNewsList/>}/>
-          <Route path='/dashboard/cms/dailynews-create' element={<DailyNewsCreate/>}/>
-          <Route path='/dashboard/cms/dailynews-edit/:dailyNewsId' element={<DailyNewsEdit/>}/>
-          <Route path='/dashboard/cms/dailynews-view/:dailyNewsId' element={<DailyNewsView/>}/>
+        {/* Daily News */}
+        <Route path='/dashboard/cms/dailynews-list' element={<DailyNewsList />} />
+        <Route path='/dashboard/cms/dailynews-create' element={<DailyNewsCreate />} />
+        <Route path='/dashboard/cms/dailynews-edit/:dailyNewsId' element={<DailyNewsEdit />} />
+        <Route path='/dashboard/cms/dailynews-view/:dailyNewsId' element={<DailyNewsView />} />
 
-          {/* Direct Pay */}
-          <Route path='/dashboard/contributions/directpayment-list' element={<DirectPaymentList/>}/>
-          <Route path='/dashboard/contributions/directpayment-create' element={<DirectPaymentCreate/>}/>
-          <Route path='/dashboard/contributions/directpayment-edit/:directPaymentId' element={<DirectPaymentEdit/>}/>
-          <Route path='/dashboard/contributions/directpayment-view/:directPaymentId' element={<DirectPaymentView/>}/>
+        {/* Documents*/}
+        <Route path='/dashboard/cms/documents-list' element={<DocumentList />} />
+        <Route path='/dashboard/cms/document-create' element={<DocumentCreate />} />
+        {/* <Route path='/dashboard/cms/document-edit/:attachmentId' element={<AccountDirectEntryEdit />} />
+        <Route path='/dashboard/cms/document-view/:attachmentId' element={<AccountDirectEntryView />} /> */}
 
-          {/* Monthly Contribution */}
-          {/* <Route path='/dashboard/contributions/monthlyContribution-list' element={<mon/>}/> */}
-     
-          {/* Account Direcy Entry */}
-          <Route path='/dashboard/contributions/accountDirectEntry-list' element={<AccountDirectEntryList/>}/>
-          <Route path='/dashboard/contributions/accountDirectEntry-create' element={<AccountDirectEntryCreate/>}/>
-          <Route path='/dashboard/contributions/accountDirectEntry-edit/:accountsDirectEntryID' element={<AccountDirectEntryEdit/>}/>
-          <Route path='/dashboard/contributions/accountDirectEntry-view/:accountsDirectEntryID' element={<AccountDirectEntryView/>}/>
+        {/* Direct Pay */}
+        <Route path='/dashboard/contributions/directpayment-list' element={<DirectPaymentList />} />
+        <Route path='/dashboard/contributions/directpayment-create' element={<DirectPaymentCreate />} />
+        <Route path='/dashboard/contributions/directpayment-edit/:directPaymentId' element={<DirectPaymentEdit />} />
+        <Route path='/dashboard/contributions/directpayment-view/:directPaymentId' element={<DirectPaymentView />} />
+
+        {/* Monthly Contribution */}
+        {/* <Route path='/dashboard/contributions/monthlyContribution-list' element={<mon/>}/> */}
+
+        {/* Account Direcy Entry */}
+        <Route path='/dashboard/contributions/accountDirectEntry-list' element={<AccountDirectEntryList />} />
+        <Route path='/dashboard/contributions/accountDirectEntry-create' element={<AccountDirectEntryCreate />} />
+        <Route path='/dashboard/contributions/accountDirectEntry-edit/:accountsDirectEntryID' element={<AccountDirectEntryEdit />} />
+        <Route path='/dashboard/contributions/accountDirectEntry-view/:accountsDirectEntryID' element={<AccountDirectEntryView />} />
 
       </Route>
 

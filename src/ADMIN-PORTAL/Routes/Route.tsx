@@ -129,6 +129,11 @@ import AccountDirectEntryCreate from '../Pages/Contributions/AccountDirectEntry/
 import AccountDirectEntryEdit from '../Pages/Contributions/AccountDirectEntry/Edit';
 import AccountDirectEntryView from '../Pages/Contributions/AccountDirectEntry/View';
 
+//Public Page
+import PublicPageList from '../Pages/PublicPage/List';
+import PublicPageCreate from '../Pages/PublicPage/Create';
+import PublicPageView from '../Pages/PublicPage/View';
+
 
 export default function AdminRoutes() {
   return (
@@ -262,10 +267,15 @@ export default function AdminRoutes() {
         {/* <Route path='/dashboard/contributions/monthlyContribution-list' element={<mon/>}/> */}
 
         {/* Account Direcy Entry */}
-        <Route path='/dashboard/contributions/accountDirectEntry-list' element={<AccountDirectEntryList />} />
+        <Route path='/dashboard/contributions/accountDirectEntry-list' element={<AccountDirectEntryList/>} />
         <Route path='/dashboard/contributions/accountDirectEntry-create' element={<AccountDirectEntryCreate />} />
         <Route path='/dashboard/contributions/accountDirectEntry-edit/:accountsDirectEntryID' element={<AccountDirectEntryEdit />} />
         <Route path='/dashboard/contributions/accountDirectEntry-view/:accountsDirectEntryID' element={<AccountDirectEntryView />} />
+
+       {/* Public Page */}
+        <Route path='/dashboard/cms/publicPage-list' element={<PublicPageList/>} />
+        <Route path='/dashboard/cms/publicPage-create' element={<PublicPageCreate/>} />
+        <Route path='/dashboard/cms/publicPage-view' element={<PublicPageView/>} />
 
       </Route>
 

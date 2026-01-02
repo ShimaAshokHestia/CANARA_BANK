@@ -205,6 +205,8 @@ export const API_ENDPOINTS = {
 
   PUBLIC_PAGE: {
     GET_ALL: `${API_BASE_URL}/PublicPage/public/home`,
+    CREATE:`${API_BASE_URL}/PubicPage`,
+    DELETE:(id:number)=>`${API_BASE_URL}/PublicPage/${id}`
   },
 
   //-------------------------STAFF MODULE------------------------------

@@ -13,7 +13,7 @@ import PublicManagingCommitteeService from "../Services/ManagingCommiteePublic.s
 //   email?: string;
 // }
 
-const ManagingCommittee: React.FC = () => {
+const ManagingCommitteePublic: React.FC = () => {
 
    const managingCommittee = PublicService.managingCommittee
 
@@ -98,4 +98,4 @@ const ManagingCommittee: React.FC = () => {
   );
 };
 
-export default ManagingCommittee;
+export default ManagingCommitteePublic;

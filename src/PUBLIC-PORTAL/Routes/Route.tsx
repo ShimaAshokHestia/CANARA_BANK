@@ -7,13 +7,13 @@ import PublicLayout from '../Layout/Layout';
 import ContactUs from '../Pages/ContactUs';
 import Downloads from '../Pages/Downloads';
 import Rules from '../Pages/Rules';
-import ManagingCommittee from '../Pages/ManagingCommittee';
 import AboutUs from '../Pages/AboutUs';
 import Home from '../Pages/Home';
 import News from '../Pages/NewPage';
 import Claims from '../Pages/Claims';
 import PrivacyPolicy from '../Pages/PrivacyPolicy';
 import LoginPage from '../Auth/Login';
+import ManagingCommitteePublic from '../Pages/ManagingCommittee';
 
 export const publicRoutes = (
   <>
@@ -25,7 +25,7 @@ export const publicRoutes = (
       <Route index element={<Home />} />
       <Route path="downloads" element={<Downloads />} />
       <Route path="about-us" element={<AboutUs />} />
-      <Route path="managing-committee" element={<ManagingCommittee />} />
+      <Route path="managing-committee" element={<ManagingCommitteePublic />} />
       <Route path="rules" element={<Rules />} />
       <Route path="claims" element={<Claims />} />
       <Route path="contact-us" element={<ContactUs />} />

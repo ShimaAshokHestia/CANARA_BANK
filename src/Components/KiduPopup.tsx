@@ -20,6 +20,7 @@ interface KiduPopupProps<T> {
   idKey?: string;
   rowsPerPage?: number;
   searchKeys?: (keyof T)[]; // Keys to search in
+  showAddButton?: boolean; // Control whether to show add button in empty state
 }
 
 function KiduPopup<T extends Record<string, any>>({
@@ -32,7 +33,8 @@ function KiduPopup<T extends Record<string, any>>({
   AddModalComponent,
   idKey = "id",
   rowsPerPage = 10,
-  searchKeys
+  searchKeys,
+  showAddButton = true // Default to true for backward compatibility
 }: KiduPopupProps<T>) {
   const [showAddModal, setShowAddModal] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -164,8 +166,8 @@ function KiduPopup<T extends Record<string, any>>({
                 showActions={false}
                 showSearch={true}
                 showTitle={false}
-                showKiduPopupButton={!!AddModalComponent}
-                addRoute={AddModalComponent ? "#" : undefined} // Dummy route needed for button to show
+                showKiduPopupButton={showAddButton && !!AddModalComponent} // Only show if both enabled
+                addRoute={showAddButton && AddModalComponent ? "#" : undefined}
                 addButtonLabel={title.replace("Select ", "")}
                 onRowClick={handleRowClick}
                 onAddClick={() => setShowAddModal(true)}

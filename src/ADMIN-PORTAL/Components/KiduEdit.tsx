@@ -657,8 +657,8 @@ const KiduEdit: React.FC<KiduEditProps> = ({
     const colWidth = rules.colWidth || 4;
     
     return (
-      <Col md={colWidth} className="mb-2" key={name}>
-        <Form.Label className="mb-1 fw-medium small">
+      <Col md={colWidth} className="mb-3" key={name}>
+        <Form.Label className="fw-bold">
           {rules.label}
           {rules.required && <span style={{ color: "red", marginLeft: "2px" }}>*</span>}
         </Form.Label>

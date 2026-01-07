@@ -24,7 +24,6 @@ const columns = [
   { key: "branchName", label: "Branch", enableSorting: true, type: "text" as const },
   { key: "statusName",  label: "Status", enableSorting: true, type: "text" as const },
   { key: "isRegCompleted", label: "Reg. Completed", enableSorting: true, type: "checkbox" as const },
-  { key: "unionMember", label: "Union Member", enableSorting: true, type: "text" as const },
 ];
 
 const MemberList: React.FC = () => {

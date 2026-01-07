@@ -31,7 +31,7 @@ const MemberEdit: React.FC = () => {
   const fields: Field[] = [
     { name: "staffNo", rules: { type: "number", label: "Staff No", required: true, colWidth: 3 } },
     { name: "name", rules: { type: "text", label: "Name", required: true, colWidth: 6 } },
-    { name: "genderId", rules: { type: "number", label: "Gender ID", required: true, colWidth: 3 } },
+    { name: "genderId", rules: { type: "select", label: "Gender", required: true, colWidth: 3 } },
 
     { name: "designationId", rules: { type: "popup", label: "Designation", required: true, colWidth: 3 } },
     { name: "categoryId", rules: { type: "popup", label: "Category", required: true, colWidth: 3 } },
@@ -48,32 +48,46 @@ const MemberEdit: React.FC = () => {
     { name: "nominee", rules: { type: "text", label: "Nominee Name", colWidth: 4 } },
     { name: "nomineeRelation", rules: { type: "text", label: "Nominee Relation", colWidth: 4 } },
     { name: "nomineeIDentity", rules: { type: "text", label: "Nominee Identity", colWidth: 4 } },
-    { name: "unionMember", rules: { type: "text", label: "Union Member (Yes/No)", colWidth: 3 } },
+    { name: "unionMember", rules: { type: "select", label: "Union Member", colWidth: 3 } },
     { name: "totalRefund", rules: { type: "text", label: "Total Refund", colWidth: 3 } },
+  ];
+
+  // Gender options
+  const genderOptions = [
+    { value: 0, label: "Male" },
+    { value: 1, label: "Female" },
+    { value: 2, label: "Others" }
+  ];
+
+  // Union Member options
+  const unionMemberOptions = [
+    { value: "Yes", label: "Yes" },
+    { value: "No", label: "No" }
   ];
 
   const toIsoMidnight = (val?: string) => (val ? `${val}T00:00:00` : "");
 
   const handleFetch = async (id: string) => {
-  const response = await MemberService.getMemberById(Number(id));
-  const member = response.value;
+    const response = await MemberService.getMemberById(Number(id));
+    const member = response.value;
 
-  if (member) {
-    const branch = await BranchService.getBranchById(member.branchId);
-    setSelectedBranch(branch.value);
+    if (member) {
+      const branch = await BranchService.getBranchById(member.branchId);
+      setSelectedBranch(branch.value);
 
-    const designation = await DesignationService.getDesignationById(member.designationId);
-    setSelectedDesignation(designation.value);
+      const designation = await DesignationService.getDesignationById(member.designationId);
+      setSelectedDesignation(designation.value);
 
-    const category = await CategoryService.getCategoryById(member.categoryId);
-    setSelectedCategory(category.value);
+      const category = await CategoryService.getCategoryById(member.categoryId);
+      setSelectedCategory(category.value);
 
-    const status = await StatusService.getStatusById(member.statusId);
-    setSelectedStatus(status.value);
-  }
+      const status = await StatusService.getStatusById(member.statusId);
+      setSelectedStatus(status.value);
+    }
 
-  return response;
-};
+    return response;
+  };
+
   const handleUpdate = async (id: string, formData: Record<string, any>) => {
     if (!selectedBranch || !selectedDesignation || !selectedCategory || !selectedStatus) {
       throw new Error("Please select all required values");
@@ -112,7 +126,7 @@ const MemberEdit: React.FC = () => {
     await MemberService.updateMember(Number(id), payload);
   };
 
- const popupHandlers = {
+  const popupHandlers = {
     branchId: {
       value: selectedBranch ? `${selectedBranch.dpCode} - ${selectedBranch.name}` : "",
       actualValue: selectedBranch?.branchId,
@@ -147,30 +161,34 @@ const MemberEdit: React.FC = () => {
         auditLogConfig={{ tableName: "Member", recordIdField: "memberId" }}
         popupHandlers={popupHandlers}
         themeColor="#1B3763"
+        options={{
+          genderId: genderOptions,
+          unionMember: unionMemberOptions
+        }}
       />
 
       <BranchPopup 
-      show={showBranchPopup} 
-      handleClose={() => setShowBranchPopup(false)} 
-      onSelect={setSelectedBranch} 
+        show={showBranchPopup} 
+        handleClose={() => setShowBranchPopup(false)} 
+        onSelect={setSelectedBranch} 
       />
       <DesignationPopup 
-      show={showDesignationPopup} 
-      handleClose={() => setShowDesignationPopup(false)} 
-      onSelect={setSelectedDesignation} 
+        show={showDesignationPopup} 
+        handleClose={() => setShowDesignationPopup(false)} 
+        onSelect={setSelectedDesignation} 
       />
       <CategoryPopup 
-      show={showCategoryPopup} 
-      handleClose={() => setShowCategoryPopup(false)} 
-      onSelect={setSelectedCategory} 
+        show={showCategoryPopup} 
+        handleClose={() => setShowCategoryPopup(false)} 
+        onSelect={setSelectedCategory} 
       />
       <StatusPopup 
-      show={showStatusPopup} 
-      handleClose={() => setShowStatusPopup(false)} 
-      onSelect={setSelectedStatus} 
+        show={showStatusPopup} 
+        handleClose={() => setShowStatusPopup(false)} 
+        onSelect={setSelectedStatus} 
       />
     </>
   );
 };
 
-export default MemberEdit;
+export default MemberEdit

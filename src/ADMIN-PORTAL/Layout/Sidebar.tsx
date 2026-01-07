@@ -19,7 +19,8 @@ import {
   BsPersonFillGear,
   BsBuilding,
   BsCalendar3,
-  BsBag
+  BsBag,
+  BsTicketPerforated
 } from "react-icons/bs";
 import { FaFileInvoice } from "react-icons/fa6";
 import { BiLogOut } from "react-icons/bi";
@@ -341,6 +342,29 @@ const Sidebar: React.FC = () => {
                   {hovered && (
                     <span className={`fw-bold flex-grow-1 ${isActive ? "text-white" : "text-white"}`}>
                       Reports
+                    </span>
+                  )}
+                </>
+              )}
+            </NavLink>
+
+            {/* Support Tickets Menu */}
+            <NavLink
+              to="/dashboard/supportTickets-list"
+              className={({ isActive }) =>
+                `d-flex align-items-center gap-2 w-100 ${hovered ? "ps-4 pe-3" : "justify-content-center"} rounded mt-2 ${isActive ? "bg-white" : ""}`
+              }
+              style={{ fontSize: "13px", textDecoration: "none", padding: "8px 0" }}
+            >
+              {({ isActive }) => (
+                <>
+                  <BsTicketPerforated
+                    className={isActive ? "text-primary" : "text-white"}
+                    style={{ fontSize: "20px", minWidth: "20px" }}
+                  />
+                  {hovered && (
+                    <span className={`fw-bold flex-grow-1 ${isActive ? "text-white" : "text-white"}`}>
+                      Support Tickets
                     </span>
                   )}
                 </>

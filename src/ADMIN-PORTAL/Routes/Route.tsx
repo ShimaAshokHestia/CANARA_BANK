@@ -134,6 +134,12 @@ import PublicPageList from '../Pages/PublicPage/List';
 import PublicPageCreate from '../Pages/PublicPage/Create';
 import PublicPageView from '../Pages/PublicPage/View';
 
+//Support Ticket
+import SupportTicketList from '../Pages/SupportTickets/List';
+import SupportTicketCreate from '../Pages/SupportTickets/Create';
+import SupportTicketEdit from '../Pages/SupportTickets/Edit';
+import SupportTicketView from '../Pages/SupportTickets/View';
+
 // Export route configuration as JSX elements
 export const adminRoutes = (
   <>
@@ -270,6 +276,13 @@ export const adminRoutes = (
       <Route path="/dashboard/cms/publicPage-list" element={<PublicPageList />} />
       <Route path="/dashboard/cms/publicPage-create" element={<PublicPageCreate />} />
       <Route path="/dashboard/cms/publicPage-view" element={<PublicPageView />} />
+
+      {/* Support Ticket */}
+      <Route path="/dashboard/supportTickets-list" element={<SupportTicketList />} />
+      <Route path="/dashboard/supportTickets-create" element={<SupportTicketCreate />} />
+      <Route path="/dashboard/supportTickets-edit/:supportTicketId" element={<SupportTicketEdit />} />
+      <Route path="/dashboard/supportTickets-view/:supportTicketId" element={<SupportTicketView />} />
+
     </Route>
     
     {/* Catch-All Route for 404 */}

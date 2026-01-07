@@ -27,7 +27,7 @@ const MemberCreate: React.FC = () => {
   const fields: Field[] = [
     { name: "staffNo", rules: { type: "number", label: "Staff No", required: true, colWidth: 3 } },
     { name: "name", rules: { type: "text", label: "Name", required: true, minLength: 2, maxLength: 150, colWidth: 6 } },
-    { name: "genderId", rules: { type: "number", label: "Gender ID", required: true, colWidth: 3 } },
+    { name: "genderId", rules: { type: "select", label: "Gender", required: true, colWidth: 3 } },
 
     { name: "designationId", rules: { type: "popup", label: "Designation", required: true, colWidth: 4 } },
     { name: "categoryId", rules: { type: "popup", label: "Category", required: true, colWidth: 4 } },
@@ -46,7 +46,7 @@ const MemberCreate: React.FC = () => {
     { name: "nomineeRelation", rules: { type: "text", label: "Nominee Relation", colWidth: 4 } },
     { name: "nomineeIDentity", rules: { type: "text", label: "Nominee Identity", colWidth: 4 } },
 
-    { name: "unionMember", rules: { type: "text", label: "Union Member (Yes / No)", colWidth: 3 } },
+    { name: "unionMember", rules: { type: "select", label: "Union Member", colWidth: 3 } },
     { name: "totalRefund", rules: { type: "text", label: "Total Refund", placeholder: "0", colWidth: 3 } },
   ];
 
@@ -79,7 +79,7 @@ const MemberCreate: React.FC = () => {
       profileImageSrc: formData.profileImageSrc?.trim() || "",
       unionMember: formData.unionMember?.trim() || "",
       totalRefund: formData.totalRefund?.toString() ?? "0",
-} as Omit<Member, "memberId" | "auditLogs">;
+    } as Omit<Member, "memberId" | "auditLogs">;
 
     await MemberService.createMember(payload);
   };
@@ -107,6 +107,19 @@ const MemberCreate: React.FC = () => {
     },
   };
 
+  // Gender options
+  const genderOptions = [
+    { value: 0, label: "Male" },
+    { value: 1, label: "Female" },
+    { value: 2, label: "Others" }
+  ];
+
+  // Union Member options
+  const unionMemberOptions = [
+    { value: "Yes", label: "Yes" },
+    { value: "No", label: "No" }
+  ];
+
   return (
     <>
       <KiduCreate
@@ -121,27 +134,31 @@ const MemberCreate: React.FC = () => {
         navigateDelay={1200}
         themeColor="#1B3763"
         popupHandlers={popupHandlers}
+        options={{
+          genderId: genderOptions,
+          unionMember: unionMemberOptions
+        }}
       />
 
       <BranchPopup 
-      show={showBranchPopup} 
-      handleClose={() => setShowBranchPopup(false)} 
-      onSelect={setSelectedBranch} 
+        show={showBranchPopup} 
+        handleClose={() => setShowBranchPopup(false)} 
+        onSelect={setSelectedBranch} 
       />
       <DesignationPopup 
-      show={showDesignationPopup} 
-      handleClose={() => setShowDesignationPopup(false)} 
-      onSelect={setSelectedDesignation} 
+        show={showDesignationPopup} 
+        handleClose={() => setShowDesignationPopup(false)} 
+        onSelect={setSelectedDesignation} 
       />
       <CategoryPopup 
-      show={showCategoryPopup} 
-      handleClose={() => setShowCategoryPopup(false)} 
-      onSelect={setSelectedCategory} 
+        show={showCategoryPopup} 
+        handleClose={() => setShowCategoryPopup(false)} 
+        onSelect={setSelectedCategory} 
       />
       <StatusPopup 
-      show={showStatusPopup} 
-      handleClose={() => setShowStatusPopup(false)} 
-      onSelect={setSelectedStatus} 
+        show={showStatusPopup} 
+        handleClose={() => setShowStatusPopup(false)} 
+        onSelect={setSelectedStatus} 
       />
     </>
   );

@@ -8,7 +8,6 @@ export interface Member {
   branchId: number;
   name: string;
   genderId: number;
-  //imageId: number;
   dob: Date | string; 
   dobString: string;
   doj: Date | string; 

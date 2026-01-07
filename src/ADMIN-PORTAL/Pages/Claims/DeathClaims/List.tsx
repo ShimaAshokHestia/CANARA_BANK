@@ -5,7 +5,6 @@ import type { DeathClaim } from "../../../Types/Claims/DeathClaims.type";
 import type { Member } from "../../../Types/Contributions/Member.types";
 import type { State } from "../../../Types/Settings/States.types";
 import type { Designation } from "../../../Types/Settings/Designation";
-
 import DeathClaimService from "../../../Services/Claims/DeathClaims.services";
 import MemberService from "../../../Services/Contributions/Member.services";
 import StateService from "../../../Services/Settings/State.services";

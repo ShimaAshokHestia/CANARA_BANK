@@ -1,7 +1,7 @@
 // src/components/YearMaster/YearMasterEdit.tsx
 
 import React from "react";
-import type { Field } from "../../Components/KiduCreate";
+import type { Field } from "../../Components/KiduEdit";
 import YearMasterService from "../../Services/Settings/YearMaster.services";
 import type { YearMaster } from "../../Types/Settings/YearMaster.types";
 import KiduEdit from "../../Components/KiduEdit";

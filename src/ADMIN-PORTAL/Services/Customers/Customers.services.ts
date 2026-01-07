@@ -5,7 +5,6 @@ import HttpService from "../../../Services/HttpService";
 import type { CustomResponse } from "../../../Types/ApiTypes";
 import type { Customer } from "../../Types/Customers/Customers.types";
 
-
 const CustomerService = {
   async getAllCustomers(): Promise<Customer[]> {
     const response = await HttpService.callApi<CustomResponse<Customer[]>>(
@@ -15,40 +14,32 @@ const CustomerService = {
     return response.value;
   },
 
- async getCustomerById(id: number): Promise<CustomResponse<Customer>> {
-  const response = await HttpService.callApi<CustomResponse<Customer>>(
-    API_ENDPOINTS.CUSTOMER.GET_BY_ID(id),
-    "GET"
-  );
-  return response; 
-},
+  async getCustomerById(id: number): Promise<CustomResponse<Customer>> {
+    const response = await HttpService.callApi<CustomResponse<Customer>>(
+      API_ENDPOINTS.CUSTOMER.GET_BY_ID(id),
+      "GET"
+    );
+    return response;
+  },
 
-  // async createCustomer(
-  //   data: Omit<Customer, "customerId" | "auditLogs">
-  // ): Promise<Customer> {
-  //   const response = await HttpService.callApi<CustomResponse<Customer>>(
-  //     API_ENDPOINTS.CUSTOMER.CREATE,
-  //     "POST",
-  //     data
-  //   );
-  //   return response.value;
-  // },
-async createCustomer(data: { customer: any }) {
-  return HttpService.callApi(
-    API_ENDPOINTS.CUSTOMER.CREATE,
-    "POST",
-    data
-  );
-},
+  // Updated to accept Customer data directly (not wrapped in object)
+  async createCustomer(data: Omit<Customer, "auditLogs">): Promise<Customer> {
+    const response = await HttpService.callApi<CustomResponse<Customer>>(
+      API_ENDPOINTS.CUSTOMER.CREATE,
+      "POST",
+      data // Send data directly, not wrapped
+    );
+    return response.value;
+  },
 
   async updateCustomer(
     id: number,
-    data: Partial<Omit<Customer, "customerId" | "auditLogs">>
+    data: Partial<Customer>
   ): Promise<Customer> {
     const response = await HttpService.callApi<CustomResponse<Customer>>(
       API_ENDPOINTS.CUSTOMER.UPDATE(id),
       "PUT",
-      data
+      data // Send complete customer object including customerId
     );
     return response.value;
   },

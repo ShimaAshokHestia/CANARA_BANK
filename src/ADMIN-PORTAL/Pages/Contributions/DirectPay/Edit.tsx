@@ -18,7 +18,7 @@ const DirectPaymentEdit: React.FC = () => {
     { name: "paymentDate", rules: { type: "date", label: "Payment Date", required: true, colWidth: 4 } },
     { name: "paymentMode", rules: { type: "text", label: "Payment Mode", required: true, colWidth: 4 } },
     { name: "referenceNo", rules: { type: "text", label: "Reference No", required: true, colWidth: 4 } },
-    { name: "remarks", rules: { type: "textarea", label: "Remarks", colWidth: 12 } },
+    { name: "remarks", rules: { type: "textarea", label: "Remarks", colWidth: 6 } },
   ];
 
   const handleFetch = async (id: string) => {

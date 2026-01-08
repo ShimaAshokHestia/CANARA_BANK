@@ -36,7 +36,7 @@ const AccountDirectEntryCreate: React.FC = () => {
     { name: "f10", rules: { type: "text", label: "F10", colWidth: 4 } },
     { name: "f11", rules: { type: "text", label: "F11", colWidth: 4 } },
 
-    { name: "status", rules: { type: "text", label: "Status", colWidth: 3 } },
+    { name: "status", rules: { type: "select", label: "Status", colWidth: 3 } },
     { name: "isApproved", rules: { type: "toggle", label: "Approved" } },
     { name: "approvedBy", rules: { type: "text", label: "Approved By", colWidth: 3 } },
     { name: "approvedDate", rules: { type: "date", label: "Approved Date", colWidth: 3 } },
@@ -90,6 +90,11 @@ const AccountDirectEntryCreate: React.FC = () => {
     }
   };
 
+//status option
+const statusOptions =[
+  {value:"submitted",label:"Submitted"}
+]
+
   return (
     <>
       <KiduCreate
@@ -104,11 +109,29 @@ const AccountDirectEntryCreate: React.FC = () => {
         errorMessage="Failed to create entry. Please try again."
         themeColor="#1B3763"
         navigateDelay={1200}
+        options={{
+          status: statusOptions
+        }}
       />
 
-      <MemberPopup show={showMemberPopup} handleClose={() => setShowMemberPopup(false)} onSelect={setSelectedMember} />
-      <BranchPopup show={showBranchPopup} handleClose={() => setShowBranchPopup(false)} onSelect={setSelectedBranch} />
-      <MonthPopup show={showMonthPopup} handleClose={()=> setShowMonthPopup(false)} onSelect={setSelectedMonth} />
+      <MemberPopup 
+      show={showMemberPopup} 
+      handleClose={() => setShowMemberPopup(false)} 
+      onSelect={setSelectedMember} 
+      />
+      
+      <BranchPopup 
+      show={showBranchPopup} 
+      handleClose={() => setShowBranchPopup(false)} 
+      onSelect={setSelectedBranch} 
+      />
+      
+      <MonthPopup 
+      show={showMonthPopup} 
+      handleClose={()=> setShowMonthPopup(false)} 
+      onSelect={setSelectedMonth} 
+      />
+
        </>
   );
 };

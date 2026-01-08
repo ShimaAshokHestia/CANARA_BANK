@@ -10,7 +10,8 @@ export interface User {
   userId: number;
   userName: string;
   userEmail: string;
-  staffNo: number; // Added to match backend response
+  staffNo: number;
+  memberId?: number; // Added to match backend response
   phoneNumber: string;
   address: string;
   passwordHash: string;

@@ -4,10 +4,14 @@ import "../Style/Profile.css";
 import { useNavigate } from "react-router-dom";
 import type { Member } from "../../ADMIN-PORTAL/Types/Contributions/Member.types";
 import MemberService from "../../ADMIN-PORTAL/Services/Contributions/Member.services";
+import AuthService from "../../Services/Auth.services";
 
 const Profile: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [user, setUser] = useState<Member | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   // 🔹 Fields configuration (labels + keys only)
   const fields = [
     { label: "Staff No", key: "staffNo" },
@@ -26,16 +30,38 @@ const Profile: React.FC = () => {
     { label: "Nominee Relationship", key: "nomineeRelationship" },
   ];
 
-  // 🔹 Fetch member by ID
+  // 🔹 Fetch member by ID using AuthService
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const memberId = Number(localStorage.getItem("memberId"));
-        if (!memberId) return;
+        setLoading(true);
+        setError(null);
+
+        // Use AuthService to get memberId
+        const memberId = AuthService.getMemberId();
+        
+        if (!memberId) {
+          setError("Member ID not found. Please log in again.");
+          setLoading(false);
+          return;
+        }
+
+        console.log("Fetching profile for memberId:", memberId);
+
+        // Fetch member details
         const response = await MemberService.getMemberById(memberId);
-        setUser(response.value);
-      } catch (error) {
+        
+        if (response.isSucess && response.value) {
+          setUser(response.value);
+          console.log("Profile loaded:", response.value);
+        } else {
+          setError("Failed to load profile data.");
+        }
+      } catch (error: any) {
         console.error("Failed to load profile:", error);
+        setError(error.message || "Failed to load profile. Please try again.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -44,7 +70,41 @@ const Profile: React.FC = () => {
 
   const handleShowContribution = () => {
     console.log("Show Contribution clicked");
+    navigate("/staff-portal/history");
   };
+
+  if (loading) {
+    return (
+      <Card className="profile-card mt-2">
+        <Card.Body>
+          <div className="text-center py-5">
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+            <p className="mt-2">Loading profile...</p>
+          </div>
+        </Card.Body>
+      </Card>
+    );
+  }
+
+  if (error) {
+    return (
+      <Card className="profile-card mt-2">
+        <Card.Body>
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
+          <Button 
+            variant="primary" 
+            onClick={() => window.location.reload()}
+          >
+            Retry
+          </Button>
+        </Card.Body>
+      </Card>
+    );
+  }
 
   return (
     <Card className="profile-card mt-2">
@@ -127,7 +187,10 @@ const Profile: React.FC = () => {
           </Row>
         </div>
         <div className="profile-action text-end">
-          <Button className="profile-btn" onClick={handleShowContribution} onClickCapture={() => navigate("staff-portal/history")}>
+          <Button 
+            className="profile-btn" 
+            onClick={handleShowContribution}
+          >
             ₹ Show Contribution
           </Button>
         </div>

@@ -48,6 +48,18 @@ class AuthService {
           // Store user role separately for easy access
           localStorage.setItem('user_role', response.value.user.role);
           console.log('User role stored:', response.value.user.role);
+
+          // ✅ Store memberId separately for easy access (if available)
+          if (response.value.user.memberId) {
+            localStorage.setItem('member_id', response.value.user.memberId.toString());
+            console.log('Member ID stored:', response.value.user.memberId);
+          }
+
+          // ✅ Store staffNo separately for easy access
+          if (response.value.user.staffNo) {
+            localStorage.setItem('staff_no', response.value.user.staffNo.toString());
+            console.log('Staff No stored:', response.value.user.staffNo);
+          }
         }
 
         // Store token expiry
@@ -61,6 +73,8 @@ class AuthService {
         console.log('- jwt_token exists:', !!localStorage.getItem('jwt_token'));
         console.log('- user exists:', !!localStorage.getItem('user'));
         console.log('- user_role exists:', !!localStorage.getItem('user_role'));
+        console.log('- member_id exists:', !!localStorage.getItem('member_id'));
+        console.log('- staff_no exists:', !!localStorage.getItem('staff_no'));
         console.log('- token_expires_at exists:', !!localStorage.getItem('token_expires_at'));
       } else {
         console.error('Login failed - response not successful or no value');
@@ -81,6 +95,8 @@ class AuthService {
     localStorage.removeItem('jwt_token');
     localStorage.removeItem('user');
     localStorage.removeItem('user_role');
+    localStorage.removeItem('member_id'); // ✅ Clear memberId
+    localStorage.removeItem('staff_no'); // ✅ Clear staffNo
     localStorage.removeItem('token_expires_at');
 
     console.log('After logout - jwt_token:', localStorage.getItem('jwt_token') !== null);
@@ -130,6 +146,56 @@ class AuthService {
       return role;
     } catch (error) {
       console.error('Error getting user role from localStorage:', error);
+      return null;
+    }
+  }
+
+  // ✅ NEW METHOD - Get memberId for current user
+  static getMemberId(): number | null {
+    try {
+      const memberIdStr = localStorage.getItem('member_id');
+      console.log('Getting member ID:', memberIdStr);
+      
+      if (!memberIdStr) {
+        // Try getting from user object as fallback
+        const user = this.getCurrentUser();
+        if (user?.memberId) {
+          console.log('Member ID found in user object:', user.memberId);
+          return user.memberId;
+        }
+        console.log('No member ID found');
+        return null;
+      }
+      
+      const memberId = parseInt(memberIdStr, 10);
+      return isNaN(memberId) ? null : memberId;
+    } catch (error) {
+      console.error('Error getting member ID:', error);
+      return null;
+    }
+  }
+
+  // ✅ NEW METHOD - Get staffNo for current user
+  static getStaffNo(): number | null {
+    try {
+      const staffNoStr = localStorage.getItem('staff_no');
+      console.log('Getting staff number:', staffNoStr);
+      
+      if (!staffNoStr) {
+        // Try getting from user object as fallback
+        const user = this.getCurrentUser();
+        if (user?.staffNo) {
+          console.log('Staff number found in user object:', user.staffNo);
+          return user.staffNo;
+        }
+        console.log('No staff number found');
+        return null;
+      }
+      
+      const staffNo = parseInt(staffNoStr, 10);
+      return isNaN(staffNo) ? null : staffNo;
+    } catch (error) {
+      console.error('Error getting staff number:', error);
       return null;
     }
   }
@@ -185,10 +251,9 @@ class AuthService {
 
     if (!role) {
       console.warn('No role found, cannot determine dashboard');
-      return '/'; // Return home page instead of /login
+      return '/';
     }
 
-    // Normalize role string (trim and convert to lowercase for comparison)
     const normalizedRole = role.trim().toLowerCase();
 
     switch (normalizedRole) {
@@ -208,7 +273,7 @@ class AuthService {
       
       default:
         console.warn(`Unknown role: ${role}, redirecting to home`);
-        return '/'; // Return home page instead of /login
+        return '/';
     }
   }
 

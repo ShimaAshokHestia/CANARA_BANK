@@ -46,6 +46,7 @@ const UserCreate: React.FC = () => {
       userName: formData.userName.trim(),
       userEmail: formData.userEmail.trim(),
       staffNo: selectedMember.staffNo,
+      memberId: selectedMember.memberId, // ✅ ADD THIS - Automatically set from selected member
       phoneNumber: formData.phoneNumber.trim(),
       address: formData.address?.trim() || "",
       passwordHash: formData.passwordHash,
@@ -66,7 +67,10 @@ const UserCreate: React.FC = () => {
       onOpen: () => setShowCompanyPopup(true),
     },
     staffNo: {
-      value: selectedMember ? `${selectedMember.staffNo} - ${selectedMember.name}` : "",
+      // ✅ UPDATED - Show both staffNo and memberId when selected
+      value: selectedMember 
+        ? `${selectedMember.staffNo} - ${selectedMember.name} (Member ID: ${selectedMember.memberId})` 
+        : "",
       onOpen: () => setShowMemberPopup(true),
     },
   };
@@ -100,8 +104,14 @@ const UserCreate: React.FC = () => {
         show={showMemberPopup}
         handleClose={() => setShowMemberPopup(false)}
         onSelect={(member) => {
+          // ✅ When member is selected, both staffNo and memberId are automatically available
           setSelectedMember(member);
           setShowMemberPopup(false);
+          console.log('Selected Member:', {
+            staffNo: member.staffNo,
+            memberId: member.memberId,
+            name: member.name
+          });
         }}
       />
     </>

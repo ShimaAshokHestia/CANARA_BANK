@@ -8,8 +8,10 @@ import type { RefundContribution } from "../../../Types/Claims/Refund.types";
 
 const columns = [
   { key: "refundContributionId", label: "Refund ID", enableSorting: true, type: "text" as const, },
-  { key: "staffNo", label: "Staff No", enableSorting: true, type: "text" as const, },
   { key: "refundNO", label: "Refund No", enableSorting: true, type: "text" as const, },
+  { key: "staffNo", label: "Staff No", enableSorting: true, type: "text" as const, },
+  { key: "stateName", label: "State", enableSorting: true, type: "text" as const},
+  { key: "designationName", label: "Designation", enableSorting: true, type: "text" as const},
   { key: "branchNameOFTime", label: "Branch Name", enableSorting: true, type: "text" as const, },
   { key: "dpcodeOfTime", label: "DP Code", enableSorting: true, type: "text" as const, },
   { key: "type",label: "Type", enableSorting: true, type: "text" as const, },

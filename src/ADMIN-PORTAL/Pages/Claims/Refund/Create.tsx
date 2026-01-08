@@ -1,4 +1,3 @@
-// src/ADMIN-PORTAL/Pages/Contributions/RefundContribution/RefundContributionCreate.tsx
 import React, { useState } from "react";
 import type { Field } from "../../../Components/KiduCreate";
 import KiduCreate from "../../../Components/KiduCreate";
@@ -8,101 +7,136 @@ import type { State } from "../../../Types/Settings/States.types";
 import StatePopup from "../../Settings/State/StatePopup";
 import type { Designation } from "../../../Types/Settings/Designation";
 import DesignationPopup from "../../Settings/Designation/DesignationPopup";
-
+import type { Member } from "../../../Types/Contributions/Member.types";
+import MemberPopup from "../../Contributions/Member/MemberPopup";
 
 const RefundContributionCreate: React.FC = () => {
-   //const [isLoading, setIsLoading] = useState(false);
-    const [showStatePopup, setShowStatePopup] = useState(false);
-    const[showDesignationPopup,setShowDesignationPopup]=useState(false);
-    
-    const [selectedState, setSelectedState] = useState<State | null>(null);
-    const[selectedDesignation,setSelectedDesignation]=useState<Designation|null>(null);
- 
-    const fields: Field[] = [
-   // { name: "staffNo", rules: { type: "number", label: "Staff No", required: true, colWidth: 4 } },
-    { name: "stateId", rules: { type: "popup", label: "State ID", required: true, colWidth: 4 } },
-    { name: "designationId", rules: { type: "popup", label: "Designation ID", required: true, colWidth: 4 } },
+  const [showStatePopup, setShowStatePopup] = useState(false);
+  const [showMemberPopup, setShowMemberPopup] = useState(false);
+  const [showDesignationPopup, setShowDesignationPopup] = useState(false);
+
+  const [selectedState, setSelectedState] = useState<State | null>(null);
+  const [selectedMember, setSelectedMember] = useState<Member | null>(null);
+  const [selectedDesignation, setSelectedDesignation] = useState<Designation | null>(null);
+
+  const fields: Field[] = [
+    { name: "stateId", rules: { type: "popup", label: "State", required: true, colWidth: 4 } },
+    { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4 } },
+    { name: "designationId", rules: { type: "popup", label: "Designation", required: true, colWidth: 4 } },
+
     { name: "refundNO", rules: { type: "text", label: "Refund No", required: true, colWidth: 4 } },
     { name: "branchNameOFTime", rules: { type: "text", label: "Branch Name (At the Time)", required: true, colWidth: 4 } },
     { name: "dpcodeOfTime", rules: { type: "text", label: "DP Code (At the Time)", required: true, colWidth: 4 } },
-    { name: "type", rules: { type: "text", label: "Type", required: true, colWidth: 4 } },
-    { name: "remark", rules: { type: "textarea", label: "Remark", required: false, colWidth: 12 } },
+
+    { name: "type", rules: { type: "select", label: "Type", required: true, colWidth: 4 } },
+    { name: "remark", rules: { type: "textarea", label: "Remark", colWidth: 6 } },
+
     { name: "ddno", rules: { type: "text", label: "DD No", required: true, colWidth: 4 } },
     { name: "dddate", rules: { type: "date", label: "DD Date", required: true, colWidth: 4 } },
+
     { name: "amount", rules: { type: "number", label: "Amount", required: true, colWidth: 4 } },
-    { name: "lastContribution", rules: { type: "number", label: "Last Contribution", required: false, colWidth: 4 } },
+    { name: "lastContribution", rules: { type: "number", label: "Last Contribution", colWidth: 4 } },
     { name: "yearOF", rules: { type: "number", label: "Year Of", required: true, colWidth: 4 } },
   ];
 
-//const toIso = (val?: string) => (val ? `${val}T00:00:00` : "");
+  const toIso = (val?: string) => (val ? `${val}T00:00:00` : "");
 
   const handleSubmit = async (formData: Record<string, any>) => {
-   
-    try{
-      const payload: Omit<RefundContribution, "refundContributionId" | "auditLogs"> = {
-      staffNo: Number(formData.staffNo),
-      stateId: Number(formData.stateId),
-      designationId: Number(formData.designationId),
+    if (!selectedState) throw new Error("Please select State");
+    if (!selectedMember) throw new Error("Please select Member");
+    if (!selectedDesignation) throw new Error("Please select Designation");
+
+    const payload: Omit<RefundContribution, "refundContributionId" | "auditLogs"> = {
+      staffNo: selectedMember.staffNo,
+      stateId: selectedState.stateId,
+      memberId: selectedMember.memberId,
+      designationId: selectedDesignation.designationId,
+
       deathDate: "",
       deathDateString: "",
-      refundNO: formData.refundNO?.trim() || "",
-      branchNameOFTime: formData.branchNameOFTime?.trim() || "",
-      dpcodeOfTime: formData.dpcodeOfTime?.trim() || "",
-      type: formData.type?.trim() || "",
+
+      refundNO: formData.refundNO.trim(),
+      branchNameOFTime: formData.branchNameOFTime.trim(),
+      dpcodeOfTime: formData.dpcodeOfTime.trim(),
+
+      type: formData.type,
       remark: formData.remark?.trim() || "",
-      ddno: formData.ddno?.trim() || "",
-      dddate: formData.dddate,
-      dddateString: formData.dddate,
+
+      ddno: formData.ddno.trim(),
+      dddate: toIso(formData.dddate),
+      dddateString: toIso(formData.dddate),
+
       amount: Number(formData.amount),
       lastContribution: Number(formData.lastContribution || 0),
       yearOF: Number(formData.yearOF),
     };
+
     await RefundContributionService.createRefundContribution(payload);
-    } catch(err){
-      console.error("Error creating Refund Contribution:", err);
-      throw err;
-    } 
   };
 
- const popupHandlers = {
-  stateId: {
-    value: selectedState?.stateId?.toString() || "",
-    onOpen: () => setShowStatePopup(true),
-  },
-  designationId: {
-    value: selectedDesignation?.designationId?.toString() || "",
-    onOpen: () => setShowDesignationPopup(true),
-  },
-};
+  const popupHandlers = {
+    stateId: {
+      value: selectedState?.name || "",
+      actualValue: selectedState?.stateId,
+      onOpen: () => setShowStatePopup(true),
+    },
+    memberId: {
+      value: selectedMember ? `${selectedMember.staffNo} - ${selectedMember.name}` : "",
+      actualValue: selectedMember?.memberId,
+      onOpen: () => setShowMemberPopup(true),
+    },
+    designationId: {
+      value: selectedDesignation?.name || "",
+      actualValue: selectedDesignation?.designationId,
+      onOpen: () => setShowDesignationPopup(true),
+    },
+  };
 
-  
+  const typeOptions = [
+    { value: "Refund", label: "Refund" },
+    { value: "Loan", label: "Loan" },
+    { value: "Emergency", label: "Emergency" },
+  ];
+
   return (
-    
     <>
       <KiduCreate
         title="Create Refund Contribution"
         fields={fields}
         onSubmit={handleSubmit}
-        submitButtonText="Create Refund Contribution"
-        showResetButton
-        successMessage="Refund Contribution created successfully!"
-        errorMessage="Failed to create Refund Contribution. Please try again."
+        popupHandlers={popupHandlers}
+        options={{ type: typeOptions }}
         navigateOnSuccess="/dashboard/claims/refundcontribution-list"
         themeColor="#1B3763"
-         popupHandlers={popupHandlers}
       />
-        <StatePopup
+
+      <StatePopup
         show={showStatePopup}
         handleClose={() => setShowStatePopup(false)}
-        onSelect={setSelectedState}
+        onSelect={(s) => {
+          setSelectedState(s);
+          setShowStatePopup(false);
+        }}
       />
+
+      <MemberPopup
+        show={showMemberPopup}
+        handleClose={() => setShowMemberPopup(false)}
+        onSelect={(m) => {
+          setSelectedMember(m);
+          setShowMemberPopup(false);
+        }}
+      />
+
       <DesignationPopup
         show={showDesignationPopup}
         handleClose={() => setShowDesignationPopup(false)}
-        onSelect={setSelectedDesignation}
+        onSelect={(d) => {
+          setSelectedDesignation(d);
+          setShowDesignationPopup(false);
+        }}
       />
     </>
-    
   );
 };
 

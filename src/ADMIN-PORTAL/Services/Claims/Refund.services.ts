@@ -8,7 +8,7 @@ import type { RefundContribution } from "../../Types/Claims/Refund.types";
 const RefundContributionService = {
   async getAllRefundContributions(): Promise<RefundContribution[]> {
     const response = await HttpService.callApi<CustomResponse<RefundContribution[]>>(
-      API_ENDPOINTS.REFUND_CONTRIBUITION.GET_ALL,
+      API_ENDPOINTS.REFUND_CONTRIBUTION.GET_ALL,
       "GET"
     );
     return response.value;
@@ -16,7 +16,7 @@ const RefundContributionService = {
 
   async getRefundContributionById(id: number): Promise<CustomResponse<RefundContribution>> {
     const response = await HttpService.callApi<CustomResponse<RefundContribution>>(
-      API_ENDPOINTS.REFUND_CONTRIBUITION.GET_BY_ID(id),
+      API_ENDPOINTS.REFUND_CONTRIBUTION.GET_BY_ID(id),
       "GET"
     );
     return response;
@@ -26,7 +26,7 @@ const RefundContributionService = {
     data: Omit<RefundContribution, "refundContributionId" | "auditLogs">
   ): Promise<RefundContribution> {
     const response = await HttpService.callApi<CustomResponse<RefundContribution>>(
-      API_ENDPOINTS.REFUND_CONTRIBUITION.CREATE,
+      API_ENDPOINTS.REFUND_CONTRIBUTION.CREATE,
       "POST",
       data
     );
@@ -38,7 +38,7 @@ const RefundContributionService = {
     data: Partial<Omit<RefundContribution, "refundContributionId" | "auditLogs">>
   ): Promise<RefundContribution> {
     const response = await HttpService.callApi<CustomResponse<RefundContribution>>(
-      API_ENDPOINTS.REFUND_CONTRIBUITION.UPDATE(id),
+      API_ENDPOINTS.REFUND_CONTRIBUTION.UPDATE(id),
       "PUT",
       data
     );
@@ -47,7 +47,7 @@ const RefundContributionService = {
 
   async deleteRefundContribution(id: number): Promise<void> {
     await HttpService.callApi<CustomResponse<void>>(
-      API_ENDPOINTS.REFUND_CONTRIBUITION.DELETE(id),
+      API_ENDPOINTS.REFUND_CONTRIBUTION.DELETE(id),
       "DELETE"
     );
   },

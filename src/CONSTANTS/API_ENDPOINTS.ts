@@ -136,10 +136,10 @@ export const API_ENDPOINTS = {
     UPDATE: (id: number) => `${API_BASE_URL}/UserRoleRight/${id}`,
     DELETE: (id: number) => `${API_BASE_URL}/UserRoleRight/${id}`,
   },
-  REFUND_CONTRIBUITION: {
+  REFUND_CONTRIBUTION: {
     GET_ALL: `${API_BASE_URL}/RefundContribution`,
     GET_BY_ID: (id: number) => `${API_BASE_URL}/RefundContribution/${id}`,
-    CREATE: `${API_BASE_URL}/RefundContribuition`,
+    CREATE: `${API_BASE_URL}/RefundContribution`,
     UPDATE: (id: number) => `${API_BASE_URL}/RefundContribution/${id}`,
     DELETE: (id: number) => `${API_BASE_URL}/RefundContribution/${id}`,
   },

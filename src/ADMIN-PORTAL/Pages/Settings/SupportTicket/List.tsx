@@ -23,9 +23,9 @@ const SupportTicketList: React.FC = () => {
       title="Support Tickets"
       columns={columns}
       idKey="supportTicketId"
-      addRoute="/dashboard/support-ticket/support-ticket-create"
-      editRoute="/dashboard/support-ticket/support-ticket-edit"
-      viewRoute="/dashboard/support-ticket/support-ticket-view"
+      addRoute="/dashboard/support-ticket/supportTickets-create"
+      editRoute="/dashboard/support-ticket/supportTickets-edit"
+      viewRoute="/dashboard/support-ticket/supportTickets-view"
       fetchData={fetchData}
       showAddButton
       showSearch

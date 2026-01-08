@@ -29,14 +29,18 @@ const SupportTicketView: React.FC = () => {
       fields={fields}
       onFetch={handleFetch}
       onDelete={handleDelete}
-      editRoute="/dashboard/support-ticket/support-ticket-edit"
-      listRoute="/dashboard/support-ticket/support-ticket-list"
+      editRoute="/dashboard/support-ticket/supportTickets-edit"
+      listRoute="/dashboard/support-ticket/supportTickets-list"
       paramName="supportTicketId"
       auditLogConfig={{
         tableName: "SupportTicket",
         recordIdField: "supportTicketId",
       }}
       themeColor="#1B3763"
+      loadingText="Loading support ticket details..."
+      showDeleteButton={true}
+      showEditButton={true}
+      deleteConfirmMessage="Are you sure you want to delete this support ticket? This action cannot be undone."
     />
   );
 };

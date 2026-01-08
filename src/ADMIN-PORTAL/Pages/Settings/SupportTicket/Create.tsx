@@ -42,7 +42,7 @@ const SupportTicketCreate: React.FC = () => {
       loadingState={loading}
       successMessage="Support ticket created successfully!"
       errorMessage="Failed to create support ticket"
-      navigateOnSuccess="/dashboard/support-ticket/support-ticket-list"
+      navigateOnSuccess="/dashboard/support-ticket/supportTickets-list"
       themeColor="#1B3763"
     />
   );

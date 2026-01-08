@@ -87,7 +87,7 @@ const SupportTicketEdit: React.FC = () => {
       onFetch={handleFetch}
       onUpdate={handleUpdate}
       paramName="supportTicketId"
-      navigateBackPath="/dashboard/support-ticket/support-ticket-list"
+      navigateBackPath="/dashboard/support-ticket/supportTickets-list"
       successMessage="Support ticket updated successfully!"
       errorMessage="Failed to update support ticket"
       auditLogConfig={{

@@ -24,10 +24,13 @@ import {
 } from "react-icons/bs";
 import { FaFileInvoice } from "react-icons/fa6";
 import { BiLogOut } from "react-icons/bi";
+import AuthService from "../../Services/Auth.services";
+import KiduLogoutModal from "../../Components/KiduLogoutModal";
 
 const Sidebar: React.FC = () => {
   const [hovered, setHovered] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const handleMenuToggle = (menuName: string) => {
     setOpenMenu(openMenu === menuName ? null : menuName);
@@ -50,7 +53,7 @@ const Sidebar: React.FC = () => {
     { label: "Member", path: "/dashboard/contributions/member-list" },
     { label: "Monthly Contributions", path: "/dashboard/contributions/monthly" },
     { label: "Direct Pay", path: "/dashboard/contributions/directpayment-list" },
-    { label: "Account Direct Entry", path: "/dashboard/contributions/accountDirectEntry-list"}
+    { label: "Account Direct Entry", path: "/dashboard/contributions/accountDirectEntry-list" }
   ];
 
   const claimsSubMenu = [
@@ -63,15 +66,25 @@ const Sidebar: React.FC = () => {
     { label: "Quotes", path: "/dashboard/cms/dayquote-list" },
     { label: "Daily News", path: "/dashboard/cms/dailynews-list" },
     { label: "Managing Committee", path: "/dashboard/cms/manage-committe-list" },
-    { label: "Public Page", path:"/dashboard/cms/publicpage-list"},
-    { label: "Documents", path:"/dashboard/cms/documents-list"}
+    { label: "Public Page", path: "/dashboard/cms/publicpage-list" },
+    { label: "Documents", path: "/dashboard/cms/documents-list" }
   ];
 
   const navigate = useNavigate();
+  // const handleLogout = () => {
+  //   // AuthService.logout();
+  //   navigate("/");
+  // };
+
   const handleLogout = () => {
-    // AuthService.logout();
+    setShowLogoutModal(true);
+  };
+
+  const confirmLogout = () => {
+    AuthService.logout();
     navigate("/");
   };
+
 
   return (
     <>
@@ -94,7 +107,7 @@ const Sidebar: React.FC = () => {
             <p className="mt-2 text-warning fw-bold" style={{ fontSize: "15px" }}>
               Admin Portal
             </p>
-            
+
           ) : (
             <p className="fw-bolder fs-6 text-white">
               <span style={{ fontSize: "10px" }}></span>
@@ -112,7 +125,7 @@ const Sidebar: React.FC = () => {
               objectFit: "cover",
             }}
           /> */}
-          
+
         </div>
 
         <div
@@ -395,7 +408,7 @@ const Sidebar: React.FC = () => {
               )}
             </NavLink>
 
-             {/* Approval Menu */}
+            {/* Approval Menu */}
             <NavLink
               to="/dashboard/approval"
               className={({ isActive }) =>
@@ -429,7 +442,7 @@ const Sidebar: React.FC = () => {
                 cursor: "pointer",
               }}
             >
-              <BiLogOut style={{ fontSize: "20px" , color:"red"}} />
+              <BiLogOut style={{ fontSize: "20px", color: "red" }} />
               {hovered && <span className="ms-2 text-danger">Logout</span>}
             </p>
           </Nav>
@@ -508,6 +521,12 @@ const Sidebar: React.FC = () => {
           }
         `}
       </style>
+      <KiduLogoutModal
+        show={showLogoutModal}
+        onCancel={() => setShowLogoutModal(false)}
+        onConfirm={confirmLogout}
+      />
+
     </>
   );
 };

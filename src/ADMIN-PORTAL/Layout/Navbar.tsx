@@ -10,6 +10,7 @@ import { getFullImageUrl } from "../../CONSTANTS/API_ENDPOINTS";
 import KiduYearSelector from "../../Components/KiduYearSelector";
 import AuthService from "../../Services/Auth.services";
 import ProfileUpdate from "./Profile";
+import KiduLogoutModal from "../../Components/KiduLogoutModal";
 
 const NavbarComponent: React.FC = () => {
   const [showNotifications, setShowNotifications] = useState(false);
@@ -17,6 +18,7 @@ const NavbarComponent: React.FC = () => {
   const [username, setUsername] = useState<string>("Username");
   const [profilePic, setProfilePic] = useState<string>(profile);
   const { selectedYear, setSelectedYear } = useYear();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const navigate = useNavigate();
 
   // Fetch username from localStorage
@@ -64,10 +66,19 @@ const NavbarComponent: React.FC = () => {
     console.log("Selected Year Updated Globally:", year);
   };
 
+  // const handleLogout = () => {
+  //   AuthService.logout();
+  //   navigate("/");
+  // };
   const handleLogout = () => {
+    setShowLogoutModal(true);
+  };
+
+  const confirmLogout = () => {
     AuthService.logout();
     navigate("/");
   };
+
 
   return (
     <>
@@ -182,6 +193,13 @@ const NavbarComponent: React.FC = () => {
           <ProfileUpdate />
         </Offcanvas.Body>
       </Offcanvas>
+
+      <KiduLogoutModal
+        show={showLogoutModal}
+        onCancel={() => setShowLogoutModal(false)}
+        onConfirm={confirmLogout}
+      />
+
     </>
   );
 };

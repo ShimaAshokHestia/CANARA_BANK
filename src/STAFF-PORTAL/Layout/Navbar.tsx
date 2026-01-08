@@ -2,6 +2,8 @@ import { Menu, X, LogOut } from "lucide-react";
 import "../Style/Navbar.css";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../Services/Auth.services";
+import { useState } from "react";
+import KiduLogoutModal from "../../Components/KiduLogoutModal";
 
 interface Props {
   sidebarOpen: boolean;
@@ -10,6 +12,7 @@ interface Props {
 
 const StaffNavbar = ({ sidebarOpen, toggleSidebar }: Props) => {
   const navigate = useNavigate();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   // 🔹 Get user details from localStorage
   const storedUser = localStorage.getItem("user");
@@ -19,32 +22,49 @@ const StaffNavbar = ({ sidebarOpen, toggleSidebar }: Props) => {
   const staffNo = parsedUser?.staffNo ?? "—";
 
 
+  // const handleLogout = () => {
+  //   AuthService.logout(); //  same logout logic as AdminNavbar
+  //   navigate("/");
+  // };
+
   const handleLogout = () => {
-    AuthService.logout(); //  same logout logic as AdminNavbar
+    setShowLogoutModal(true);
+  };
+
+  const confirmLogout = () => {
+    AuthService.logout();
     navigate("/");
   };
   return (
-    <header  className={`staff-navbar ${sidebarOpen ? "expanded" : "collapsed"}`}>
-      <div className="left">
-        <button onClick={toggleSidebar}>
-          {sidebarOpen ? <X /> : <Menu />}
-        </button>
-        <div>
-          <p>Welcome back,</p>
-          <p className="fw-bold mt-1 text-warning">{userName}</p>
+    <>
+      <header className={`staff-navbar ${sidebarOpen ? "expanded" : "collapsed"}`}>
+        <div className="left">
+          <button onClick={toggleSidebar}>
+            {sidebarOpen ? <X /> : <Menu />}
+          </button>
+          <div>
+            <p>Welcome back,</p>
+            <p className="fw-bold mt-1 text-warning">{userName}</p>
+          </div>
         </div>
-      </div>
-      <div className="right">
-        <div className="staff-no">
-          <span>Staff No.</span>
-          <strong>{staffNo}</strong>
+        <div className="right">
+          <div className="staff-no">
+            <span>Staff No.</span>
+            <strong>{staffNo}</strong>
+          </div>
+          {/* NEW LOGOUT ICON */}
+          <button className="logout-icon" onClick={handleLogout}>
+            <LogOut />
+          </button>
         </div>
-        {/* NEW LOGOUT ICON */}
-        <button className="logout-icon" onClick={handleLogout}>
-          <LogOut />
-        </button>
-      </div>
-    </header>
+      </header>
+      <KiduLogoutModal
+        show={showLogoutModal}
+        onCancel={() => setShowLogoutModal(false)}
+        onConfirm={confirmLogout}
+      />
+
+    </>
   );
 };
 

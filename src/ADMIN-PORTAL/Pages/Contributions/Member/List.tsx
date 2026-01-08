@@ -9,7 +9,6 @@ import BranchService from "../../../Services/Settings/Branch.services";
 import DesignationService from "../../../Services/Settings/Designation.services";
 import CategoryService from "../../../Services/Settings/Category.services";
 import StatusService from "../../../Services/Settings/Status.services";
-
 import KiduServerTable from "../../../../Components/KiduServerTable";
 
 /* ===================== TABLE COLUMNS ===================== */

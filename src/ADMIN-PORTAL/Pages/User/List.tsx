@@ -1,75 +1,75 @@
 import React from "react";
 import type { User } from "../../Types/Settings/User.types";
 import type { Company } from "../../Types/Settings/Company.types";
+import type { Member } from "../../Types/Contributions/Member.types";
 
 import UserService from "../../Services/Settings/User.services";
 import CompanyService from "../../Services/Settings/Company.services";
+import MemberService from "../../Services/Contributions/Member.services";
 
 import KiduServerTable from "../../../Components/KiduServerTable";
 
 /* ===================== TABLE COLUMNS ===================== */
 const columns = [
-  { key: "userId", label: "User ID", enableSorting: true, type: "text" as const },
+  { key: "userId", label: "ID", enableSorting: true, type: "text" as const },
   { key: "userName", label: "User Name", enableSorting: true, type: "text" as const },
+  { key: "staffName", label: "Staff", enableSorting: true, type: "text" as const },
+  { key: "companyName", label: "Company", enableSorting: true, type: "text" as const },
   { key: "userEmail", label: "Email", enableSorting: true, type: "text" as const },
   { key: "phoneNumber", label: "Phone", enableSorting: true, type: "text" as const },
   { key: "isActive", label: "Active", enableSorting: true, type: "checkbox" as const },
 ];
 
 const UserList: React.FC = () => {
-  const fetchData = async (params: {
-    pageNumber: number;
-    pageSize: number;
-    searchTerm: string;
-  }): Promise<{ data: any[]; total: number }> => {
-    try {
-      /* ===================== FETCH DATA ===================== */
-      const [users, companies] = await Promise.all([
-        UserService.getAllUsers(),
-        CompanyService.getAllCompanies(),
-      ]);
+  const fetchData = async ({ pageNumber, pageSize, searchTerm }: any) => {
+    /* 1️⃣ Fetch all data */
+    const [users, companies, members] = await Promise.all([
+      UserService.getAllUsers(),
+      CompanyService.getAllCompanies(),
+      MemberService.getAllMembers(),
+    ]);
 
-      /* ===================== CREATE LOOKUP MAP ===================== */
-      const companyMap = Object.fromEntries(
-        companies.map((c: Company) => [c.companyId, c.comapanyName])
+    /* 2️⃣ Create lookup maps */
+    const companyMap = new Map<number, string>(
+      companies.map((c: Company) => [c.companyId, c.comapanyName])
+    );
+
+    const memberMap = new Map<number, string>(
+      members.map((m: Member) => [m.staffNo, m.name])
+    );
+
+    /* 3️⃣ Enrich users */
+    const enriched: any[] = users.map((u: User) => ({
+      ...u,
+      companyName: companyMap.get(u.companyId) || "-",
+      staffName: memberMap.get(u.staffNo) || "-",
+    }));
+
+    /* 4️⃣ Search */
+    let filtered = enriched;
+    if (searchTerm) {
+      const q = searchTerm.toLowerCase();
+      filtered = enriched.filter((u) =>
+        [
+          u.userId,
+          u.userName,
+          u.staffName,
+          u.companyName,
+          u.userEmail,
+          u.phoneNumber,
+        ]
+          .map(String)
+          .some((v) => v.toLowerCase().includes(q))
       );
-
-      /* ===================== ENRICH USERS ===================== */
-      let enrichedUsers = users.map((u: User) => ({
-        ...u,
-        companyName: companyMap[u.companyId] ?? "-",
-      }));
-
-      /* ===================== SEARCH ===================== */
-      if (params.searchTerm) {
-        const q = params.searchTerm.toLowerCase();
-        enrichedUsers = enrichedUsers.filter((u) =>
-          [
-            u.userName,
-            u.userEmail,
-            u.companyName,
-            u.phoneNumber,
-            u.address,
-            u.role,
-            u.userId,
-          ]
-            .map(String)
-            .some((v) => v.toLowerCase().includes(q))
-        );
-      }
-
-      /* ===================== PAGINATION ===================== */
-      const start = (params.pageNumber - 1) * params.pageSize;
-      const end = start + params.pageSize;
-
-      return {
-        data: enrichedUsers.slice(start, end),
-        total: enrichedUsers.length,
-      };
-    } catch (error: any) {
-      console.error("Error fetching users:", error);
-      throw new Error(error.message || "Failed to fetch users");
     }
+
+    /* 5️⃣ Pagination */
+    const start = (pageNumber - 1) * pageSize;
+
+    return {
+      data: filtered.slice(start, start + pageSize),
+      total: filtered.length,
+    };
   };
 
   return (
@@ -82,13 +82,11 @@ const UserList: React.FC = () => {
       addRoute="/dashboard/settings/user-create"
       editRoute="/dashboard/settings/user-edit"
       viewRoute="/dashboard/settings/user-view"
+      fetchData={fetchData}
       showAddButton
-      showExport
       showSearch
       showActions
-      showTitle
-      fetchData={fetchData}
-      rowsPerPage={10}
+      showExport
     />
   );
 };

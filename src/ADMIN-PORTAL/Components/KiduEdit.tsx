@@ -680,20 +680,20 @@ const KiduEdit: React.FC<KiduEditProps> = ({
   return (
     <>
       <div 
-        className="container d-flex justify-content-center align-items-center mt-5" 
+        className="container-fluid d-flex justify-content-center align-items-center mt-1" 
         style={{ fontFamily: "Urbanist" }}
       >
         <Card 
-          className="shadow-lg p-4 w-100" 
+          className="shadow-lg px-3 py-3 w-100" 
           style={{ 
-            maxWidth: "1300px", 
+            maxWidth: "1400px", 
             borderRadius: "15px", 
             border: "none",
             ...containerStyle 
           }}
         >
           {/* HEADER */}
-          <div className="d-flex justify-content-between align-items-center mb-4">
+          <div className="d-flex justify-content-between align-items-center ">
             <div className="d-flex align-items-center">
               <KiduPrevious />
               <h5 className="fw-bold m-0 ms-2" style={{ color: themeColor }}>
@@ -701,7 +701,7 @@ const KiduEdit: React.FC<KiduEditProps> = ({
               </h5>
             </div>
           </div>
-
+<hr />
           <Card.Body style={{ padding: "1.5rem" }}>
             <Form onSubmit={handleSubmit}>
               <Row className="mb-3">

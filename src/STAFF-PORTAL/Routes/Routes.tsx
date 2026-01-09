@@ -5,11 +5,13 @@
 import { Route } from 'react-router-dom';
 import StaffLayout from '../Layout/Layout';
 import Profile from '../Pages/Profile';
-import UpdateNominee from '../Pages/UpdateNominee';
-import DirectContribution from '../Pages/DirectContribution';
 import ShowContribution from '../Pages/ShowContribution';
 import AccountSettings from '../Pages/AccountSetting';
 import ProtectedRoute from '../../PUBLIC-PORTAL/Auth/ProtectedRoute';
+import StaffAccountDirectEntryList from '../Pages/AccountDirectEntry/List';
+import StaffAccountDirectEntryCreate from '../Pages/AccountDirectEntry/Create';
+import StaffAccountDirectEntryEdit from '../Pages/AccountDirectEntry/Edit';
+import StaffEdit from '../Pages/StaffEdit';
 
 export const staffRoutes = (
   <Route
@@ -21,8 +23,12 @@ export const staffRoutes = (
     }
   >
     <Route index element={<Profile />} />
-    <Route path="nominee" element={<UpdateNominee />} />
-    <Route path="contribution" element={<DirectContribution />} />
+    {/* <Route path="nominee" element={<UpdateNominee />} /> */}
+    <Route path="staff-edit/:memberId" element={<StaffEdit />} />
+    <Route path="contribution-list" element={<StaffAccountDirectEntryList />} />
+    <Route path="contributions/staffaccountDirectEntry-create" element={<StaffAccountDirectEntryCreate />} />
+    {/* <Route path="staffaccountDirectEntry-view" element={<StaffAccountDirectEntryView />} /> */}
+    <Route path="contributions/staffaccountDirectEntry-edit/:accountsDirectEntryID" element={<StaffAccountDirectEntryEdit />} />
     <Route path="settings" element={<AccountSettings />} />
     <Route path="history" element={<ShowContribution />} />
   </Route>

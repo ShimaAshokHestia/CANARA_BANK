@@ -529,7 +529,7 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
   return (
     <>
       <div
-        className="container px-4 mt-5"
+        className="container-fluid px-2 mt-1"
         style={{ fontFamily: "Urbanist" }}
       >
         <div

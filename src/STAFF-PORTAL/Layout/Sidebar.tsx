@@ -14,6 +14,11 @@ const StaffSidebar = ({ open }: Props) => {
   const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
+  // 🔹 GET memberId from localStorage (ADDED)
+  const storedUser = localStorage.getItem("user");
+  const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+  const memberId = parsedUser?.memberId;
+
   // const handleLogout = () => {
   //   AuthService.logout(); // ✅ same logout logic as AdminNavbar
   //   navigate("/");
@@ -37,8 +42,8 @@ const StaffSidebar = ({ open }: Props) => {
 
         <nav className="sidebar-nav">
           <NavLink to="/staff-portal" end><User size={ICON_SIZE} /> {open && "Profile"}</NavLink>
-          <NavLink to="nominee"><UserCog size={ICON_SIZE} /> {open && "Update Nominee"}</NavLink>
-          <NavLink to="contribution"><CreditCard size={ICON_SIZE} /> {open && "Direct Contribution"}</NavLink>
+          <NavLink to={`staff-edit/${memberId}`}><UserCog size={ICON_SIZE} /> {open && "Update Nominee"}</NavLink>
+          <NavLink to="contribution-list"><CreditCard size={ICON_SIZE} /> {open && "Direct Contribution"}</NavLink>
           <NavLink to="settings"><Settings size={ICON_SIZE} /> {open && "Account Settings"}</NavLink>
           <NavLink to="history"><BarChart size={ICON_SIZE} /> {open && "Contribution History"}</NavLink>
         </nav>

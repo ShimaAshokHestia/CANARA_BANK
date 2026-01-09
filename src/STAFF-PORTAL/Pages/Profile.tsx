@@ -20,7 +20,7 @@ const Profile: React.FC = () => {
     { label: "Designation", key: "designation" },
     { label: "Category", key: "category" },
     { label: "Date of Birth", key: "dateOfBirth" },
-    { label: "Date of Join", key: "dateOfJoin" },
+    { label: "Date of Join", key: "dojtoSchemeString" },
     { label: "DP Code", key: "dpCode" },
     { label: "Date From", key: "dateFrom" },
     { label: "Date To", key: "dateTo" },

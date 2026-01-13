@@ -19,7 +19,8 @@ export interface FieldRule {
   maxLength?: number;
   pattern?: RegExp;
   placeholder?: string;
-  colWidth?: 3 | 4 | 6 | 12;
+  colWidth?:2| 3 | 4 | 6 | 12;
+   disabled?: boolean;
 }
 
 export interface Field {
@@ -341,6 +342,8 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
               placeholder={`Select ${rules.label}`}
               readOnly
               isInvalid={!!errors[name]}
+               disabled={rules.disabled}
+            style={rules.disabled ? { backgroundColor: "#f5f5f5", cursor: "not-allowed" } : {}}
             />
             <Button variant="outline-secondary" onClick={popup?.onOpen}>
               <BsSearch />
@@ -362,6 +365,8 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
               onChange={handleChange}
               onBlur={() => handleBlur(name)}
               isInvalid={!!errors[name]}
+               disabled={rules.disabled}
+            style={rules.disabled ? { backgroundColor: "#f5f5f5", cursor: "not-allowed" } : {}}
             />
             <Button
               variant="outline-secondary"
@@ -383,6 +388,8 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
             onChange={handleChange}
             onBlur={() => handleBlur(name)}
             isInvalid={!!errors[name]}
+             disabled={rules.disabled}
+            style={rules.disabled ? { backgroundColor: "#f5f5f5", cursor: "not-allowed" } : {}}
           >
             <option value="">Select {rules.label}</option>
             {fieldOptions.map((opt: any, idx: number) => {
@@ -410,6 +417,8 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
             onChange={handleChange}
             onBlur={() => handleBlur(name)}
             isInvalid={!!errors[name]}
+             disabled={rules.disabled}
+            style={rules.disabled ? { backgroundColor: "#f5f5f5", cursor: "not-allowed" } : {}}
           />
         );
 
@@ -492,6 +501,8 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
             onBlur={() => handleBlur(name)}
             isInvalid={!!errors[name]}
             maxLength={rules.maxLength}
+             disabled={rules.disabled}
+            style={rules.disabled ? { backgroundColor: "#f5f5f5", cursor: "not-allowed" } : {}}
           />
         );
     }

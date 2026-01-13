@@ -33,7 +33,7 @@ const StaffAccountDirectEntryCreate: React.FC = () => {
   }, []);
   
   const fields: Field[] = [
-    { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4 } },
+    { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4, disabled:true } },
     { name: "branchId", rules: { type: "popup", label: "Branch", required: true, colWidth: 4 } },
     { name: "monthCode", rules: { type: "popup", label: "Month Code", required: true, colWidth: 4 } },
     { name: "yearOf", rules: { type: "number", label: "Year", required: true, colWidth: 4 } },
@@ -89,8 +89,8 @@ const StaffAccountDirectEntryCreate: React.FC = () => {
     memberId: {
       value: selectedMember?.name || "",
       actualValue: selectedMember?.memberId,
-      // onOpen: () => setShowMemberPopup(true),
-      onOpen: () => {},
+      onOpen: () => setShowMemberPopup(false),
+     
     },
     branchId: {
       value: selectedBranch?.name || "",
@@ -118,7 +118,7 @@ const statusOptions =[
         popupHandlers={popupHandlers}
         submitButtonText="Create Account Direcy Entry"
         showResetButton
-        navigateOnSuccess="/dashboard/contributions/accountDirectEntry-list"
+        navigateOnSuccess="staff-portal/contribution-list"
         successMessage="Entry created successfully"
         errorMessage="Failed to create entry. Please try again."
         themeColor="#1B3763"

@@ -21,24 +21,18 @@ const StaffAccountDirectEntryList: React.FC = () => {
     const storedUser = localStorage.getItem("user");
     const parsedUser = storedUser ? JSON.parse(storedUser) : null;
     const staffId = parsedUser?.memberId;
-
     if (!staffId) {
       return { data: [], total: 0 };
     }
-
     // 🔹 Fetch entries by staffId
-    const response =
-      await AccountDirectEntryService.getAccountDirectEntryByStaffId(staffId);
-
+    const response = await AccountDirectEntryService.getAccountDirectEntryByStaffId(staffId);
     const entries = response.value ?? [];
-
     // 🔹 Normalize / fallback fields
     let enrichedData = entries.map((e: any) => ({
       ...e,
       monthName: e.monthName ?? e.monthCode,
       branchName: e.branchName ?? "-",
     }));
-
     // 🔹 SEARCH (same pattern as BranchList)
     if (searchTerm) {
       const q = searchTerm.toLowerCase();
@@ -50,11 +44,9 @@ const StaffAccountDirectEntryList: React.FC = () => {
         String(e.amt).includes(q)
       );
     }
-
     // 🔹 PAGINATION
     const start = (pageNumber - 1) * pageSize;
     const pagedData = enrichedData.slice(start, start + pageSize);
-
     return {
       data: pagedData,
       total: enrichedData.length,

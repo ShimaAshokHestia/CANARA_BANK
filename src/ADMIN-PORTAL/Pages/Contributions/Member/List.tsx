@@ -3,7 +3,6 @@ import type { Member } from "../../../Types/Contributions/Member.types";
 import MemberService from "../../../Services/Contributions/Member.services";
 import KiduServerTable from "../../../../Components/KiduServerTable";
 
-/* ===================== TABLE COLUMNS ===================== */
 const columns = [
   { key: "memberId", label: "Member ID", enableSorting: true, type: "text" as const },
   { key: "staffNo", label: "Staff No", enableSorting: true, type: "text" as const },
@@ -22,7 +21,7 @@ const MemberList: React.FC = () => {
     searchTerm: string;
   }): Promise<{ data: any[]; total: number }> => {
     try {
-      /* ===================== FETCH MEMBERS (names already included) ===================== */
+
       let members = await MemberService.getAllMembers();
 
       /* ===================== SEARCH ===================== */

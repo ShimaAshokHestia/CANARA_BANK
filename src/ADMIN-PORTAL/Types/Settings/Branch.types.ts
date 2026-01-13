@@ -12,8 +12,8 @@ export interface Branch {
   status: string;             
   isRegCompleted: boolean;
   circleId: number;
-  circleName?: string | null;
+  circleName?: string;
   stateId: number;
-  stateName?: string | null;
+  stateName?: string;
   auditLogs?: AuditTrails[];
 }

@@ -1,4 +1,3 @@
-// src/components/Branch/BranchList.tsx
 import React from "react";
 import type { Branch } from "../../Types/Settings/Branch.types";
 import BranchService from "../../Services/Settings/Branch.services";

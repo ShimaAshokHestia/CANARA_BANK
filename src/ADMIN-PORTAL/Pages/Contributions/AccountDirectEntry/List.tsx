@@ -1,67 +1,76 @@
-// src/ADMIN-PORTAL/Components/Accounts/AccountDirectEntryList.tsx
+// src/Pages/Accounts/AccountsDirectEntry/List.tsx
 
 import React from "react";
 import KiduServerTable from "../../../../Components/KiduServerTable";
-
-import AccountDirectEntryService from "../../../Services/Contributions/AccountDirectEntry.services";
-import MonthService from "../../../Services/Settings/Month.services";
-import type { Month } from "../../../Types/Settings/Month.types";
+import type { AccountsDirectEntry } from "../../../Types/Contributions/AccountDirectEntry.types";
+import AccountsDirectEntryService from "../../../Services/Contributions/AccountDirectEntry.services";
 
 const columns = [
   { key: "accountsDirectEntryID", label: "ID", enableSorting: true, type: "text" as const },
-  { key: "name", label: "Member", enableSorting: true, type: "text" as const },
-  { key: "branchName", label: "Branch", enableSorting: true, type: "text" as const },
-  { key: "monthName", label: "Month", enableSorting: true, type: "text" as const }, 
+  { key: "memberName", label: "Member", enableSorting: true, type: "text" as const }, // ✅
+  { key: "branchName", label: "Branch", enableSorting: true, type: "text" as const }, // ✅
+  { key: "monthName", label: "Month", enableSorting: true, type: "text" as const },   // ✅
   { key: "yearOf", label: "Year", enableSorting: true, type: "text" as const },
   { key: "amt", label: "Amount", enableSorting: true, type: "text" as const },
+  { key: "status", label: "Status", enableSorting: true, type: "text" as const },
   { key: "isApproved", label: "Approved", enableSorting: true, type: "checkbox" as const },
 ];
 
-const AccountDirectEntryList: React.FC = () => {
-  const fetchData = async () => {
-    // 1️⃣ Fetch entries
-    const entries = await AccountDirectEntryService.getAllAccountDirectEntries();
+const AccountsDirectEntryList: React.FC = () => {
+  const fetchData = async (params: {
+    pageNumber: number;
+    pageSize: number;
+    searchTerm: string;
+  }): Promise<{ data: any[]; total: number }> => {
 
-    // 2️⃣ Fetch months
-    const months = await MonthService.getAllMonths();
+    let entries: AccountsDirectEntry[] =
+      await AccountsDirectEntryService.getAllAccountDirectEntries();
 
-    // 3️⃣ Build lookup map
-    const monthMap = Object.fromEntries(
-      months.map((m: Month) => [m.monthCode, m.monthName])
-    );
+    /* ===================== SEARCH ===================== */
+    if (params.searchTerm) {
+      const q = params.searchTerm.toLowerCase();
+      entries = entries.filter(e =>
+        [
+          e.accountsDirectEntryID?.toString(),
+          e.memberName,
+          e.branchName,
+          e.monthName,
+          e.status,
+        ]
+          .filter(Boolean)
+          .some(v => String(v).toLowerCase().includes(q))
+      );
+    }
 
-    // 4️⃣ Enrich data
-    const enrichedData = entries.map((e: any) => ({
-      ...e,
-      monthName: monthMap[e.monthCode] ?? e.monthCode,
-      branchName: e.branchName ?? e.name, // adjust if you later add branch lookup
-    }));
+    /* ===================== PAGINATION ===================== */
+    const start = (params.pageNumber - 1) * params.pageSize;
+    const end = start + params.pageSize;
 
     return {
-      data: enrichedData,
-      total: enrichedData.length,
+      data: entries.slice(start, end),
+      total: entries.length,
     };
   };
 
   return (
     <KiduServerTable
-      title="Account Direct Entry"
-      subtitle="Manage entry with search and pagination"
+      title="Accounts Direct Entry"
+      subtitle="Manage account direct entries"
       columns={columns}
       idKey="accountsDirectEntryID"
       addButtonLabel="Add Entry"
-      fetchData={fetchData}
       addRoute="/dashboard/contributions/accountDirectEntry-create"
       editRoute="/dashboard/contributions/accountDirectEntry-edit"
       viewRoute="/dashboard/contributions/accountDirectEntry-view"
-      showActions
       showAddButton
-      showSearch
       showExport
+      showSearch
+      showActions
       showTitle
+      fetchData={fetchData}
       rowsPerPage={10}
     />
   );
 };
 
-export default AccountDirectEntryList;
+export default AccountsDirectEntryList;

@@ -30,7 +30,7 @@ const PublicPageEdit: React.FC = () => {
         const res = await PublicPageService.getPublicPageById(
           Number(publicPageId)
         );
-        setFormData(res.value);
+        setFormData(res);
       } catch (err: any) {
         toast.error("Failed to load public page");
       } finally {

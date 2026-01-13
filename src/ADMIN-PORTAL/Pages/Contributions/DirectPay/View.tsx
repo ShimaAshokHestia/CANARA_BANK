@@ -1,4 +1,5 @@
 // src/Pages/Contributions/DirectPay/View.tsx
+
 import React from "react";
 import type { ViewField } from "../../../Components/KiduView";
 import DirectPaymentService from "../../../Services/Contributions/Directpayment.services";
@@ -7,15 +8,19 @@ import KiduView from "../../../Components/KiduView";
 const DirectPaymentView: React.FC = () => {
   const fields: ViewField[] = [
     { key: "directPaymentId", label: "Payment ID", icon: "bi-hash" },
-    { key: "memberId", label: "Member ID", icon: "bi-person" },
+
+    // ✅ SHOW NAME, NOT ID
+    { key: "memberName", label: "Member", icon: "bi-person" },
+
     { key: "amount", label: "Amount", icon: "bi-currency-rupee" },
-    { key: "paymentDate", label: "Payment Date", icon: "bi-calendar" },
+    { key: "paymentDatestring", label: "Payment Date", icon: "bi-calendar" },
     { key: "paymentMode", label: "Payment Mode", icon: "bi-wallet2" },
     { key: "referenceNo", label: "Reference No", icon: "bi-receipt" },
-    { key: "remarks", label: "Remarks", icon: "bi-chat-text" }
+    { key: "remarks", label: "Remarks", icon: "bi-chat-text" },
   ];
 
   const handleFetch = async (id: string) => {
+    // Backend already returns memberName
     return await DirectPaymentService.getDirectPaymentById(Number(id));
   };
 
@@ -32,7 +37,10 @@ const DirectPaymentView: React.FC = () => {
       paramName="directPaymentId"
       listRoute="/dashboard/contributions/directpayment-list"
       editRoute="/dashboard/contributions/directpayment-edit"
-      auditLogConfig={{ tableName: "DirectPayment", recordIdField: "directPaymentId" }}
+      auditLogConfig={{
+        tableName: "DirectPayment",
+        recordIdField: "directPaymentId",
+      }}
       themeColor="#1B3763"
       showEditButton
       showDeleteButton

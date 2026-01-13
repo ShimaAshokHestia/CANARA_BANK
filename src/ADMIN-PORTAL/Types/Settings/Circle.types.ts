@@ -6,15 +6,11 @@ export interface Circle {
   name: string;                
   abbreviation: string;        
   isActive: boolean;           
-
   stateId: number;             
   stateName: string;      
-
   dateFrom: Date | string;     
   dateFromString: string;   
-
   dateTo: Date | string;       
   dateToString: string;     
-
   auditLogs?: AuditTrails[];  
 }

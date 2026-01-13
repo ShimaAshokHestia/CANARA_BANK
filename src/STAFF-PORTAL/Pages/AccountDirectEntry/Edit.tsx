@@ -27,13 +27,13 @@ const StaffAccountDirectEntryEdit: React.FC = () => {
   const toIso = (v?: string) => (v ? `${v}T00:00:00` : null);
 
   const fields: Field[] = [
-    { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4 } },
+    { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4 , disabled:true } },
     { name: "branchId", rules: { type: "popup", label: "Branch", required: true, colWidth: 4 } },
     { name: "monthCode", rules: { type: "popup", label: "Month", required: true, colWidth: 4 } },
 
     { name: "yearOf", rules: { type: "number", label: "Year", required: true, colWidth: 4 } },
-    { name: "ddIba", rules: { type: "text", label: "DD / IBA", colWidth: 4 } },
-    { name: "ddIbaDate", rules: { type: "date", label: "DD / IBA Date", colWidth: 4 } },
+    { name: "ddIba", rules: { type: "text", label: "DD / IBA",required: true, colWidth: 4 } },
+    { name: "ddIbaDate", rules: { type: "date", label: "DD / IBA Date", required: true, colWidth: 4 } },
     { name: "amt", rules: { type: "number", label: "Amount", required: true, colWidth: 4 } },
     { name: "enrl", rules: { type: "text", label: "ENRL", colWidth: 3 } },
     { name: "fine", rules: { type: "text", label: "Fine", colWidth: 3 } },
@@ -42,7 +42,7 @@ const StaffAccountDirectEntryEdit: React.FC = () => {
     { name: "f10", rules: { type: "text", label: "F10", colWidth: 4 } },
     { name: "f11", rules: { type: "text", label: "F11", colWidth: 4 } },
 
-    { name: "status", rules: { type: "text", label: "Status", colWidth: 4, disabled: true, } },
+    { name: "status", rules: { type: "text", label: "Status", colWidth: 4, required: true, disabled: true, } },
     { name: "isApproved", rules: { type: "toggle", label: "Approved" } },
     { name: "approvedBy", rules: { type: "text", label: "Approved By", colWidth: 3 } },
     { name: "approvedDate", rules: { type: "date", label: "Approved Date", colWidth: 3 } },
@@ -108,7 +108,7 @@ const StaffAccountDirectEntryEdit: React.FC = () => {
     memberId: {
       value: selectedMember?.name || "",
       actualValue: selectedMember?.memberId,
-      onOpen: () => setShowMemberPopup(true),
+      onOpen: () => setShowMemberPopup(false),
     },
     branchId: {
       value: selectedBranch?.name || "",

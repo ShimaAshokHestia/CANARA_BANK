@@ -38,8 +38,8 @@ const StaffAccountDirectEntryView: React.FC = () => {
             onFetch={handleFetch}
             onDelete={handleDelete}
             paramName="accountsDirectEntryID"
-            editRoute="staff-portal/contributions/staffaccountDirectEntry-edit"
-            listRoute="staff-portal/contribution-list"
+            editRoute="/staff-portal/contributions/staffaccountDirectEntry-edit"
+            listRoute="/staff-portal/contribution-list"
             auditLogConfig={{ tableName: "AccountDirectEntry", recordIdField: "accountsDirectEntryID" }}
             themeColor="#1B3763"
             loadingText="Loading entry details..."

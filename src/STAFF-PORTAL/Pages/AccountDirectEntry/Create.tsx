@@ -18,8 +18,7 @@ const StaffAccountDirectEntryCreate: React.FC = () => {
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<Month | null>(null)
-
-   // ✅ AUTO-POPULATE MEMBER FROM LOCAL STORAGE
+   // AUTO-POPULATE MEMBER FROM LOCAL STORAGE
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -38,18 +37,19 @@ const StaffAccountDirectEntryCreate: React.FC = () => {
     { name: "monthCode", rules: { type: "popup", label: "Month Code", required: true, colWidth: 4 } },
     { name: "yearOf", rules: { type: "number", label: "Year", required: true, colWidth: 4 } },
 
-    { name: "ddIba", rules: { type: "text", label: "DD / IBA No", colWidth: 4 } },
-    { name: "ddIbaDate", rules: { type: "date", label: "DD / IBA Date", colWidth: 4 } },
-    { name: "amt", rules: { type: "number", label: "Amount", required: true, colWidth: 4 } },
+    { name: "ddIba", rules: { type: "text", label: "DD / IBA No", colWidth: 4, required: true } },
+    { name: "ddIbaDate", rules: { type: "date", label: "DD / IBA Date", colWidth: 4 , required: true} },
+    { name: "amt", rules: { type: "number", label: "Amount", required: true, colWidth: 3 } },
 
     { name: "enrl", rules: { type: "text", label: "ENRL", colWidth: 3 } },
     { name: "fine", rules: { type: "text", label: "Fine", colWidth: 3 } },
+     { name: "status", rules: { type: "select", label: "Status", colWidth: 3 ,required: true,} },
 
-    { name: "f9", rules: { type: "text", label: "F9", colWidth: 4 } },
-    { name: "f10", rules: { type: "text", label: "F10", colWidth: 4 } },
-    { name: "f11", rules: { type: "text", label: "F11", colWidth: 4 } },
+    { name: "f9", rules: { type: "text", label: "F9", colWidth: 2 } },
+    { name: "f10", rules: { type: "text", label: "F10", colWidth: 2 } },
+    { name: "f11", rules: { type: "text", label: "F11", colWidth: 2 } },
 
-    { name: "status", rules: { type: "select", label: "Status", colWidth: 3 } },
+   
     { name: "isApproved", rules: { type: "toggle", label: "Approved" } },
     { name: "approvedBy", rules: { type: "text", label: "Approved By", colWidth: 3 } },
     { name: "approvedDate", rules: { type: "date", label: "Approved Date", colWidth: 3 } },
@@ -76,7 +76,7 @@ const StaffAccountDirectEntryCreate: React.FC = () => {
       f9: formData.f9 || "",
       f10: formData.f10 || "",
       f11: formData.f11 || "",
-      status: formData.status || "",
+      status: formData.status || "Submitted",
       isApproved: Boolean(formData.isApproved),
       approvedBy: formData.approvedBy || "",
       approvedDate: toIso(formData.approvedDate),
@@ -106,7 +106,7 @@ const StaffAccountDirectEntryCreate: React.FC = () => {
 
 //status option
 const statusOptions =[
-  {value:"submitted",label:"Submitted"}
+  {value:"Submitted",label:"Submitted"}
 ]
 
   return (
@@ -118,7 +118,7 @@ const statusOptions =[
         popupHandlers={popupHandlers}
         submitButtonText="Create Account Direcy Entry"
         showResetButton
-        navigateOnSuccess="staff-portal/contribution-list"
+        navigateOnSuccess="/staff-portal/contribution-list"
         successMessage="Entry created successfully"
         errorMessage="Failed to create entry. Please try again."
         themeColor="#1B3763"

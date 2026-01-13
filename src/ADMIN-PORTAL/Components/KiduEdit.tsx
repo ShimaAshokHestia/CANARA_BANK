@@ -484,6 +484,8 @@ const KiduEdit: React.FC<KiduEditProps> = ({
               placeholder={`Select ${rules.label}`}
               readOnly
               isInvalid={!!errors[name]}
+              disabled={rules.disabled}
+            style={rules.disabled ? { backgroundColor: "#f5f5f5", cursor: "not-allowed" } : {}}
             />
             <Button variant="outline-secondary" size="sm" onClick={popup?.onOpen}>
               <BsSearch />

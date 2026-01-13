@@ -7,7 +7,7 @@ interface MemberPopupProps {
   show: boolean;
   handleClose: () => void;
   onSelect: (member: Member) => void;
-  showAddButton: boolean
+  showAddButton?: boolean
 }
 
 const MemberPopup: React.FC<MemberPopupProps> = ({

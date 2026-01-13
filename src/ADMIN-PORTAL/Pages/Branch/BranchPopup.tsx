@@ -7,7 +7,7 @@ interface BranchPopupProps {
   show: boolean;
   handleClose: () => void;
   onSelect: (branch: Branch) => void;
-  showAddButton:boolean;
+  showAddButton?:boolean;
 }
 
 const BranchPopup: React.FC<BranchPopupProps> = ({

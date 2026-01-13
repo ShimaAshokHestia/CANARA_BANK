@@ -8,7 +8,7 @@ interface DesignationPopupProps {
   show: boolean;
   handleClose: () => void;
   onSelect: (designation: Designation) => void;
-  showAddButton:boolean;
+  showAddButton?:boolean;
 }
 
 const DesignationPopup: React.FC<DesignationPopupProps> = ({

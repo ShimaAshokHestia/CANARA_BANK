@@ -7,7 +7,7 @@ interface StatusPopupProps {
   show: boolean;
   handleClose: () => void;
   onSelect: (status: Status) => void;
-  showAddButton:boolean;
+  showAddButton?:boolean;
 }
 
 const StatusPopup: React.FC<StatusPopupProps> = ({

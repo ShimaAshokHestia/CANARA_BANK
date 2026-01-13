@@ -7,7 +7,7 @@ interface CategoryPopupProps {
   show: boolean;
   handleClose: () => void;
   onSelect: (category: Category) => void;
-  showAddButton:boolean;
+  showAddButton?:boolean;
 }
 
 const CategoryPopup: React.FC<CategoryPopupProps> = ({

@@ -8,7 +8,7 @@ interface MonthPopupProps {
   show: boolean;
   handleClose: () => void;
   onSelect: (month: Month) => void;
-  showAddButton:boolean;
+  showAddButton?:boolean;
 }
 
 const MonthPopup: React.FC<MonthPopupProps> = ({

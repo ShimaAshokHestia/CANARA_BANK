@@ -7,12 +7,14 @@ interface StatePopupProps {
   show: boolean;
   handleClose: () => void;
   onSelect: (state: State) => void;
+   showAddButton?:boolean;
 }
 
 const StatePopup: React.FC<StatePopupProps> = ({
   show,
   handleClose,
-  onSelect
+  onSelect,
+  showAddButton
 }) => {
   const columns = [
     { key: "stateId" as keyof State, label: "ID" },
@@ -32,6 +34,7 @@ const StatePopup: React.FC<StatePopupProps> = ({
       AddModalComponent={StateCreateModal}
       idKey="stateId"
       rowsPerPage={10}
+      showAddButton={showAddButton}
     />
   );
 };

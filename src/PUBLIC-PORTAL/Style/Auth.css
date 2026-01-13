@@ -71,7 +71,7 @@
 }
 
 .auth-btn {
-  background: #f4c045 !important;
+  background: #daa52a !important;
   color: #000 !important;
   font-weight: 600;
   border-radius: 8px;
@@ -79,8 +79,8 @@
 }
 
 .auth-logoutbtn {
-  background: #f44545 !important;
-  color: #000 !important;
+  background: #ffe100 !important;
+  color: #ffffff !important;
   font-weight: 600;
   border-radius: 8px;
   height: 45px;

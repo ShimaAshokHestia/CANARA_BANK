@@ -11,10 +11,6 @@ import BranchPopup from "../../Branch/BranchPopup";
 import DesignationPopup from "../../Settings/Designation/DesignationPopup";
 import CategoryPopup from "../../Settings/Category/CategoryPopup";
 import StatusPopup from "../../Settings/Status/StatusPopup";
-import CategoryService from "../../../Services/Settings/Category.services";
-import StatusService from "../../../Services/Settings/Status.services";
-import DesignationService from "../../../Services/Settings/Designation.services";
-import BranchService from "../../../Services/Settings/Branch.services";
 
 const MemberEdit: React.FC = () => {
 
@@ -52,11 +48,11 @@ const MemberEdit: React.FC = () => {
     { name: "totalRefund", rules: { type: "text", label: "Total Refund", colWidth: 3 } },
   ];
 
-  // Gender options
+  // Gender options - explicitly using numbers
   const genderOptions = [
-    { value: 0, label: "Male" },
-    { value: 1, label: "Female" },
-    { value: 2, label: "Others" }
+    { value: "0", label: "Male" },
+    { value: "1", label: "Female" },
+    { value: "2", label: "Others" }
   ];
 
   // Union Member options
@@ -72,17 +68,27 @@ const MemberEdit: React.FC = () => {
     const member = response.value;
 
     if (member) {
-      const branch = await BranchService.getBranchById(member.branchId);
-      setSelectedBranch(branch.value);
+      // Set selected values from the member response data
+      setSelectedBranch({
+        branchId: member.branchId,
+        name: member.branchName || "",
+        dpCode: member.dpCode || ""
+      } as unknown as Branch);
 
-      const designation = await DesignationService.getDesignationById(member.designationId);
-      setSelectedDesignation(designation.value);
+      setSelectedDesignation({
+        designationId: member.designationId,
+        name: member.designationName || ""
+      } as unknown as Designation);
 
-      const category = await CategoryService.getCategoryById(member.categoryId);
-      setSelectedCategory(category.value);
+      setSelectedCategory({
+        categoryId: member.categoryId,
+        name: member.categoryname || ""
+      } as unknown as Category);
 
-      const status = await StatusService.getStatusById(member.statusId);
-      setSelectedStatus(status.value);
+      setSelectedStatus({
+        statusId: member.statusId,
+        name: member.status || ""
+      } as unknown as Status);
     }
 
     return response;
@@ -97,7 +103,9 @@ const MemberEdit: React.FC = () => {
       memberId: Number(id),
       staffNo: Number(formData.staffNo),
       name: formData.name.trim(),
-      genderId: Number(formData.genderId),
+      genderId: formData.genderId !== undefined && formData.genderId !== null && formData.genderId !== "" 
+        ? Number(formData.genderId) 
+        : 0,
       designationId: selectedDesignation.designationId,
       categoryId: selectedCategory.categoryId,
       branchId: selectedBranch.branchId,
@@ -191,4 +199,4 @@ const MemberEdit: React.FC = () => {
   );
 };
 
-export default MemberEdit
+export default MemberEdit;

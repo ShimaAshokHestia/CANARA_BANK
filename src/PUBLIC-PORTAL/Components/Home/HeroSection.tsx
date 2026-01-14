@@ -23,8 +23,6 @@ const HeroSection: React.FC = () => {
     loadHeroConfig();
   }, []);
 
-  
-
   // 🔹 Map API → existing structure (NO UI change)
   const hero = {
     badge: config?.homeHeroBadge,
@@ -65,30 +63,27 @@ const HeroSection: React.FC = () => {
       <Container className="position-relative text-white py-3 hero-content">
         <div className="hero-inner">
           <span className="hero-badge">
-            {/* ✨   Celebrating 50 Years of Service */} ✨{hero.badge}
+          ✨{hero.badge || "Celebrating 50 Years of Service"}
           </span>
-
           <h1 className="hero-title">
-            {/* Supporting Our  */} {hero.title.line1}
+          {hero.title.line1 || "Supporting Our"}
             <br />
           <span className="highlight">{/*Bank Family*/} {hero.title.highlight}</span> <br />
-            {/* For 50 Years */} {hero.title.line3}
+          {hero.title.line3 || "For 50 Years"}
           </h1>
 
           <p className="hero-description">
-            {/* A Unit of Canara Bank Employees' Union, dedicated to the welfare of our
-            members and their families through the Golden Jubilee Family Welfare Scheme. */}
-            {hero.description}
+            {hero.description || "A Unit of Canara Bank Employees' Union, dedicated to the welfare of our members and their families through the Golden Jubilee Family Welfare Scheme."}
           </p>
 
           <div className="d-flex flex-wrap gap-3 mt-4">
             <Button className="hero-btn-gold d-flex align-items-center gap-2">
-              {/* Become a Member */} {hero.buttons.primary.label}
+            {hero.buttons.primary.label || "Become a Member"}
               <HiArrowRight size={18} className="arrow-move" />
             </Button>
 
             <Button variant="outline-light" className="hero-btn-outline">
-              {/* Learn More */} {hero.buttons.secondary.label}
+            {hero.buttons.secondary.label || "Learn More"}
             </Button>
           </div>
         </div>

@@ -52,6 +52,7 @@ export interface KiduCreateProps {
   onSubmit: (formData: Record<string, any>) => Promise<void> | void;
   submitButtonText?: string;
   showResetButton?: boolean;
+  showBackButton?: boolean;
   containerStyle?: React.CSSProperties;
   children?: React.ReactNode;
   options?: Record<string, SelectOption[] | string[]>;
@@ -72,6 +73,7 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
   onSubmit,
   submitButtonText = "Create",
   showResetButton = true,
+  showBackButton=true,
   containerStyle = {},
   children,
   options = {},
@@ -552,7 +554,7 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
         >
           {/* HEADER */}
           <div className="d-flex align-items-center mb-3">
-            <KiduPrevious />
+            {showBackButton && <KiduPrevious />}
             <h4 className="fw-bold mb-0 ms-2" style={{ color: themeColor }}>
               {title}
             </h4>

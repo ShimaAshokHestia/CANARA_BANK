@@ -2,7 +2,7 @@
 import { API_ENDPOINTS } from "../../../CONSTANTS/API_ENDPOINTS";
 import HttpService from "../../../Services/HttpService";
 import type { CustomResponse } from "../../../Types/ApiTypes";
-import type { User } from "../../Types/Settings/User.types";
+import type { ChangePasswordRequest, User } from "../../Types/Settings/User.types";
 
 const UserService = {
   async getAllUsers(): Promise<User[]> {
@@ -46,13 +46,15 @@ const UserService = {
     );
   },
 
-  async changePassword(data: { userId: number; oldPassword: string; newPassword: string }): Promise<void> {
-    await HttpService.callApi<CustomResponse<void>>(
+  async changePassword(data: ChangePasswordRequest): Promise<string> {
+    const response = await HttpService.callApi<CustomResponse<string>>(
       API_ENDPOINTS.USER.CHANGE_PASSWORD,
       'POST',
       data
     );
+    return response.value;
   },
+
 };
 
 export default UserService;

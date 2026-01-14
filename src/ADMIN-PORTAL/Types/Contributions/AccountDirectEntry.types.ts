@@ -12,6 +12,7 @@ export interface AccountsDirectEntry {
   yearOf: number;
   ddIba: string;
   ddIbaDate: Date | string;
+  ddIbaDateString?:string;
   amt: number;
   enrl: string;
   fine: string;
@@ -22,5 +23,6 @@ export interface AccountsDirectEntry {
   isApproved: boolean;
   approvedBy: string;
   approvedDate: Date | string;
+  approvedDateString?:string;
   auditLogs?: AuditTrails[];
 }

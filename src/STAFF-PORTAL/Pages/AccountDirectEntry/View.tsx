@@ -8,10 +8,10 @@ const fields: ViewField[] = [
     { key: "accountsDirectEntryID", label: "Entry ID", icon: "bi-hash" },
     { key: "name", label: "Member Name", icon: "bi-person" },
     { key: "branchName", label: "Branch Name", icon: "bi-building" },
-    { key: "monthCode", label: "Month", icon: "bi-calendar" },
+    { key: "monthName", label: "Month", icon: "bi-calendar" },
     { key: "yearOf", label: "Year", icon: "bi-calendar2" },
     { key: "ddIba", label: "DDIBA", icon: "bi-calendar2" },
-    { key: "ddIbaDate", label: "DDIBADate", icon: "bi-calendar2" },
+    { key: "ddIbaDateString", label: "DDIBADate", icon: "bi-calendar2" },
     { key: "amt", label: "Amount", icon: "bi-cash" },
     { key: "enrl", label: "Enrl", icon: "bi-hash" },
     { key: "fine", label: "Fine", icon: "bi-cash" },
@@ -21,7 +21,7 @@ const fields: ViewField[] = [
     { key: "status", label: "Status", icon: "bi-activity" },
     { key: "isApproved", label: "Approved", icon: "bi-check2-circle", isBoolean: true },
     { key: "approvedBy", label: "Approved By", icon: "bi-person" },
-    { key: "approvedDate", label: "Approved Date", icon: "bi-calendar2" },
+    { key: "approvedDateString", label: "Approved Date", icon: "bi-calendar2" },
 ];
 
 const StaffAccountDirectEntryView: React.FC = () => {

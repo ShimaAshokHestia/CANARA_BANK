@@ -5,14 +5,11 @@ import type { Member } from "../../../ADMIN-PORTAL/Types/Contributions/Member.ty
 import type { Branch } from "../../../ADMIN-PORTAL/Types/Settings/Branch.types";
 import type { Month } from "../../../ADMIN-PORTAL/Types/Settings/Month.types";
 import AccountDirectEntryService from "../../Services/AccountDirectEntry.services";
-import MemberService from "../../../ADMIN-PORTAL/Services/Contributions/Member.services";
-import BranchService from "../../../ADMIN-PORTAL/Services/Settings/Branch.services";
-import MonthService from "../../../ADMIN-PORTAL/Services/Settings/Month.services";
-import type { AccountDirectEntry } from "../../Types/AccountDirectEntry.types";
 import KiduEdit, { type Field } from "../../../ADMIN-PORTAL/Components/KiduEdit";
 import MemberPopup from "../../../ADMIN-PORTAL/Pages/Contributions/Member/MemberPopup";
 import BranchPopup from "../../../ADMIN-PORTAL/Pages/Branch/BranchPopup";
 import MonthPopup from "../../../ADMIN-PORTAL/Pages/Settings/Month/MonthPopup";
+import type { AccountsDirectEntry } from "../../../ADMIN-PORTAL/Types/Contributions/AccountDirectEntry.types";
 
 
 const StaffAccountDirectEntryEdit: React.FC = () => {
@@ -53,14 +50,20 @@ const StaffAccountDirectEntryEdit: React.FC = () => {
     const entry = response.value;
 
     if (entry) {
-      const member = await MemberService.getMemberById(entry.memberId);
-      setSelectedMember(member.value);
+      setSelectedMember({
+        memberId: entry.memberId,
+        name: entry.memberName || entry.name,
+      } as Member);
 
-      const branch = await BranchService.getBranchById(entry.branchId);
-      setSelectedBranch(branch.value);
+      setSelectedBranch({
+        branchId: entry.branchId,
+        name: entry.branchName,
+      } as Branch);
 
-      const month = await MonthService.getMonthById(entry.monthCode);
-      setSelectedMonth(month.value);
+      setSelectedMonth({
+        monthCode: entry.monthCode,
+        monthName: entry.monthName,
+      } as Month);
     }
 
     return response;
@@ -75,7 +78,7 @@ const StaffAccountDirectEntryEdit: React.FC = () => {
       throw new Error("DD / IBA Date is required");
     }
 
-    const payload: Omit<AccountDirectEntry, "auditLogs"> = {
+    const payload: Omit<AccountsDirectEntry, "auditLogs"> = {
       accountsDirectEntryID: Number(id),
       memberId: selectedMember.memberId,
       name: selectedMember.name,
@@ -91,6 +94,7 @@ const StaffAccountDirectEntryEdit: React.FC = () => {
       f10: formData.f10 || "",
       f11: formData.f11 || "",
       status: formData.status || "",
+      approvedBy:formData.approvedBy || "",
       isApproved: formData.isApproved === true,
 
       ...(formData.isApproved && {

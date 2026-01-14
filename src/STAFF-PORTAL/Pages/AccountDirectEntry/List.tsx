@@ -6,11 +6,12 @@ import AccountDirectEntryService from "../../../ADMIN-PORTAL/Services/Contributi
 
 const columns = [
   { key: "accountsDirectEntryID", label: "ID", enableSorting: true, type: "text" as const },
-  { key: "name", label: "Member", enableSorting: true, type: "text" as const },
+  { key: "memberName", label: "Member", enableSorting: true, type: "text" as const },
   { key: "branchName", label: "Branch", enableSorting: true, type: "text" as const },
   { key: "monthName", label: "Month", enableSorting: true, type: "text" as const },
   { key: "yearOf", label: "Year", enableSorting: true, type: "text" as const },
   { key: "amt", label: "Amount", enableSorting: true, type: "text" as const },
+   { key: "status", label: "Status", enableSorting: true, type: "text" as const },
   { key: "isApproved", label: "Approved", enableSorting: true, type: "checkbox" as const },
 ];
 

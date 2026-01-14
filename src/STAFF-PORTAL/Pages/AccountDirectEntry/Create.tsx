@@ -23,7 +23,6 @@ const StaffAccountDirectEntryCreate: React.FC = () => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       const user = JSON.parse(storedUser);
-
       setSelectedMember({
         memberId: user.memberId,
         name: user.userName,

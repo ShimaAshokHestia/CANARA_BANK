@@ -19,6 +19,13 @@ export interface User {
   auditLogs?: AuditTrails[];
 }
 
+// New interface for password change
+export interface ChangePasswordRequest {
+  userId: number;
+  oldPassword: string;
+  newPassword: string;
+}
+
 export type UserRole = 'Staff' | 'Admin User' | 'Super Admin';
 
 export interface TypedUser extends Omit<User, 'role'> {

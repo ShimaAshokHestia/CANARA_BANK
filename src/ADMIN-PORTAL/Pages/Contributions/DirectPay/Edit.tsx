@@ -34,33 +34,34 @@ const DirectPaymentEdit: React.FC = () => {
     return response;
   };
 
-  const handleUpdate = async (id: string, formData: Record<string, any>) => {
-    if (!selectedMember) {
-      throw new Error("Please select a member");
-    }
+ const handleUpdate = async (id: string, formData: Record<string, any>) => {
+  if (!selectedMember) {
+    throw new Error("Please select a member");
+  }
 
-    const payload: Omit<DirectPayment, "auditLogs"> = {
-      directPaymentId: Number(id),
-      memberId: selectedMember.memberId,
+  const payload = {
+    directPaymentId: Number(id),
 
-      amount: Number(formData.amount),
-      paymentDate: formData.paymentDate,
-      paymentDatestring: formData.paymentDate,
-      paymentMode: formData.paymentMode.trim(),
-      referenceNo: formData.referenceNo.trim(),
-      remarks: formData.remarks?.trim() || "",
+    memberId: selectedMember.memberId,
 
-      createdByUserId: 0,
-      createdDate: new Date().toISOString(),
-      createdDatestring: new Date().toISOString(),
-      isDeleted: false,
-    };
+    amount: Number(formData.amount),
+    paymentDate: formData.paymentDate,
+    paymentDatestring: formData.paymentDate,
 
-    await DirectPaymentService.updateDirectPayment(
-      Number(id),
-      payload
-    );
-  };
+    paymentMode: formData.paymentMode.trim(),
+    referenceNo: formData.referenceNo.trim(),
+    remarks: formData.remarks?.trim() || "",
+
+    createdByUserId: 0,
+    createdDate: new Date().toISOString(),
+    createdDatestring: new Date().toISOString(),
+
+    isDeleted: false,
+  } as Omit<DirectPayment, "auditLogs">;
+
+  await DirectPaymentService.updateDirectPayment(Number(id), payload);
+};
+
 
   const popupHandlers = {
     memberId: {

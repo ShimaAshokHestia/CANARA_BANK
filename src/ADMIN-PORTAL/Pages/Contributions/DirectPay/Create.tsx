@@ -27,23 +27,28 @@ const DirectPaymentCreate: React.FC = () => {
     throw new Error("Please select a member");
   }
 
-  const payload: Omit<DirectPayment, "directPaymentId" | "auditLogs"> = {
-    memberId: selectedMember.memberId, // ✅ FIX
+  const payload = {
+    memberId: selectedMember.memberId,
+
     amount: Number(formData.amount),
+
     paymentDate: formData.paymentDate,
     paymentDatestring: formData.paymentDate,
+
     paymentMode: formData.paymentMode.trim(),
     referenceNo: formData.referenceNo.trim(),
-    remarks: formData.remarks || "",
+    remarks: formData.remarks?.trim() || "",
+
     createdByUserId: 0,
     createdDate: new Date().toISOString(),
     createdDatestring: new Date().toISOString(),
-    isDeleted: false,
-  };
 
-  const response = await DirectPaymentService.createDirectPayment(payload);
-  console.log(response);
+    isDeleted: false,
+  } as Omit<DirectPayment, "directPaymentId" | "auditLogs">;
+
+  await DirectPaymentService.createDirectPayment(payload);
 };
+
 
 
   const popupHandlers={

@@ -57,7 +57,7 @@ const RefundContributionEdit: React.FC = () => {
   if (refund.stateId) {
     const state = await StateService.getStateById(refund.stateId);
     setSelectedState(state.value);
-    refund.stateId = state.value.stateId; // 🔑 IMPORTANT
+    refund.stateId = state.value.stateId; 
   }
 
   // ================= MEMBER (KEY FIX) =================
@@ -66,7 +66,7 @@ const RefundContributionEdit: React.FC = () => {
     const member = members.find(m => m.staffNo === refund.staffNo);
     if (member) {
       setSelectedMember(member);
-      refund.memberId = member.memberId; // 🔥 THIS LINE FIXES IT
+      refund.memberId = member.memberId; 
     }
   }
 

@@ -128,8 +128,8 @@ const handleUpdate = async (id: string, formData: Record<string, any>) => {
       actualValue: selectedState?.stateId,
       onOpen: () => setShowStatePopup(true),
     },
-    memberId: {
-  value: selectedMember ? `${selectedMember.staffNo} - ${selectedMember.name}` : "",
+memberId: {
+  value: selectedMember?.name || "",
   actualValue: selectedMember?.memberId,
   onOpen: () => setShowMemberPopup(true),
 },

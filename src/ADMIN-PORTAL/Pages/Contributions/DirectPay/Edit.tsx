@@ -6,6 +6,7 @@ import DirectPaymentService from "../../../Services/Contributions/Directpayment.
 import type { DirectPayment } from "../../../Types/Contributions/Directpayment.types";
 import type { Member } from "../../../Types/Contributions/Member.types";
 import MemberPopup from "../Member/MemberPopup";
+import MemberService from "../../../Services/Contributions/Member.services";
 
 const DirectPaymentEdit: React.FC = () => {
 
@@ -22,17 +23,19 @@ const DirectPaymentEdit: React.FC = () => {
   ];
 
   const handleFetch = async (id: string) => {
-    const response = await DirectPaymentService.getDirectPaymentById(Number(id));
+  const response = await DirectPaymentService.getDirectPaymentById(Number(id));
+  const payment = response.value;
 
-    if (response.value?.memberId) {
-      setSelectedMember({
-        memberId: response.value.memberId,
-        name: `Member ID: ${response.value.memberId}`,
-      } as Member);
+  if (payment?.memberId) {
+    const memberRes = await MemberService.getMemberById(payment.memberId);
+    if (memberRes.value) {
+      setSelectedMember(memberRes.value);
     }
+  }
 
-    return response;
-  };
+  return response;
+};
+
 
  const handleUpdate = async (id: string, formData: Record<string, any>) => {
   if (!selectedMember) {

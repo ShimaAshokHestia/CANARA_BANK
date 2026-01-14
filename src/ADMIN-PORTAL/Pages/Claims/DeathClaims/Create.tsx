@@ -28,7 +28,7 @@ const DeathClaimCreate: React.FC = () => {
 
     { name: "deathDate", rules: { type: "date", label: "Death Date", required: true, colWidth: 4 } },
     { name: "nominee", rules: { type: "text", label: "Nominee Name", required: true, colWidth: 4 } },
-    { name: "nomineeRelation", rules: { type: "text", label: "Nominee Relation", required: true, colWidth: 4 } },
+    { name: "nomineeRelation", rules: { type: "select", label: "Nominee Relation", required: true, colWidth: 4 } },
     { name: "nomineeIDentity", rules: { type: "text", label: "Nominee Identity", required: false, colWidth: 6 } },
 
     { name: "ddno", rules: { type: "text", label: "DD Number", required: true, colWidth: 3 } },
@@ -82,7 +82,18 @@ const popupHandlers = {
       onOpen: () => setShowDesignationPopup(true),
     },
 }
-
+//nominee Relation options
+  const nomineeRelationOptions = [
+    {value:"Spouse", label: "Spouse"},
+    {value:"Father", label: "Father"},
+    {value:"Mother", label: "Mother"},
+    {value:"Son", label: "Son"},
+    {value:"Daughter", label: "Daughter"},
+    {value:"Sibling", label: "Sibling"},
+    {value:"Nephew", label: "Nephew"},
+    {value:"Niece", label: "Niece"},
+    {value:"Grandparent", label: "Grandparent"},
+  ]
   return (
    <>
       <KiduCreate
@@ -97,6 +108,9 @@ const popupHandlers = {
         navigateDelay={1200}
         themeColor="#1B3763"
         popupHandlers={popupHandlers}
+        options={{
+         nomineeRelation: nomineeRelationOptions, 
+        }}
       />
       <MemberPopup
         show={showMemberPopup}

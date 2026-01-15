@@ -77,30 +77,39 @@ const DeathClaimEdit: React.FC = () => {
     };
   };
 
-  // ✅ UPDATE (PRIMARY KEY INCLUDED)
-  const handleUpdate = async (id: string, formData: Record<string, any>) => {
-    if (!selectedMember || !selectedState || !selectedDesignation) {
-      throw new Error("Please select all required values");
-    }
+ const handleUpdate = async (id: string, formData: Record<string, any>) => {
+  if (!selectedMember || !selectedState || !selectedDesignation) {
+    throw new Error("Please select all required values");
+  }
 
-    const payload: Omit<DeathClaim, "auditLogs"> = {
-      deathClaimId: Number(id),
-      memberId: selectedMember.memberId,
-      stateId: selectedState.stateId,
-      designationId: selectedDesignation.designationId,
-      deathDate: toIso(formData.deathDate),
-      nominee: formData.nominee || "",
-      nomineeRelation: formData.nomineeRelation || "",
-      nomineeIDentity: formData.nomineeIDentity || "",
-      ddno: formData.ddno || "",
-      dddate: toIso(formData.dddate),
-      amount: Number(formData.amount),
-      lastContribution: Number(formData.lastContribution || 0),
-      yearOF: Number(formData.yearOF),
-    };
+  const payload: Omit<
+    DeathClaim,
+    | "auditLogs"
+    | "memberName"
+    | "stateName"
+    | "designationName"
+  > = {
+    deathClaimId: Number(id),
+    memberId: selectedMember.memberId,
+    stateId: selectedState.stateId,
+    designationId: selectedDesignation.designationId,
 
-    await DeathClaimService.updateDeathClaim(Number(id), payload);
+    deathDate: toIso(formData.deathDate),
+    nominee: formData.nominee || "",
+    nomineeRelation: formData.nomineeRelation || "",
+    nomineeIDentity: formData.nomineeIDentity || "",
+
+    ddno: formData.ddno || "",
+    dddate: toIso(formData.dddate),
+
+    amount: Number(formData.amount),
+    lastContribution: Number(formData.lastContribution || 0),
+    yearOF: Number(formData.yearOF),
   };
+
+  await DeathClaimService.updateDeathClaim(Number(id), payload);
+};
+
 
   const popupHandlers = {
     memberId: {

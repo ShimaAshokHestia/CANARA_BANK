@@ -45,7 +45,7 @@ const DeathClaimCreate: React.FC = () => {
     if (!selectedState) throw new Error("Please select a state");
     if (!selectedDesignation) throw new Error("Please select a designation");
 
-    const payload: Omit<DeathClaim, "deathClaimId" | "auditLogs"> = {
+    const payload = {
       memberId: selectedMember.memberId,
       stateId: selectedState.stateId,
       designationId: selectedDesignation.designationId,
@@ -58,7 +58,7 @@ const DeathClaimCreate: React.FC = () => {
       amount: Number(formData.amount),
       lastContribution: Number(formData.lastContribution),
       yearOF: Number(formData.yearOF),
-    };
+    } as Omit<DeathClaim, "deathClaimId" | "auditLogs">;
 
     await DeathClaimService.createDeathClaim(payload);
   };

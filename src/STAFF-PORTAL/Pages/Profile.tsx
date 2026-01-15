@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import type { Member } from "../../ADMIN-PORTAL/Types/Contributions/Member.types";
 import MemberService from "../../ADMIN-PORTAL/Services/Contributions/Member.services";
 import AuthService from "../../Services/Auth.services";
+import KiduLoader from "../../Components/KiduLoader";
 
 const Profile: React.FC = () => {
   const navigate = useNavigate();
@@ -77,12 +78,7 @@ const Profile: React.FC = () => {
     return (
       <Card className="profile-card mt-2">
         <Card.Body>
-          <div className="text-center py-5">
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-            <p className="mt-2">Loading profile...</p>
-          </div>
+         <KiduLoader type="staff details" />
         </Card.Body>
       </Card>
     );

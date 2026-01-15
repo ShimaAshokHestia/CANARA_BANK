@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Form, Button } from "react-bootstrap";
 import "../Style/DirectContribution.css";
-import type { AccountDirectEntry } from "../Types/AccountDirectEntry.types";
 import AccountDirectEntryService from "../Services/AccountDirectEntry.services";
 import KiduValidation, { ValidationMessage } from "../../Components/KiduValidation";
+import type { AccountsDirectEntry } from "../../ADMIN-PORTAL/Types/Contributions/AccountDirectEntry.types";
 
 const fields = {
   name: { label: "Staff Name" },
@@ -105,7 +105,7 @@ const DirectContribution: React.FC = () => {
 
     setIsSubmitting(true);
     try {
-      const payload: Omit<AccountDirectEntry, "accountsDirectEntryID"> = {
+      const payload: Omit<AccountsDirectEntry, "accountsDirectEntryID"> = {
         ...formData,
         branchId: Number(formData.branchId),
         monthCode: Number(formData.monthCode),

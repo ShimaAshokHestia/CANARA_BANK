@@ -170,6 +170,7 @@ const StaffEdit: React.FC = () => {
         fields={fields}
         onFetch={handleFetch}
         onUpdate={handleUpdate}
+        loadingText="Staff edit"
         paramName="memberId"
         navigateBackPath="/staff-portal"
         auditLogConfig={{ tableName: "Member", recordIdField: "memberId" }}

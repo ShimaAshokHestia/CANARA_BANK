@@ -18,7 +18,7 @@ const StaffAccountDirectEntryCreate: React.FC = () => {
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<Month | null>(null)
-   // AUTO-POPULATE MEMBER FROM LOCAL STORAGE
+  // AUTO-POPULATE MEMBER FROM LOCAL STORAGE
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -29,26 +29,21 @@ const StaffAccountDirectEntryCreate: React.FC = () => {
       } as Member);
     }
   }, []);
-  
+
   const fields: Field[] = [
-    { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4, disabled:true } },
+    { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4, disabled: true } },
     { name: "branchId", rules: { type: "popup", label: "Branch", required: true, colWidth: 4 } },
     { name: "monthCode", rules: { type: "popup", label: "Month Code", required: true, colWidth: 4 } },
     { name: "yearOf", rules: { type: "number", label: "Year", required: true, colWidth: 4 } },
-
     { name: "ddIba", rules: { type: "text", label: "DD / IBA No", colWidth: 4, required: true } },
-    { name: "ddIbaDate", rules: { type: "date", label: "DD / IBA Date", colWidth: 4 , required: true} },
+    { name: "ddIbaDate", rules: { type: "date", label: "DD / IBA Date", colWidth: 4, required: true } },
     { name: "amt", rules: { type: "number", label: "Amount", required: true, colWidth: 3 } },
-
     { name: "enrl", rules: { type: "text", label: "ENRL", colWidth: 3 } },
     { name: "fine", rules: { type: "text", label: "Fine", colWidth: 3 } },
-     { name: "status", rules: { type: "select", label: "Status", colWidth: 3 ,required: true,} },
-
+    { name: "status", rules: { type: "select", label: "Status", colWidth: 3, required: true, } },
     { name: "f9", rules: { type: "text", label: "F9", colWidth: 2 } },
     { name: "f10", rules: { type: "text", label: "F10", colWidth: 2 } },
     { name: "f11", rules: { type: "text", label: "F11", colWidth: 2 } },
-
-   
     { name: "isApproved", rules: { type: "toggle", label: "Approved" } },
     { name: "approvedBy", rules: { type: "text", label: "Approved By", colWidth: 3 } },
     { name: "approvedDate", rules: { type: "date", label: "Approved Date", colWidth: 3 } },
@@ -59,7 +54,7 @@ const StaffAccountDirectEntryCreate: React.FC = () => {
   const handleSubmit = async (formData: Record<string, any>) => {
     if (!selectedMember) throw new Error("Select member");
     if (!selectedBranch) throw new Error("Select branch");
-    if (!selectedMonth) throw new Error ("Select month");
+    if (!selectedMonth) throw new Error("Select month");
 
     const payload: Omit<AccountsDirectEntry, "accountsDirectEntryID" | "auditLogs"> = {
       memberId: selectedMember.memberId,
@@ -89,7 +84,7 @@ const StaffAccountDirectEntryCreate: React.FC = () => {
       value: selectedMember?.name || "",
       actualValue: selectedMember?.memberId,
       onOpen: () => setShowMemberPopup(false),
-     
+
     },
     branchId: {
       value: selectedBranch?.name || "",
@@ -99,14 +94,14 @@ const StaffAccountDirectEntryCreate: React.FC = () => {
     monthCode: {
       value: selectedMonth?.monthName || "",
       actualValue: selectedMonth?.monthCode,
-      onOpen: ()=> setShowMonthPopup(true),
+      onOpen: () => setShowMonthPopup(true),
     }
   };
 
-//status option
-const statusOptions =[
-  {value:"Submitted",label:"Submitted"}
-]
+  //status option
+  const statusOptions = [
+    { value: "Submitted", label: "Submitted" }
+  ]
 
   return (
     <>
@@ -127,28 +122,28 @@ const statusOptions =[
         }}
       />
 
-      <MemberPopup 
-      show={showMemberPopup} 
-      handleClose={() => setShowMemberPopup(false)} 
-      onSelect={setSelectedMember} 
-       showAddButton={false}
-      />
-      
-      <BranchPopup 
-      show={showBranchPopup} 
-      handleClose={() => setShowBranchPopup(false)} 
-      onSelect={setSelectedBranch} 
-       showAddButton={false}
-      />
-      
-      <MonthPopup 
-      show={showMonthPopup} 
-      handleClose={()=> setShowMonthPopup(false)} 
-      onSelect={setSelectedMonth}
-       showAddButton={false} 
+      <MemberPopup
+        show={showMemberPopup}
+        handleClose={() => setShowMemberPopup(false)}
+        onSelect={setSelectedMember}
+        showAddButton={false}
       />
 
-       </>
+      <BranchPopup
+        show={showBranchPopup}
+        handleClose={() => setShowBranchPopup(false)}
+        onSelect={setSelectedBranch}
+        showAddButton={false}
+      />
+
+      <MonthPopup
+        show={showMonthPopup}
+        handleClose={() => setShowMonthPopup(false)}
+        onSelect={setSelectedMonth}
+        showAddButton={false}
+      />
+
+    </>
   );
 };
 

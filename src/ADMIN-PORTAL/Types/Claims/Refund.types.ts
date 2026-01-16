@@ -8,7 +8,7 @@ export interface RefundContribution {
   stateId: number; 
   stateName: string;           
   designationId: number;  
-  designationName: string;     
+  designationName: string;    
   deathDate: Date | string;      
   deathDateString: Date | string;       
   refundNO: number;            

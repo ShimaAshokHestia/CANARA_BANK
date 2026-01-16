@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import type { Field } from "../../../Components/KiduCreate";
 import KiduCreate from "../../../Components/KiduCreate";
-import type { RefundContribution } from "../../../Types/Claims/Refund.types";
+//import type { RefundContribution } from "../../../Types/Claims/Refund.types";
 import RefundContributionService from "../../../Services/Claims/Refund.services";
 import type { State } from "../../../Types/Settings/States.types";
 import type { Designation } from "../../../Types/Settings/Designation";
@@ -45,35 +45,46 @@ const RefundContributionCreate: React.FC = () => {
   const toIso = (val?: string) => (val ? `${val}T00:00:00` : "");
 
   /* ===================== SUBMIT ===================== */
-  const handleSubmit = async (formData: Record<string, any>) => {
-    if (!selectedState) throw new Error("Please select State");
-    if (!selectedMember) throw new Error("Please select Member");
-    if (!selectedDesignation) throw new Error("Please select Designation");
+ const handleSubmit = async (formData: Record<string, any>) => {
+  if (!selectedState) throw new Error("Please select State");
+  if (!selectedMember) throw new Error("Please select Member");
+  if (!selectedDesignation) throw new Error("Please select Designation");
 
-   const payload: Omit<RefundContribution, "refundContributionId" | "auditLogs"> = {
-  staffNo: selectedMember!.staffNo,
-  stateId: selectedState!.stateId,
-  memberId: selectedMember!.memberId,
-  designationId: selectedDesignation!.designationId,
-  refundContribution: formData.type,
-  refundNO: String(formData.refundNO || "").trim(),
-  branchNameOFTime: String(formData.branchNameOFTime || "").trim(),
-  dpcodeOfTime: String(formData.dpcodeOfTime || "").trim(),
-  type: formData.type,
-  remark: String(formData.remark || "").trim(),
-  ddno: String(formData.ddno || "").trim(),
-  dddate: toIso(formData.dddate),
-  dddateString: toIso(formData.dddate),
-  amount: Number(formData.amount),
-  lastContribution: Number(formData.lastContribution || 0),
-  yearOF: Number(formData.yearOF),
-  deathDate: "",
-  deathDateString: "",
+  const payload = {
+    staffNo: selectedMember.staffNo,
+    stateId: selectedState.stateId,
+    memberId: selectedMember.memberId,
+    designationId: selectedDesignation.designationId,
+
+    // ✅ REQUIRED BY BACKEND
+    refundContribution: formData.type,
+
+    // ✅ MUST BE STRING (NOT NUMBER)
+    refundNO: String(formData.refundNO || "").trim(),
+
+    branchNameOFTime: String(formData.branchNameOFTime || "").trim(),
+    dpcodeOfTime: String(formData.dpcodeOfTime || "").trim(),
+
+    type: formData.type,
+    remark: String(formData.remark || "").trim(),
+
+    ddno: String(formData.ddno || "").trim(),
+    dddate: toIso(formData.dddate),
+    dddateString: toIso(formData.dddate),
+
+    amount: Number(formData.amount),
+    lastContribution: Number(formData.lastContribution || 0),
+    yearOF: Number(formData.yearOF),
+
+    deathDate: "",
+    deathDateString: "",
+  };
+
+  await RefundContributionService.createRefundContribution(
+    payload as any
+  );
 };
 
-
-    await RefundContributionService.createRefundContribution(payload);
-  };
 
   /* ===================== POPUPS ===================== */
   const popupHandlers = {

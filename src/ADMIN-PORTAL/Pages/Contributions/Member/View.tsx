@@ -9,25 +9,18 @@ const MemberView: React.FC = () => {
     { key: "staffNo", label: "Staff No", icon: "bi-123" },
     { key: "name", label: "Name", icon: "bi-person" },
     { key: "gender", label: "Gender", icon: "bi-gender-ambiguous" },
-
-    // ✅ Display names instead of IDs
     { key: "designationName", label: "Designation", icon: "bi-briefcase" },
     { key: "categoryname", label: "Category", icon: "bi-ui-checks-grid" },
     { key: "branchName", label: "Branch", icon: "bi-building" },
     { key: "status", label: "Status", icon: "bi-activity" },
-
     { key: "dobString", label: "Date of Birth", icon: "bi-calendar" },
     { key: "dojString", label: "Date of Joining", icon: "bi-calendar-check" },
     { key: "dojtoSchemeString", label: "DOJ to Scheme", icon: "bi-calendar-event" },
-
     { key: "isRegCompleted", label: "Registration Completed", icon: "bi-clipboard-check", isBoolean: true },
-
     { key: "profileImageSrc", label: "Profile Image Src", icon: "bi-card-image" },
-
     { key: "nominee", label: "Nominee", icon: "bi-person-heart" },
     { key: "nomineeRelation", label: "Nominee Relation", icon: "bi-people" },
     { key: "nomineeIDentity", label: "Nominee Identity", icon: "bi-person-badge" },
-
     { key: "unionMember", label: "Union Member", icon: "bi-patch-check" },
     { key: "totalRefund", label: "Total Refund", icon: "bi-cash" },
   ];

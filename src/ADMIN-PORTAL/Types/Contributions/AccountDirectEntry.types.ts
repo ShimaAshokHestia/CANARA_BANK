@@ -1,6 +1,6 @@
 import type { AuditTrails } from "../../../Types/AuditLog.types";
 
-export interface AccountsDirectEntry {
+export interface AccountDirectEntry {
   accountsDirectEntryID: number;
   memberId: number;
   memberName?:string;

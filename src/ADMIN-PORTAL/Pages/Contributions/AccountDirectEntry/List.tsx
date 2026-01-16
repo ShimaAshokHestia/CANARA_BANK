@@ -1,15 +1,14 @@
 // src/Pages/Accounts/AccountsDirectEntry/List.tsx
-
 import React from "react";
 import KiduServerTable from "../../../../Components/KiduServerTable";
-import type { AccountsDirectEntry } from "../../../Types/Contributions/AccountDirectEntry.types";
-import AccountsDirectEntryService from "../../../Services/Contributions/AccountDirectEntry.services";
+import AccountDirectEntryService from "../../../Services/Contributions/AccountDirectEntry.services";
+import type { AccountDirectEntry } from "../../../Types/Contributions/AccountDirectEntry.types";
 
 const columns = [
   { key: "accountsDirectEntryID", label: "ID", enableSorting: true, type: "text" as const },
-  { key: "memberName", label: "Member", enableSorting: true, type: "text" as const }, // ✅
-  { key: "branchName", label: "Branch", enableSorting: true, type: "text" as const }, // ✅
-  { key: "monthName", label: "Month", enableSorting: true, type: "text" as const },   // ✅
+  { key: "memberName", label: "Member", enableSorting: true, type: "text" as const },
+  { key: "branchName", label: "Branch", enableSorting: true, type: "text" as const },
+  { key: "monthName", label: "Month", enableSorting: true, type: "text" as const },
   { key: "yearOf", label: "Year", enableSorting: true, type: "text" as const },
   { key: "amt", label: "Amount", enableSorting: true, type: "text" as const },
   { key: "status", label: "Status", enableSorting: true, type: "text" as const },
@@ -21,10 +20,10 @@ const AccountsDirectEntryList: React.FC = () => {
     pageNumber: number;
     pageSize: number;
     searchTerm: string;
-  }): Promise<{ data: any[]; total: number }> => {
+  }): Promise<{ data: AccountDirectEntry[]; total: number }> => {
 
-    let entries: AccountsDirectEntry[] =
-      await AccountsDirectEntryService.getAllAccountDirectEntries();
+    let entries: AccountDirectEntry[] =
+      await AccountDirectEntryService.getAllAccountDirectEntries();
 
     /* ===================== SEARCH ===================== */
     if (params.searchTerm) {
@@ -57,8 +56,7 @@ const AccountsDirectEntryList: React.FC = () => {
       title="Accounts Direct Entry"
       subtitle="Manage account direct entries"
       columns={columns}
-      idKey="accountsDirectEntryID"
-      addButtonLabel="Add Entry"
+      idKey="accountsDirectEntryID"   
       addRoute="/dashboard/contributions/accountDirectEntry-create"
       editRoute="/dashboard/contributions/accountDirectEntry-edit"
       viewRoute="/dashboard/contributions/accountDirectEntry-view"

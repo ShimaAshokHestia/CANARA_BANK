@@ -28,18 +28,14 @@ const MemberEdit: React.FC = () => {
     { name: "staffNo", rules: { type: "number", label: "Staff No", required: true, colWidth: 3 } },
     { name: "name", rules: { type: "text", label: "Name", required: true, colWidth: 6 } },
     { name: "genderId", rules: { type: "select", label: "Gender", required: true, colWidth: 3 } },
-
     { name: "designationId", rules: { type: "popup", label: "Designation", required: true, colWidth: 3 } },
     { name: "categoryId", rules: { type: "popup", label: "Category", required: true, colWidth: 3 } },
     { name: "branchId", rules: { type: "popup", label: "Branch", required: true, colWidth: 3 } },
     { name: "statusId", rules: { type: "popup", label: "Status", required: true, colWidth: 3 } },
-
     { name: "dob", rules: { type: "date", label: "Date of Birth", required: true, colWidth: 4 } },
     { name: "doj", rules: { type: "date", label: "Date of Joining", required: true, colWidth: 4 } },
     { name: "dojtoScheme", rules: { type: "date", label: "DOJ to Scheme", required: true, colWidth: 4 } },
-
     { name: "isRegCompleted", rules: { type: "toggle", label: "Registration Completed" } },
-
     { name: "profileImageSrc", rules: { type: "text", label: "Profile Image", colWidth: 3 } },
     { name: "nominee", rules: { type: "text", label: "Nominee Name", colWidth: 4 } },
     { name: "nomineeRelation", rules: { type: "text", label: "Nominee Relation", colWidth: 4 } },
@@ -67,7 +63,6 @@ const MemberEdit: React.FC = () => {
     const response = await MemberService.getMemberById(Number(id));
     const member = response.value;
 
-    // Debug log
     console.log("Fetched member data:", member);
     console.log("GenderId from API:", member?.genderId, "Type:", typeof member?.genderId);
 

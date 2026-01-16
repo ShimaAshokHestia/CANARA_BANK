@@ -1,13 +1,14 @@
+// src/ADMIN-PORTAL/Components/Claims/RefundContributionCreate.tsx
 import React, { useState } from "react";
 import type { Field } from "../../../Components/KiduCreate";
 import KiduCreate from "../../../Components/KiduCreate";
 import type { RefundContribution } from "../../../Types/Claims/Refund.types";
 import RefundContributionService from "../../../Services/Claims/Refund.services";
 import type { State } from "../../../Types/Settings/States.types";
-import StatePopup from "../../Settings/State/StatePopup";
 import type { Designation } from "../../../Types/Settings/Designation";
-import DesignationPopup from "../../Settings/Designation/DesignationPopup";
 import type { Member } from "../../../Types/Contributions/Member.types";
+import StatePopup from "../../Settings/State/StatePopup";
+import DesignationPopup from "../../Settings/Designation/DesignationPopup";
 import MemberPopup from "../../Contributions/Member/MemberPopup";
 
 const RefundContributionCreate: React.FC = () => {
@@ -19,6 +20,7 @@ const RefundContributionCreate: React.FC = () => {
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
   const [selectedDesignation, setSelectedDesignation] = useState<Designation | null>(null);
 
+  /* ===================== FIELDS ===================== */
   const fields: Field[] = [
     { name: "stateId", rules: { type: "popup", label: "State", required: true, colWidth: 4 } },
     { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4 } },
@@ -38,41 +40,42 @@ const RefundContributionCreate: React.FC = () => {
     { name: "lastContribution", rules: { type: "number", label: "Last Contribution", colWidth: 4 } },
     { name: "yearOF", rules: { type: "number", label: "Year Of", required: true, colWidth: 4 } },
   ];
+
+  /* ===================== HELPERS ===================== */
   const toIso = (val?: string) => (val ? `${val}T00:00:00` : "");
- const handleSubmit = async (formData: Record<string, any>) => {
-  if (!selectedState) throw new Error("Please select State");
-  if (!selectedMember) throw new Error("Please select Member");
-  if (!selectedDesignation) throw new Error("Please select Designation");
 
-  const payload = {
-    staffNo: selectedMember.staffNo,
-    stateId: selectedState.stateId,
-    memberId: selectedMember.memberId,
-    designationId: selectedDesignation.designationId,
+  /* ===================== SUBMIT ===================== */
+  const handleSubmit = async (formData: Record<string, any>) => {
+    if (!selectedState) throw new Error("Please select State");
+    if (!selectedMember) throw new Error("Please select Member");
+    if (!selectedDesignation) throw new Error("Please select Designation");
 
-    deathDate: "",
-    deathDateString: "",
-
-    refundNO: Number(formData.refundNO),
-    branchNameOFTime: formData.branchNameOFTime.trim(),
-    dpcodeOfTime: formData.dpcodeOFTime.trim(),
-
-    type: formData.type,
-    remark: formData.remark?.trim() || "",
-
-    ddno: formData.ddno.trim(),
-    dddate: toIso(formData.dddate),
-    dddateString: toIso(formData.dddate),
-
-    amount: Number(formData.amount),
-    lastContribution: Number(formData.lastContribution || 0),
-    yearOF: Number(formData.yearOF),
-  } as Omit<RefundContribution, "refundContributionId" | "auditLogs">;
-
-  await RefundContributionService.createRefundContribution(payload);
+   const payload: Omit<RefundContribution, "refundContributionId" | "auditLogs"> = {
+  staffNo: selectedMember!.staffNo,
+  stateId: selectedState!.stateId,
+  memberId: selectedMember!.memberId,
+  designationId: selectedDesignation!.designationId,
+  refundContribution: formData.type,
+  refundNO: String(formData.refundNO || "").trim(),
+  branchNameOFTime: String(formData.branchNameOFTime || "").trim(),
+  dpcodeOfTime: String(formData.dpcodeOfTime || "").trim(),
+  type: formData.type,
+  remark: String(formData.remark || "").trim(),
+  ddno: String(formData.ddno || "").trim(),
+  dddate: toIso(formData.dddate),
+  dddateString: toIso(formData.dddate),
+  amount: Number(formData.amount),
+  lastContribution: Number(formData.lastContribution || 0),
+  yearOF: Number(formData.yearOF),
+  deathDate: "",
+  deathDateString: "",
 };
 
 
+    await RefundContributionService.createRefundContribution(payload);
+  };
+
+  /* ===================== POPUPS ===================== */
   const popupHandlers = {
     stateId: {
       value: selectedState?.name || "",
@@ -80,7 +83,7 @@ const RefundContributionCreate: React.FC = () => {
       onOpen: () => setShowStatePopup(true),
     },
     memberId: {
-      value: selectedMember ? `${selectedMember.staffNo} - ${selectedMember.name}` : "",
+      value: selectedMember?.name || "",
       actualValue: selectedMember?.memberId,
       onOpen: () => setShowMemberPopup(true),
     },

@@ -4,73 +4,86 @@ import type { Field } from "../../../Components/KiduCreate";
 import KiduCreate from "../../../Components/KiduCreate";
 import type { Member } from "../../../Types/Contributions/Member.types";
 import type { Branch } from "../../../Types/Settings/Branch.types";
+import type { Month } from "../../../Types/Settings/Month.types";
+import type { AccountDirectEntry } from "../../../Types/Contributions/AccountDirectEntry.types";
 import MemberPopup from "../Member/MemberPopup";
 import BranchPopup from "../../Branch/BranchPopup";
-import type { AccountsDirectEntry } from "../../../Types/Contributions/AccountDirectEntry.types";
-import AccountDirectEntryService from "../../../Services/Contributions/AccountDirectEntry.services";
-import type { Month } from "../../../Types/Settings/Month.types";
 import MonthPopup from "../../Settings/Month/MonthPopup";
+import AccountDirectEntryService from "../../../Services/Contributions/AccountDirectEntry.services";
 
 const AccountDirectEntryCreate: React.FC = () => {
   const [showMemberPopup, setShowMemberPopup] = useState(false);
   const [showBranchPopup, setShowBranchPopup] = useState(false);
-  const [showMonthPopup, setShowMonthPopup] = useState(false)
+  const [showMonthPopup, setShowMonthPopup] = useState(false);
 
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
-  const [selectedMonth, setSelectedMonth] = useState<Month | null>(null)
+  const [selectedMonth, setSelectedMonth] = useState<Month | null>(null);
+
+  const toIso = (val?: string) => (val ? `${val}T00:00:00` : "");
+
   const fields: Field[] = [
-    { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4 } },
+     { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4 } },
     { name: "branchId", rules: { type: "popup", label: "Branch", required: true, colWidth: 4 } },
-    { name: "monthCode", rules: { type: "popup", label: "Month Code", required: true, colWidth: 4 } },
+    { name: "monthCode", rules: { type: "popup", label: "Month", required: true, colWidth: 4 } },
     { name: "yearOf", rules: { type: "number", label: "Year", required: true, colWidth: 4 } },
-
     { name: "ddIba", rules: { type: "text", label: "DD / IBA No", colWidth: 4 } },
-    { name: "ddIbaDate", rules: { type: "date", label: "DD / IBA Date", colWidth: 4 } },
+    { name: "ddIbaDate", rules: { type: "date", label: "DD / IBA Date",required:true, colWidth: 4 } },
     { name: "amt", rules: { type: "number", label: "Amount", required: true, colWidth: 4 } },
-
     { name: "enrl", rules: { type: "text", label: "ENRL", colWidth: 3 } },
     { name: "fine", rules: { type: "text", label: "Fine", colWidth: 3 } },
-
     { name: "f9", rules: { type: "text", label: "F9", colWidth: 4 } },
     { name: "f10", rules: { type: "text", label: "F10", colWidth: 4 } },
     { name: "f11", rules: { type: "text", label: "F11", colWidth: 4 } },
-
     { name: "status", rules: { type: "select", label: "Status", colWidth: 3 } },
     { name: "isApproved", rules: { type: "toggle", label: "Approved" } },
     { name: "approvedBy", rules: { type: "text", label: "Approved By", colWidth: 3 } },
-    { name: "approvedDate", rules: { type: "date", label: "Approved Date", colWidth: 3 } },
+    { name: "approvedDate", rules: { type: "date", label: "Approved Date",required: true, colWidth: 3 } },
   ];
 
-  const toIso = (v?: string) => (v ? `${v}T00:00:00` : "");
+ const handleSubmit = async (formData: Record<string, any>) => {
+  if (!selectedMember || !selectedBranch || !selectedMonth) {
+    throw new Error("Please select all required values");
+  }
 
-  const handleSubmit = async (formData: Record<string, any>) => {
-    if (!selectedMember) throw new Error("Select member");
-    if (!selectedBranch) throw new Error("Select branch");
-    if (!selectedMonth) throw new Error ("Select month");
+  const isApproved = Boolean(formData.isApproved);
 
-    const payload: Omit<AccountsDirectEntry, "accountsDirectEntryID" | "auditLogs"> = {
-      memberId: selectedMember.memberId,
-      name: selectedMember.name,
-      branchId: selectedBranch.branchId,
-      monthCode: selectedMonth.monthCode,
-      yearOf: Number(formData.yearOf),
-      ddIba: formData.ddIba || "",
-      ddIbaDate: toIso(formData.ddIbaDate),
-      amt: Number(formData.amt),
-      enrl: formData.enrl || "",
-      fine: formData.fine || "",
-      f9: formData.f9 || "",
-      f10: formData.f10 || "",
-      f11: formData.f11 || "",
-      status: formData.status || "",
-      isApproved: Boolean(formData.isApproved),
-      approvedBy: formData.approvedBy || "",
-      approvedDate: toIso(formData.approvedDate),
-    };
+  const payload: any = {
+    memberId: selectedMember.memberId,
+    name: selectedMember.name,
+    branchId: selectedBranch.branchId,
+    monthCode: selectedMonth.monthCode,
+    yearOf: Number(formData.yearOf),
 
-    await AccountDirectEntryService.createAccountDirectEntry(payload);
+    ddIba: formData.ddIba || "",
+    ddIbaDate: toIso(formData.ddIbaDate),
+    amt: Number(formData.amt),
+
+    enrl: formData.enrl || "",
+    fine: formData.fine || "",
+    f9: formData.f9 || "",
+    f10: formData.f10 || "",
+    f11: formData.f11 || "",
+
+    status: isApproved ? "Approved" : "Pending",
+    isApproved,
   };
+
+  // ✅ ONLY send approval fields when approved
+  if (isApproved) {
+    if (!formData.approvedDate) {
+      throw new Error("Approved Date is required when approving");
+    }
+
+    payload.approvedBy = formData.approvedBy?.trim() || "Admin";
+    payload.approvedDate = toIso(formData.approvedDate);
+  }
+
+  await AccountDirectEntryService.createAccountDirectEntry(
+    payload as Omit<AccountDirectEntry, "accountsDirectEntryID" | "auditLogs">
+  );
+};
+
 
   const popupHandlers = {
     memberId: {
@@ -86,53 +99,25 @@ const AccountDirectEntryCreate: React.FC = () => {
     monthCode: {
       value: selectedMonth?.monthName || "",
       actualValue: selectedMonth?.monthCode,
-      onOpen: ()=> setShowMonthPopup(true),
-    }
+      onOpen: () => setShowMonthPopup(true),
+    },
   };
-
-//status option
-const statusOptions =[
-  {value:"submitted",label:"Submitted"}
-]
 
   return (
     <>
       <KiduCreate
-        title="Create Account Direcy Entry"
+        title="Create Account Direct Entry"
         fields={fields}
         onSubmit={handleSubmit}
         popupHandlers={popupHandlers}
-        submitButtonText="Create Account Direcy Entry"
-        showResetButton
         navigateOnSuccess="/dashboard/contributions/accountDirectEntry-list"
-        successMessage="Entry created successfully"
-        errorMessage="Failed to create entry. Please try again."
         themeColor="#1B3763"
-        navigateDelay={1200}
-        options={{
-          status: statusOptions
-        }}
       />
 
-      <MemberPopup 
-      show={showMemberPopup} 
-      handleClose={() => setShowMemberPopup(false)} 
-      onSelect={setSelectedMember} 
-      />
-      
-      <BranchPopup 
-      show={showBranchPopup} 
-      handleClose={() => setShowBranchPopup(false)} 
-      onSelect={setSelectedBranch} 
-      />
-      
-      <MonthPopup 
-      show={showMonthPopup} 
-      handleClose={()=> setShowMonthPopup(false)} 
-      onSelect={setSelectedMonth} 
-      />
-
-       </>
+      <MemberPopup show={showMemberPopup} handleClose={() => setShowMemberPopup(false)} onSelect={setSelectedMember} />
+      <BranchPopup show={showBranchPopup} handleClose={() => setShowBranchPopup(false)} onSelect={setSelectedBranch} />
+      <MonthPopup show={showMonthPopup} handleClose={() => setShowMonthPopup(false)} onSelect={setSelectedMonth} />
+    </>
   );
 };
 

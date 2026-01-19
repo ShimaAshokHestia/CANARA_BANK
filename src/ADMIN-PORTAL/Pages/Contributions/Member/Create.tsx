@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import type { Field } from "../../../Components/KiduCreate";
 import type { Member } from "../../../Types/Contributions/Member.types";
 import type { Branch } from "../../../Types/Settings/Branch.types";
@@ -24,6 +24,11 @@ const MemberCreate: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<Status | null>(null);
 
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [profileImagePreview, setProfileImagePreview] = useState<string>("");
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const fields: Field[] = [
     { name: "staffNo", rules: { type: "number", label: "Staff No", required: true, colWidth: 3 } },
     { name: "name", rules: { type: "text", label: "Name", required: true, minLength: 2, maxLength: 150, colWidth: 6 } },
@@ -36,7 +41,6 @@ const MemberCreate: React.FC = () => {
     { name: "doj", rules: { type: "date", label: "Date of Joining", required: true, colWidth: 4 } },
     { name: "dojtoScheme", rules: { type: "date", label: "DOJ to Scheme", required: true, colWidth: 4 } },
     { name: "isRegCompleted", rules: { type: "toggle", label: "Registration Completed" } },
-    { name: "profileImageSrc", rules: { type: "text", label: "Profile Image", placeholder: "profile_image.png", colWidth: 3 } },
     { name: "nominee", rules: { type: "text", label: "Nominee Name", colWidth: 4 } },
     { name: "nomineeRelation", rules: { type: "select", label: "Nominee Relation", colWidth: 4 } },
     { name: "nomineeIDentity", rules: { type: "text", label: "Nominee Identity", colWidth: 4 } },
@@ -46,12 +50,41 @@ const MemberCreate: React.FC = () => {
 
   const toIsoMidnight = (val?: string) => (val ? `${val}T00:00:00` : "");
 
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert("Image size should be less than 5MB");
+        return;
+      }
+      if (!file.type.startsWith('image/')) {
+        alert("Please select a valid image file");
+        return;
+      }
+      setProfileImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setProfileImage(null);
+    setProfileImagePreview("");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   const handleSubmit = async (formData: Record<string, any>) => {
     if (!selectedBranch) throw new Error("Please select a branch");
     if (!selectedDesignation) throw new Error("Please select a designation");
     if (!selectedCategory) throw new Error("Please select a category");
     if (!selectedStatus) throw new Error("Please select a status");
 
+    // First create the member to get the memberId
     const payload = {
       staffNo: Number(formData.staffNo),
       name: formData.name.trim(),
@@ -70,12 +103,26 @@ const MemberCreate: React.FC = () => {
       nominee: formData.nominee?.trim() || "",
       nomineeRelation: formData.nomineeRelation?.trim() || "",
       nomineeIDentity: formData.nomineeIDentity?.trim() || "",
-      profileImageSrc: formData.profileImageSrc?.trim() || "",
+      profileImageSrc: "",
       unionMember: formData.unionMember?.trim() || "",
       totalRefund: formData.totalRefund?.toString() ?? "0",
     } as Omit<Member, "memberId" | "auditLogs">;
 
-    await MemberService.createMember(payload);
+    const createdMember = await MemberService.createMember(payload);
+
+    // Upload profile picture if exists
+    if (profileImage && createdMember.memberId) {
+      try {
+        setIsUploading(true);
+        await MemberService.uploadProfilePicture(profileImage, createdMember.memberId);
+      } catch (error) {
+        console.error("Failed to upload profile picture:", error);
+        // Don't throw error here, member is already created
+        console.warn("Member created but profile picture upload failed");
+      } finally {
+        setIsUploading(false);
+      }
+    }
   };
 
   const popupHandlers = {
@@ -129,6 +176,81 @@ const MemberCreate: React.FC = () => {
 
   return (
     <>
+      <div className="mb-4">
+        <div className="card">
+          <div className="card-body">
+            <h5 className="card-title">Profile Picture</h5>
+            <div className="d-flex align-items-center gap-3">
+              <div>
+                {profileImagePreview ? (
+                  <img 
+                    src={profileImagePreview} 
+                    alt="Profile Preview" 
+                    style={{ 
+                      width: '120px', 
+                      height: '120px', 
+                      objectFit: 'cover', 
+                      borderRadius: '8px',
+                      border: '2px solid #dee2e6'
+                    }} 
+                  />
+                ) : (
+                  <div 
+                    style={{ 
+                      width: '120px', 
+                      height: '120px', 
+                      backgroundColor: '#f8f9fa',
+                      border: '2px dashed #dee2e6',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#6c757d'
+                    }}
+                  >
+                    No Image
+                  </div>
+                )}
+              </div>
+              <div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageSelect}
+                  style={{ display: 'none' }}
+                  id="profile-image-input"
+                />
+                <label 
+                  htmlFor="profile-image-input" 
+                  className="btn btn-primary btn-sm mb-2"
+                  style={{ cursor: 'pointer' }}
+                >
+                  Select Image
+                </label>
+                {profileImage && (
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="btn btn-danger btn-sm ms-2 mb-2"
+                  >
+                    Remove
+                  </button>
+                )}
+                <div className="text-muted small">
+                  Max size: 5MB. Accepted formats: JPG, PNG, GIF
+                </div>
+                {isUploading && (
+                  <div className="text-primary small mt-1">
+                    Uploading image...
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <KiduCreate
         title="Create Member"
         fields={fields}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import type { Field } from "../../../Components/KiduEdit";
 import KiduEdit from "../../../Components/KiduEdit";
 import MemberService from "../../../Services/Contributions/Member.services";
@@ -11,6 +11,7 @@ import BranchPopup from "../../Branch/BranchPopup";
 import DesignationPopup from "../../Settings/Designation/DesignationPopup";
 import CategoryPopup from "../../Settings/Category/CategoryPopup";
 import StatusPopup from "../../Settings/Status/StatusPopup";
+import { getFullImageUrl } from "../../../../CONSTANTS/API_ENDPOINTS";
 
 const MemberEdit: React.FC = () => {
 
@@ -24,6 +25,12 @@ const MemberEdit: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<Status | null>(null);
 
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [profileImagePreview, setProfileImagePreview] = useState<string>("");
+  const [currentImagePath, setCurrentImagePath] = useState<string>("");
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const fields: Field[] = [
     { name: "staffNo", rules: { type: "number", label: "Staff No", required: true, colWidth: 3 } },
     { name: "name", rules: { type: "text", label: "Name", required: true, colWidth: 6 } },
@@ -36,7 +43,6 @@ const MemberEdit: React.FC = () => {
     { name: "doj", rules: { type: "date", label: "Date of Joining", required: true, colWidth: 4 } },
     { name: "dojtoScheme", rules: { type: "date", label: "DOJ to Scheme", required: true, colWidth: 4 } },
     { name: "isRegCompleted", rules: { type: "toggle", label: "Registration Completed" } },
-    { name: "profileImageSrc", rules: { type: "text", label: "Profile Image", colWidth: 3 } },
     { name: "nominee", rules: { type: "text", label: "Nominee Name", colWidth: 4 } },
     { name: "nomineeRelation", rules: { type: "text", label: "Nominee Relation", colWidth: 4 } },
     { name: "nomineeIDentity", rules: { type: "text", label: "Nominee Identity", colWidth: 4 } },
@@ -58,6 +64,34 @@ const MemberEdit: React.FC = () => {
   ];
 
   const toIsoMidnight = (val?: string) => (val ? `${val}T00:00:00` : "");
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert("Image size should be less than 5MB");
+        return;
+      }
+      if (!file.type.startsWith('image/')) {
+        alert("Please select a valid image file");
+        return;
+      }
+      setProfileImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setProfileImage(null);
+    setProfileImagePreview("");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   const handleFetch = async (id: string) => {
     const response = await MemberService.getMemberById(Number(id));
@@ -88,6 +122,12 @@ const MemberEdit: React.FC = () => {
         statusId: member.statusId,
         name: member.status || ""
       } as unknown as Status);
+
+      // Set profile image if exists
+      if (member.profileImageSrc) {
+        setCurrentImagePath(member.profileImageSrc);
+        setProfileImagePreview(getFullImageUrl(member.profileImageSrc));
+      }
     }
 
     return response;
@@ -96,6 +136,22 @@ const MemberEdit: React.FC = () => {
   const handleUpdate = async (id: string, formData: Record<string, any>) => {
     if (!selectedBranch || !selectedDesignation || !selectedCategory || !selectedStatus) {
       throw new Error("Please select all required values");
+    }
+
+    let uploadedImagePath = currentImagePath;
+
+    if (profileImage) {
+      try {
+        setIsUploading(true);
+        await MemberService.uploadProfilePicture(profileImage, Number(id));
+        // The backend updates the profile path automatically, so we keep the current path
+        // The updated path will be returned from the API
+      } catch (error) {
+        console.error("Failed to upload profile picture:", error);
+        throw new Error("Failed to upload profile picture");
+      } finally {
+        setIsUploading(false);
+      }
     }
 
     const payload: Omit<Member, "auditLogs"> = {
@@ -116,7 +172,7 @@ const MemberEdit: React.FC = () => {
       dojtoScheme: toIsoMidnight(formData.dojtoScheme),
       dojtoSchemeString: toIsoMidnight(formData.dojtoScheme),
       isRegCompleted: Boolean(formData.isRegCompleted),
-      profileImageSrc: formData.profileImageSrc || "",
+      profileImageSrc: uploadedImagePath || "",
       nominee: formData.nominee || "",
       nomineeRelation: formData.nomineeRelation || "",
       nomineeIDentity: formData.nomineeIDentity || "",
@@ -158,6 +214,81 @@ const MemberEdit: React.FC = () => {
 
   return (
     <>
+      <div className="mb-4">
+        <div className="card">
+          <div className="card-body">
+            <h5 className="card-title">Profile Picture</h5>
+            <div className="d-flex align-items-center gap-3">
+              <div>
+                {profileImagePreview ? (
+                  <img 
+                    src={profileImagePreview} 
+                    alt="Profile Preview" 
+                    style={{ 
+                      width: '120px', 
+                      height: '120px', 
+                      objectFit: 'cover', 
+                      borderRadius: '8px',
+                      border: '2px solid #dee2e6'
+                    }} 
+                  />
+                ) : (
+                  <div 
+                    style={{ 
+                      width: '120px', 
+                      height: '120px', 
+                      backgroundColor: '#f8f9fa',
+                      border: '2px dashed #dee2e6',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#6c757d'
+                    }}
+                  >
+                    No Image
+                  </div>
+                )}
+              </div>
+              <div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageSelect}
+                  style={{ display: 'none' }}
+                  id="profile-image-input"
+                />
+                <label 
+                  htmlFor="profile-image-input" 
+                  className="btn btn-primary btn-sm mb-2"
+                  style={{ cursor: 'pointer' }}
+                >
+                  {currentImagePath ? 'Change Image' : 'Select Image'}
+                </label>
+                {profileImage && (
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="btn btn-danger btn-sm ms-2 mb-2"
+                  >
+                    Remove New Image
+                  </button>
+                )}
+                <div className="text-muted small">
+                  Max size: 5MB. Accepted formats: JPG, PNG, GIF
+                </div>
+                {isUploading && (
+                  <div className="text-primary small mt-1">
+                    Uploading image...
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <KiduEdit
         title="Edit Member"
         fields={fields}

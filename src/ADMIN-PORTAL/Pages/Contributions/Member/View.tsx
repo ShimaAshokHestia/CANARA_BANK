@@ -2,6 +2,8 @@ import React from "react";
 import type { ViewField } from "../../../Components/KiduView";
 import MemberService from "../../../Services/Contributions/Member.services";
 import KiduView from "../../../Components/KiduView";
+import { getFullImageUrl } from "../../../../CONSTANTS/API_ENDPOINTS";
+import defaultProfileImage from "../../../Assets/Images/profile.jpg";
 
 const MemberView: React.FC = () => {
   const fields: ViewField[] = [
@@ -12,23 +14,31 @@ const MemberView: React.FC = () => {
     { key: "designationName", label: "Designation", icon: "bi-briefcase" },
     { key: "categoryname", label: "Category", icon: "bi-ui-checks-grid" },
     { key: "branchName", label: "Branch", icon: "bi-building" },
+    { key: "dpCode", label: "DP Code", icon: "bi-code-square" },
     { key: "status", label: "Status", icon: "bi-activity" },
     { key: "dobString", label: "Date of Birth", icon: "bi-calendar" },
     { key: "dojString", label: "Date of Joining", icon: "bi-calendar-check" },
     { key: "dojtoSchemeString", label: "DOJ to Scheme", icon: "bi-calendar-event" },
     { key: "isRegCompleted", label: "Registration Completed", icon: "bi-clipboard-check", isBoolean: true },
-    { key: "profileImageSrc", label: "Profile Image Src", icon: "bi-card-image" },
     { key: "nominee", label: "Nominee", icon: "bi-person-heart" },
     { key: "nomineeRelation", label: "Nominee Relation", icon: "bi-people" },
     { key: "nomineeIDentity", label: "Nominee Identity", icon: "bi-person-badge" },
     { key: "unionMember", label: "Union Member", icon: "bi-patch-check" },
-    { key: "totalRefund", label: "Total Refund", icon: "bi-cash" },
+    { key: "totalRefund", label: "Total Refund", icon: "bi-cash" }
   ];
 
   const handleFetch = async (memberId: string) => {
-    // ✅ Single API call - names already included in response
     const response = await MemberService.getMemberById(Number(memberId));
-    return response; 
+
+    if (response.value) {
+      if (response.value.profileImageSrc) {
+        response.value.profileImageSrc = getFullImageUrl(response.value.profileImageSrc);
+      } else {
+        response.value.profileImageSrc = defaultProfileImage;
+      }
+    }
+
+    return response;
   };
 
   const handleDelete = async (memberId: string) => {
@@ -44,6 +54,13 @@ const MemberView: React.FC = () => {
       editRoute="/dashboard/contributions/member-edit"
       listRoute="/dashboard/contributions/member-list"
       paramName="memberId"
+      imageConfig={{
+        fieldName: "profileImageSrc",
+        defaultImage: defaultProfileImage,
+        showNameField: "name",
+        showIdField: "staffNo",
+        isCircle: true
+      }}
       auditLogConfig={{ tableName: "Member", recordIdField: "memberId" }}
       themeColor="#1B3763"
       loadingText="Loading member details..."

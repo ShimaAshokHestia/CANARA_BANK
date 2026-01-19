@@ -4,7 +4,7 @@ import { BsBell, BsChevronDown } from "react-icons/bs";
 import { Container, Image, Offcanvas, Button, Navbar } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import ActivityPanel from "./ActivityPanel";
-import profile from "../Assets/Images/profile.webp";
+import profile from "../Assets/Images/profile.jpg";
 import { useYear } from "./YearContext";
 import { getFullImageUrl } from "../../CONSTANTS/API_ENDPOINTS";
 import KiduYearSelector from "../../Components/KiduYearSelector";

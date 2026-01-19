@@ -114,6 +114,7 @@ export const API_ENDPOINTS = {
     CREATE: `${API_BASE_URL}/Member`,
     UPDATE: (id: number) => `${API_BASE_URL}/Member/${id}`,
     DELETE: (id: number) => `${API_BASE_URL}/Member/${id}`,
+    UPLOAD_PROFILE_PIC: `${API_BASE_URL}/Member/upload-profile-pic`,
   },
   DEATH_CLAIMS: {
     GET_ALL: `${API_BASE_URL}/DeathClaim`,
@@ -228,23 +229,39 @@ export const API_ENDPOINTS = {
 
 // ✅ Helper function to get full image URL
 export const getFullImageUrl = (imagePath: string | null | undefined): string => {
-  if (!imagePath) return '';
+  console.log('getFullImageUrl called with:', imagePath);
+  
+  if (!imagePath) {
+    console.log('No image path provided');
+    return '';
+  }
 
   // If already a complete URL, return as is
   if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    console.log('Already a full URL:', imagePath);
+    return imagePath;
+  }
+
+  // If it's a placeholder URL pattern
+  if (imagePath.includes('placeholder')) {
+    console.log('Placeholder URL detected:', imagePath);
     return imagePath;
   }
 
   // Get base URL without /api suffix
-  const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://sreenathganga-001-site12.jtempurl.com/api';
-  const cleanBaseUrl = baseUrl.replace('/api', '');
+  const baseUrl = API_BASE_URL.replace('/api', '');
+  console.log('Base URL (without /api):', baseUrl);
 
-  // Ensure proper path construction
-  return `${cleanBaseUrl}/${imagePath.replace(/^\/+/, '')}`;
+  // Ensure proper path construction - remove leading slash from imagePath if present
+  const cleanPath = imagePath.replace(/^\/+/, '');
+  const fullUrl = `${baseUrl}/${cleanPath}`;
+  
+  console.log('Final full URL:', fullUrl);
+  return fullUrl;
 };
 
 // ✅ Get base website URL (without /api)
 export const getBaseWebsiteUrl = (): string => {
-  const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://sreenathganga-001-site12.jtempurl.com/api';
-  return baseUrl.replace('/api', '');
+  const baseUrl = API_BASE_URL.replace('/api', '');
+  return baseUrl;
 };

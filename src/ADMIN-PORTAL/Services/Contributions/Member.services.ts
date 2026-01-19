@@ -1,4 +1,3 @@
-
 import { API_ENDPOINTS } from "../../../CONSTANTS/API_ENDPOINTS";
 import AuthService from "../../../Services/Auth.services";
 import HttpService from "../../../Services/HttpService";
@@ -22,12 +21,6 @@ const MemberService = {
     return response;
   },
 
-  /**
-   * ✅ NEW METHOD - Get member details for the currently logged-in staff user
-   * This uses the memberId stored in localStorage from login
-   * @returns Promise with Member data
-   * @throws Error if memberId is not found or user is not authenticated
-   */
   async getCurrentStaffMember(): Promise<CustomResponse<Member>> {
     const memberId = AuthService.getMemberId();
     
@@ -39,10 +32,6 @@ const MemberService = {
     return this.getMemberById(memberId);
   },
 
-  /**
-   * ✅ NEW METHOD - Check if current user has an associated member record
-   * @returns boolean indicating if the current user is a member
-   */
   isCurrentUserMember(): boolean {
     const memberId = AuthService.getMemberId();
     return memberId !== null && memberId > 0;
@@ -71,12 +60,6 @@ const MemberService = {
     return response.value;
   },
 
-  /**
-   * ✅ NEW METHOD - Update current staff member's own profile
-   * This ensures staff can only update their own member record
-   * @param data Partial member data to update
-   * @returns Promise with updated Member data
-   */
   async updateCurrentStaffMember(
     data: Partial<Omit<Member, "memberId" | "auditLogs">>
   ): Promise<Member> {
@@ -95,6 +78,109 @@ const MemberService = {
       API_ENDPOINTS.MEMBER.DELETE(id),
       "DELETE"
     );
+  },
+
+  /**
+   * Upload profile picture for a member
+   * @param file The image file to upload
+   * @param memberId The ID of the member (optional, will be retrieved from auth if not provided)
+   * @returns The uploaded file path/name
+   */
+  async uploadProfilePicture(file: File, memberId?: number): Promise<string> {
+    try {
+      const formData = new FormData();
+      
+      // Get memberId from auth service if not provided
+      const memberIdToUse = memberId || AuthService.getMemberId();
+      
+      if (!memberIdToUse) {
+        throw new Error('Member ID is required for profile picture upload');
+      }
+      
+      // Match the DTO parameter names from backend
+      formData.append('MemberId', memberIdToUse.toString());
+      formData.append('ProfilePic', file);
+
+      console.log('Uploading file:', {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        lastModified: new Date(file.lastModified).toISOString()
+      });
+
+      const token = AuthService.getToken();
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
+      const response = await fetch(API_ENDPOINTS.MEMBER.UPLOAD_PROFILE_PIC, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          // Do NOT set Content-Type - browser sets it automatically with boundary
+        },
+        body: formData,
+      });
+
+      console.log('Upload response:', {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok,
+      });
+
+      // Get response text first for better error debugging
+      const responseText = await response.text();
+      console.log('Response text:', responseText);
+
+      if (!response.ok) {
+        let errorMessage = `Upload failed: ${response.status} ${response.statusText}`;
+        
+        try {
+          const errorData = JSON.parse(responseText);
+          errorMessage = errorData.message || errorData.error || errorMessage;
+        } catch {
+          errorMessage = responseText || errorMessage;
+        }
+        
+        throw new Error(errorMessage);
+      }
+
+      // Parse the successful response
+      let result;
+      try {
+        result = JSON.parse(responseText);
+      } catch {
+        // If response is not JSON, it might be a plain string
+        result = responseText;
+      }
+
+      console.log('Upload successful, result:', result);
+
+      // Handle different possible response formats
+      if (typeof result === 'object') {
+        // Try different possible property names
+        return result.value || 
+               result.fileName || 
+               result.filePath || 
+               result.path || 
+               result.url || 
+               result.data || 
+               '';
+      } else if (typeof result === 'string') {
+        return result;
+      } else {
+        console.warn('Unexpected response format:', result);
+        return '';
+      }
+    } catch (error) {
+      console.error('Error in uploadProfilePicture:', error);
+      
+      if (error instanceof Error) {
+        throw new Error(`Failed to upload profile picture: ${error.message}`);
+      }
+      
+      throw new Error('Failed to upload profile picture');
+    }
   },
 };
 

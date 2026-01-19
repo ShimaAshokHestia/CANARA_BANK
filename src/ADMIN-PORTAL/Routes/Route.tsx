@@ -141,6 +141,11 @@ import SupportTicketCreate from '../Pages/SupportTickets/Create';
 import SupportTicketEdit from '../Pages/SupportTickets/Edit';
 import SupportTicketView from '../Pages/SupportTickets/View';
 
+//Contact Message
+import ContactMessageList from '../Pages/CMS/ContactMessages/List';
+import ContactMessageCreate from '../Pages/CMS/ContactMessages/Create';
+import ContactMessageEdit from '../Pages/CMS/ContactMessages/Edit';
+
 
 // Export route configuration as JSX elements - ALL PROTECTED
 export const adminRoutes = (
@@ -291,6 +296,11 @@ export const adminRoutes = (
       <Route path="supportTickets-create" element={<SupportTicketCreate />} />
       <Route path="supportTickets-edit/:supportTicketId" element={<SupportTicketEdit />} />
       <Route path="supportTickets-view/:supportTicketId" element={<SupportTicketView />} />
+
+      {/* Contact Message */}
+      <Route path="cms/contactMessage-list" element={<ContactMessageList />} />
+      <Route path="cms/contactMessage-create" element={<ContactMessageCreate />} />
+      <Route path="cms/contactMessage-edit/:contactMessageId" element={<ContactMessageEdit />} />
     </Route>
     
     {/* Catch-All Route for 404 */}

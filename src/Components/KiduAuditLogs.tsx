@@ -3,32 +3,32 @@ import React, { useEffect, useState } from "react";
 import { Accordion, Table, Card, Spinner, Alert } from "react-bootstrap";
 import AuditLogService from "../Services/AuditLog.services";
 import type { AuditTrails } from "../Types/AuditLog.types";
-
-
+ 
+ 
 interface AuditTrailsProps {
   tableName: string;
   recordId: string | number;
 }
-
+ 
 const KiduAuditLogs: React.FC<AuditTrailsProps> = ({ tableName, recordId }) => {
   const [history, setHistory] = useState<AuditTrails[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+ 
   useEffect(() => {
     if (tableName && recordId) {
       fetchHistory();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableName, recordId]);
-
+ 
   const fetchHistory = async () => {
     try {
       setLoading(true);
       setError(null);
       const data = await AuditLogService.getByTableAndId(tableName, recordId);
       console.log("Fetched audit logs:", data);
-
+ 
       if (data.isSucess && Array.isArray(data.value)) {
         setHistory(data.value);
         console.log("History updated:", data.value);
@@ -43,16 +43,16 @@ const KiduAuditLogs: React.FC<AuditTrailsProps> = ({ tableName, recordId }) => {
       setLoading(false);
     }
   };
-
+ 
   useEffect(() => {
     console.log("Updated history:", history);
   }, [history]);
-
+ 
   const formatDateSafe = (isoOrAny?: string) => {
     if (!isoOrAny) return "—";
     const d = new Date(isoOrAny);
     if (isNaN(d.getTime())) return isoOrAny;
-
+ 
     return d.toLocaleString("en-GB", {
       day: "2-digit",
       month: "long",
@@ -62,7 +62,7 @@ const KiduAuditLogs: React.FC<AuditTrailsProps> = ({ tableName, recordId }) => {
       hour12: true,
     });
   };
-
+ 
   return (
     <>
       <Accordion
@@ -93,7 +93,7 @@ const KiduAuditLogs: React.FC<AuditTrailsProps> = ({ tableName, recordId }) => {
           >
             <h6 className="mb-0 fw-medium head-font">Audit Logs</h6>
           </Card.Header>
-
+ 
           <Accordion.Body>
             <Card
               style={{
@@ -191,5 +191,5 @@ const KiduAuditLogs: React.FC<AuditTrailsProps> = ({ tableName, recordId }) => {
     </>
   );
 };
-
+ 
 export default KiduAuditLogs;

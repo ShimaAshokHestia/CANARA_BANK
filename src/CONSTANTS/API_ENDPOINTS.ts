@@ -195,6 +195,8 @@ export const API_ENDPOINTS = {
     DELETE: (id: number) => `${API_BASE_URL}/AccountDirecyEntry/${id}`,
     GET_BY_STAFFID: (id: number) => `${API_BASE_URL}/AccountDirecyEntry/GetByMemberId${id}`,
   },
+
+
   //------------------------PUBLIC MODULE----------------------------------------
   PUBLIC: {
     GET_ALL_DAYQUOTE: `${API_BASE_URL}/Public/dayquotes`,
@@ -214,7 +216,9 @@ export const API_ENDPOINTS = {
   },
 
   CONTACT_MESSAGE: {
-    CREATE: `${API_BASE_URL}/ContactMessage/submit`,
+    GET_ALL:`${API_BASE_URL}/ContactMessage`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/ContactMessage/${id}`,
+    CREATE:`${API_BASE_URL}/ContactMessage/submit`, 
   },
 
 

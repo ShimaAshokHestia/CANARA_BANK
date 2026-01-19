@@ -50,24 +50,25 @@ const Sidebar: React.FC = () => {
   ];
 
   const contribSubMenu = [
-    { label: "Member", path: "/dashboard/contributions/member-list" },
-    { label: "Monthly Contributions", path: "/dashboard/contributions/monthly" },
+    { label: "Account Direct Entry", path: "/dashboard/contributions/accountDirectEntry-list" },
     { label: "Direct Pay", path: "/dashboard/contributions/directpayment-list" },
-    { label: "Account Direct Entry", path: "/dashboard/contributions/accountDirectEntry-list" }
+    { label: "Member", path: "/dashboard/contributions/member-list" },
+    { label: "Monthly Contributions", path: "/dashboard/contributions/monthly" }  
   ];
 
   const claimsSubMenu = [
-    { label: "Refund", path: "/dashboard/claims/refundcontribution-list" },
-    { label: "Death Claims", path: "/dashboard/claims/deathclaims-list" }
+    { label: "Death Claims", path: "/dashboard/claims/deathclaims-list" },
+    { label: "Refund", path: "/dashboard/claims/refundcontribution-list" } 
   ];
 
   const cmsSubMenu = [
-    { label: "Main Page", path: "/dashboard/cms/mainpage-list" },
-    { label: "Quotes", path: "/dashboard/cms/dayquote-list" },
+    { label: "Contact Message", path: "/dashboard/cms/contactmessage-list"},
     { label: "Daily News", path: "/dashboard/cms/dailynews-list" },
+    { label: "Documents", path: "/dashboard/cms/documents-list" },
+    { label: "Main Page", path: "/dashboard/cms/mainpage-list" },
     { label: "Managing Committee", path: "/dashboard/cms/manage-committe-list" },
     { label: "Public Page", path: "/dashboard/cms/publicpage-list" },
-    { label: "Documents", path: "/dashboard/cms/documents-list" }
+    { label: "Quotes", path: "/dashboard/cms/dayquote-list" }
   ];
 
   const navigate = useNavigate();

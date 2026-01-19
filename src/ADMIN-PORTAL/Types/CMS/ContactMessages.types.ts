@@ -1,6 +1,5 @@
 import type { AuditTrails } from "../../../Types/AuditLog.types";
 
-
 export interface ContactMessage {
   contactMessageId: number;
   fullName: string;

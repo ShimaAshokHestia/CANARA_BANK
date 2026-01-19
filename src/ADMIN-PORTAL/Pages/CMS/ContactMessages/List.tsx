@@ -1,5 +1,4 @@
 // src/ADMIN-PORTAL/Components/CMS/ContactMessage/ContactMessageList.tsx
-
 import React from "react";
 import KiduServerTable from "../../../../Components/KiduServerTable";
 import type { ContactMessage } from "../../../Types/CMS/ContactMessages.types";
@@ -54,19 +53,20 @@ const ContactMessageList: React.FC = () => {
   };
 
   return (
-    <KiduServerTable
-      title="Contact Messages"
-      subtitle="Manage customer contact enquiries"
-      columns={columns}
-      idKey="contactMessageId"
-      fetchData={fetchData}
-      viewRoute="/dashboard/cms/contact-message-view"
-      editRoute="/dashboard/cms/contact-message-edit"
-      showSearch
-      showActions
-      showTitle
-      rowsPerPage={10}
-    />
+   <KiduServerTable
+  title="Contact Messages"
+  subtitle="Manage customer contact enquiries"
+  columns={columns}
+  idKey="contactMessageId"
+  fetchData={fetchData}
+  viewRoute="/dashboard/cms/ContactMessage-view"
+  editRoute="/dashboard/cms/ContactMessage-edit"
+  showSearch
+  showExport
+  showActions
+  showTitle
+  rowsPerPage={10}
+/>
   );
 };
 

@@ -16,6 +16,19 @@ interface ClaimsTableProps {
 }
 
 const ClaimsTable: React.FC<ClaimsTableProps> = ({ title, data, years }) => {
+
+   //  Calculate column-wise totals
+  const columnTotals: Record<string, number> = {};
+  let grandTotal = 0;
+
+  years.forEach((year) => {
+    columnTotals[year] = data.reduce(
+      (sum, row) => sum + (row.yearlyData[year] || 0),
+      0
+    );
+    grandTotal += columnTotals[year];
+  });
+
   return (
     <Card className="claims-table-card">
       <Card.Body>
@@ -39,15 +52,27 @@ const ClaimsTable: React.FC<ClaimsTableProps> = ({ title, data, years }) => {
                   </td>
                 </tr>
               ) : (
-                data.map((row, idx) => (
-                  <tr key={idx}>
-                    <td className="fw-medium">{row.name}</td>
+                 <>
+                  {/* Existing rows */}
+                  {data.map((row, idx) => (
+                    <tr key={idx}>
+                      <td className="fw-medium">{row.name}</td>
+                      {years.map((year) => (
+                        <td key={year}>{row.yearlyData[year] ?? ""}</td>
+                      ))}
+                      <td className="fw-bold">{row.total}</td>
+                    </tr>
+                  ))}
+
+                  {/* TOTAL ROW */}
+                  <tr className="fw-bold">
+                    <td>Total</td>
                     {years.map((year) => (
-                      <td key={year}>{row.yearlyData[year] ?? ""}</td>
+                      <td key={year}>{columnTotals[year] || 0}</td>
                     ))}
-                    <td className="fw-bold">{row.total}</td>
+                    <td>{grandTotal}</td>
                   </tr>
-                ))
+                </>
               )}
             </tbody>
           </Table>

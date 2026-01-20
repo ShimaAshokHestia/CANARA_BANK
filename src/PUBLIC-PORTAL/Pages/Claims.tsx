@@ -78,7 +78,9 @@ const Claims: React.FC = () => {
       }
     });
 
-    return Array.from(stateMap.values()).filter((state) => state.total > 0);
+    // return Array.from(stateMap.values()).filter((state) => state.total > 0);
+    return Array.from(stateMap.values());
+
   };
 
   const processDesignationWiseData = (
@@ -106,7 +108,9 @@ const Claims: React.FC = () => {
       }
     });
 
-    return Array.from(designationMap.values()).filter((des) => des.total > 0);
+    // return Array.from(designationMap.values()).filter((des) => des.total > 0);
+    return Array.from(designationMap.values());
+
   };
 
   return (
@@ -139,7 +143,7 @@ const Claims: React.FC = () => {
       </Container>
 
       {/* Tables */}
-      <Container className="claims-tables">
+      <Container fluid className="claims-tables">
         {loading ? (
           <div className="text-center py-5">Loading claims data...</div>
         ) : (

@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import type { Member } from "../../../ADMIN-PORTAL/Types/Contributions/Member.types";
 import type { Branch } from "../../../ADMIN-PORTAL/Types/Settings/Branch.types";
 import type { Month } from "../../../ADMIN-PORTAL/Types/Settings/Month.types";
-import type { AccountsDirectEntry } from "../../../ADMIN-PORTAL/Types/Contributions/AccountDirectEntry.types";
 import type { Field } from "../../../ADMIN-PORTAL/Components/KiduCreate";
 import KiduCreate from "../../../ADMIN-PORTAL/Components/KiduCreate";
 import MemberPopup from "../../../ADMIN-PORTAL/Pages/Contributions/Member/MemberPopup";
 import BranchPopup from "../../../ADMIN-PORTAL/Pages/Branch/BranchPopup";
 import MonthPopup from "../../../ADMIN-PORTAL/Pages/Settings/Month/MonthPopup";
 import AccountDirectEntryService from "../../../ADMIN-PORTAL/Services/Contributions/AccountDirectEntry.services";
+import type { AccountDirectEntry } from "../../../ADMIN-PORTAL/Types/Contributions/AccountDirectEntry.types";
 
 const StaffAccountDirectEntryCreate: React.FC = () => {
   const [showMemberPopup, setShowMemberPopup] = useState(false);
@@ -56,7 +56,7 @@ const StaffAccountDirectEntryCreate: React.FC = () => {
     if (!selectedBranch) throw new Error("Select branch");
     if (!selectedMonth) throw new Error("Select month");
 
-    const payload: Omit<AccountsDirectEntry, "accountsDirectEntryID" | "auditLogs"> = {
+    const payload: Omit<AccountDirectEntry, "accountsDirectEntryID" | "auditLogs"> = {
       memberId: selectedMember.memberId,
       name: selectedMember.name,
       branchId: selectedBranch.branchId,

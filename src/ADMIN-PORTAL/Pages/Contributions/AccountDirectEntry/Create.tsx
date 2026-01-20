@@ -95,10 +95,13 @@ const AccountDirectEntryCreate: React.FC = () => {
       onOpen: () => setShowMonthPopup(true),
     },
     yearOf: {
-      value: selectedYearMaster?.yearName || "",
-      actualValue: selectedYearMaster?.yearOf,
-      onOpen: () => setShowYearMasterPopup(true),
-    },
+  value: selectedYearMaster
+    ? String(selectedYearMaster.yearName)
+    : "",
+  actualValue: selectedYearMaster?.yearOf,
+  onOpen: () => setShowYearMasterPopup(true),
+},
+
   };
 
   const statusOptions = [

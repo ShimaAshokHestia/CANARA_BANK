@@ -1,4 +1,3 @@
-// src/Pages/Accounts/AccountsDirectEntry/View.tsx
 import React from "react";
 import type { ViewField } from "../../../Components/KiduView";
 import KiduView from "../../../Components/KiduView";
@@ -27,7 +26,6 @@ const AccountDirectEntryView: React.FC = () => {
       await AccountDirectEntryService.getAccountDirectEntryById(Number(id));
 
     const entry = response.value;
-
     if (!entry) return response;
 
     return {

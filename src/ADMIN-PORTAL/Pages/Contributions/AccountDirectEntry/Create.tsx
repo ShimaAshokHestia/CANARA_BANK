@@ -1,4 +1,3 @@
-// src/ADMIN-PORTAL/Components/Accounts/AccountDirectEntryCreate.tsx
 import React, { useState } from "react";
 import type { Field } from "../../../Components/KiduCreate";
 import KiduCreate from "../../../Components/KiduCreate";
@@ -15,7 +14,6 @@ import type { YearMaster } from "../../../Types/Settings/YearMaster.types";
 
 const AccountDirectEntryCreate: React.FC = () => {
 
-  /* ---------------- popup state ---------------- */
   const [showMemberPopup, setShowMemberPopup] = useState(false);
   const [showBranchPopup, setShowBranchPopup] = useState(false);
   const [showMonthPopup, setShowMonthPopup] = useState(false);
@@ -26,7 +24,6 @@ const AccountDirectEntryCreate: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<Month | null>(null);
   const [selectedYearMaster, setSelectedYearMaster] = useState<YearMaster | null>(null);
 
-  /* ---------------- fields ---------------- */
   const fields: Field[] = [
     { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4 } },
     { name: "branchId", rules: { type: "popup", label: "Branch", required: true, colWidth: 4 } },
@@ -48,7 +45,6 @@ const AccountDirectEntryCreate: React.FC = () => {
 
   const toIsoMidnight = (v?: string) => (v ? `${v}T00:00:00` : "");
 
-  /* ---------------- submit ---------------- */
   const handleSubmit = async (formData: Record<string, any>) => {
     if (!selectedMember) throw new Error("Please select Member");
     if (!selectedBranch) throw new Error("Please select Branch");
@@ -74,11 +70,7 @@ const AccountDirectEntryCreate: React.FC = () => {
       status: formData.status,
       isApproved,
       approvedBy: isApproved ? formData.approvedBy?.trim() || "" : "",
-approvedDate: isApproved && formData.approvedDate
-  ? toIsoMidnight(formData.approvedDate)
-  : "",
-
-
+      approvedDate: isApproved && formData.approvedDate? toIsoMidnight(formData.approvedDate) : "",
     };
 
     await AccountDirectEntryService.createAccountDirectEntry(payload);
@@ -130,20 +122,16 @@ const statusOptions =[
           status:statusOptions
         }}
       />
-
-      {/* 🔹 Popups */}
       <MemberPopup
         show={showMemberPopup}
         handleClose={() => setShowMemberPopup(false)}
         onSelect={setSelectedMember}
       />
-
       <BranchPopup
         show={showBranchPopup}
         handleClose={() => setShowBranchPopup(false)}
         onSelect={setSelectedBranch}
       />
-
       <MonthPopup
         show={showMonthPopup}
         handleClose={() => setShowMonthPopup(false)}

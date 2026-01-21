@@ -1,5 +1,3 @@
-// src/Pages/Contributions/DirectPay/View.tsx
-
 import React from "react";
 import type { ViewField } from "../../../Components/KiduView";
 import DirectPaymentService from "../../../Services/Contributions/Directpayment.services";
@@ -8,10 +6,7 @@ import KiduView from "../../../Components/KiduView";
 const DirectPaymentView: React.FC = () => {
   const fields: ViewField[] = [
     { key: "directPaymentId", label: "Payment ID", icon: "bi-hash" },
-
-    // ✅ SHOW NAME, NOT ID
     { key: "memberName", label: "Member", icon: "bi-person" },
-
     { key: "amount", label: "Amount", icon: "bi-currency-rupee" },
     { key: "paymentDatestring", label: "Payment Date", icon: "bi-calendar" },
     { key: "paymentMode", label: "Payment Mode", icon: "bi-wallet2" },
@@ -20,10 +15,8 @@ const DirectPaymentView: React.FC = () => {
   ];
 
   const handleFetch = async (id: string) => {
-    // Backend already returns memberName
     return await DirectPaymentService.getDirectPaymentById(Number(id));
   };
-
   const handleDelete = async (id: string) => {
     await DirectPaymentService.deleteDirectPayment(Number(id));
   };
@@ -45,7 +38,6 @@ const DirectPaymentView: React.FC = () => {
       showEditButton={true}
       showDeleteButton={true}
       deleteConfirmMessage="Are you sure you want to delete this Payment? This action cannot be undone."
-
     />
   );
 };

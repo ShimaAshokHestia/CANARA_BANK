@@ -1,4 +1,3 @@
-// src/components/Circle/CircleCreate.tsx
 import React, { useState } from "react";
 import type { Field } from "../../Components/KiduCreate";
 import type { Circle } from "../../Types/Settings/Circle.types";
@@ -64,7 +63,6 @@ const CircleCreate: React.FC = () => {
         popupHandlers={popupHandlers}
         themeColor="#1B3763"
       />
-
       <StatePopup
         show={showStatePopup}
         handleClose={() => setShowStatePopup(false)}

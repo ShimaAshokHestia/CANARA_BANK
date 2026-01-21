@@ -40,13 +40,11 @@ const DeathClaimEdit: React.FC = () => {
   const toIso = (v?: string) => (v ? `${v}T00:00:00` : "");
   const toDateOnly = (v?: string) => (v ? v.split("T")[0] : "");
 
-  // ✅ FETCH (NO MUTATION)
   const handleFetch = async (id: string) => {
     const response = await DeathClaimService.getDeathClaimById(Number(id));
     const claim = response.value;
 
     if (!claim) return response;
-
     if (claim.memberId) {
       const members = await MemberService.getAllMembers();
       setSelectedMember(members.find(m => m.memberId === claim.memberId) || null);
@@ -79,24 +77,18 @@ const DeathClaimEdit: React.FC = () => {
 
   const payload: Omit<
     DeathClaim,
-    | "auditLogs"
-    | "memberName"
-    | "stateName"
-    | "designationName"
+    | "auditLogs" | "memberName" | "stateName" | "designationName"
   > = {
     deathClaimId: Number(id),
     memberId: selectedMember.memberId,
     stateId: selectedState.stateId,
     designationId: selectedDesignation.designationId,
-
     deathDate: toIso(formData.deathDate),
     nominee: formData.nominee || "",
     nomineeRelation: formData.nomineeRelation || "",
     nomineeIDentity: formData.nomineeIDentity || "",
-
     ddno: formData.ddno || "",
     dddate: toIso(formData.dddate),
-
     amount: Number(formData.amount),
     lastContribution: Number(formData.lastContribution || 0),
     yearOF: Number(formData.yearOF),
@@ -104,7 +96,6 @@ const DeathClaimEdit: React.FC = () => {
 
   await DeathClaimService.updateDeathClaim(Number(id), payload);
 };
-
 
   const popupHandlers = {
     memberId: {
@@ -155,10 +146,21 @@ const DeathClaimEdit: React.FC = () => {
         themeColor="#1B3763"
         options={{ nomineeRelation: nomineeRelationOptions }}
       />
-
-      <MemberPopup show={showMemberPopup} handleClose={() => setShowMemberPopup(false)} onSelect={setSelectedMember} />
-      <StatePopup show={showStatePopup} handleClose={() => setShowStatePopup(false)} onSelect={setSelectedState} />
-      <DesignationPopup show={showDesignationPopup} handleClose={() => setShowDesignationPopup(false)} onSelect={setSelectedDesignation} />
+      <MemberPopup 
+       show={showMemberPopup} 
+       handleClose={() => setShowMemberPopup(false)} 
+       onSelect={setSelectedMember} 
+       />
+      <StatePopup 
+       show={showStatePopup} 
+       handleClose={() => setShowStatePopup(false)} 
+       onSelect={setSelectedState} 
+       />
+      <DesignationPopup 
+       show={showDesignationPopup} 
+       handleClose={() => setShowDesignationPopup(false)} 
+       onSelect={setSelectedDesignation} 
+       />
     </>
   );
 };

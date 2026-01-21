@@ -1,4 +1,3 @@
-// src/components/Circle/CircleEdit.tsx
 import React, { useState } from "react";
 import type { Field } from "../../Components/KiduEdit";
 import CircleService from "../../Services/Settings/Circle.services";
@@ -8,7 +7,6 @@ import type { State } from "../../Types/Settings/States.types";
 import StatePopup from "../Settings/State/StatePopup";
 
 const CircleEdit: React.FC = () => {
-
   const [showStatePopup, setShowStatePopup] = useState(false);
   const [selectedState, setSelectedState] = useState<State | null>(null);
 
@@ -42,14 +40,12 @@ const CircleEdit: React.FC = () => {
     circleId: string,
     formData: Record<string, any>
   ) => {
-
     if (!selectedState) {
       throw new Error("Please select a state");
     }
 
     const circleData: Omit<Circle, "auditLogs"> = {
       circleId: Number(circleId),
-
       circleCode: Number(formData.circleCode),
       name: formData.name.trim(),
       abbreviation: formData.abbreviation.trim(),

@@ -50,7 +50,7 @@ const MemberEdit: React.FC = () => {
     { name: "totalRefund", rules: { type: "text", label: "Total Refund", colWidth: 4 } },
   ];
 
-  // Gender options - using numbers to match API response
+  // Gender options
   const genderOptions = [
     { value: 0, label: "Male" },
     { value: 1, label: "Female" },
@@ -101,7 +101,6 @@ const MemberEdit: React.FC = () => {
     console.log("GenderId from API:", member?.genderId, "Type:", typeof member?.genderId);
 
     if (member) {
-      // Set selected values from the member response data
       setSelectedBranch({
         branchId: member.branchId,
         name: member.branchName || "",
@@ -123,7 +122,6 @@ const MemberEdit: React.FC = () => {
         name: member.status || ""
       } as unknown as Status);
 
-      // Set profile image if exists
       if (member.profileImageSrc) {
         setCurrentImagePath(member.profileImageSrc);
         setProfileImagePreview(getFullImageUrl(member.profileImageSrc));

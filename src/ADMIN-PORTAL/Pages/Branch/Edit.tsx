@@ -1,4 +1,3 @@
-// src/components/Branch/BranchEdit.tsx
 import React, { useState } from "react";
 import KiduEdit from "../../Components/KiduEdit";
 import type { Field } from "../../Components/KiduEdit";
@@ -35,7 +34,6 @@ const BranchEdit: React.FC = () => {
     { name: "isRegCompleted", rules: { type: "toggle", label: "Registration Completed" } },
   ];
 
-  /* ===================== FETCH ===================== */
   const handleFetch = async (id: string) => {
     const response = await BranchService.getBranchById(Number(id));
     const branch = response.value;
@@ -51,7 +49,6 @@ const BranchEdit: React.FC = () => {
     return response;
   };
 
-  /* ===================== UPDATE ===================== */
   const handleUpdate = async (id: string, formData: Record<string, any>) => {
     if (!selectedState || !selectedCircle) {
       throw new Error("Please select State and Circle");
@@ -76,7 +73,6 @@ const BranchEdit: React.FC = () => {
     await BranchService.updateBranch(Number(id), payload);
   };
 
-  /* ===================== POPUP HANDLERS ===================== */
   const popupHandlers = {
     stateId: {
       value: selectedState?.name || "",

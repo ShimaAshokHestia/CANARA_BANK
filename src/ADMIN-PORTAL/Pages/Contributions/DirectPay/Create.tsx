@@ -1,4 +1,3 @@
-// src/Pages/Contributions/DirectPay/Create.tsx
 import React, { useState } from "react";
 import type { Field } from "../../../Components/KiduCreate";
 import type { DirectPayment } from "../../../Types/Contributions/Directpayment.types";

@@ -1,5 +1,3 @@
-
-// src/components/Branch/BranchCreate.tsx
 import React, { useState } from "react";
 import KiduCreate from "../../Components/KiduCreate";
 import type { Field } from "../../Components/KiduCreate";
@@ -83,7 +81,6 @@ const BranchCreate: React.FC = () => {
         errorMessage="Failed to create branch. Please try again."
         themeColor="#1B3763"
       />
-
       <StatePopup
         show={showStatePopup}
         handleClose={() => setShowStatePopup(false)}
@@ -93,7 +90,6 @@ const BranchCreate: React.FC = () => {
           setShowStatePopup(false);
         }}
       />
-
       <CirclePopup
         show={showCirclePopup}
         handleClose={() => setShowCirclePopup(false)}

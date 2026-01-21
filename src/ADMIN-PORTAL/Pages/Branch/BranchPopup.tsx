@@ -36,7 +36,7 @@ const BranchPopup: React.FC<BranchPopupProps> = ({
       idKey="branchId"
       showAddButton={showAddButton}
       rowsPerPage={10}
-      searchKeys={["dpCode", "name", "district", "status"]} // 🔥 Added searchKeys
+      searchKeys={["dpCode", "name", "district", "status"]} 
     />
   );
 };

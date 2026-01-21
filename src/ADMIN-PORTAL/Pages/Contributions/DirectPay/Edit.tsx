@@ -1,4 +1,3 @@
-// src/Pages/Contributions/DirectPay/Edit.tsx
 import React, { useState } from "react";
 import type { Field } from "../../../Components/KiduEdit";
 import KiduEdit from "../../../Components/KiduEdit";
@@ -101,7 +100,6 @@ const handleFetch = async (id: string) => {
           paymentMode: paymentModeOptions,
          }}
       />
-
       <MemberPopup
         show={showMemberPopup}
         handleClose={() => setShowMemberPopup(false)}

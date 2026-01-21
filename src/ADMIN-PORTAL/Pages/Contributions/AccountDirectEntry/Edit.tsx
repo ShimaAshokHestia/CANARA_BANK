@@ -1,4 +1,3 @@
-// src/ADMIN-PORTAL/Components/Accounts/AccountDirectEntryEdit.tsx
 import React, { useState } from "react";
 import type { Field } from "../../../Components/KiduEdit";
 import KiduEdit from "../../../Components/KiduEdit";
@@ -16,7 +15,6 @@ import AccountDirectEntryService from "../../../Services/Contributions/AccountDi
 
 const AccountDirectEntryEdit: React.FC = () => {
 
-  /* ---------------- popup state ---------------- */
   const [showMemberPopup, setShowMemberPopup] = useState(false);
   const [showBranchPopup, setShowBranchPopup] = useState(false);
   const [showMonthPopup, setShowMonthPopup] = useState(false);
@@ -27,39 +25,31 @@ const AccountDirectEntryEdit: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<Month | null>(null);
   const [selectedYearMaster, setSelectedYearMaster] = useState<YearMaster | null>(null);
 
-  /* ---------------- fields ---------------- */
   const fields: Field[] = [
     { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4 } },
     { name: "branchId", rules: { type: "popup", label: "Branch", required: true, colWidth: 4 } },
     { name: "monthCode", rules: { type: "popup", label: "Month", required: true, colWidth: 4 } },
     { name: "yearOf", rules: { type: "popup", label: "Year", required: true, colWidth: 4 } },
-
     { name: "ddIba", rules: { type: "text", label: "DD / IBA No", required: true, colWidth: 4 } },
     { name: "ddIbaDate", rules: { type: "date", label: "DD / IBA Date", required: true, colWidth: 4 } },
-
     { name: "amt", rules: { type: "number", label: "Amount", required: true, colWidth: 4 } },
     { name: "enrl", rules: { type: "text", label: "ENRL", colWidth: 4 } },
     { name: "fine", rules: { type: "text", label: "Fine", colWidth: 4 } },
-
     { name: "f9", rules: { type: "text", label: "F9", colWidth: 4 } },
     { name: "f10", rules: { type: "text", label: "F10", colWidth: 4 } },
     { name: "f11", rules: { type: "text", label: "F11", colWidth: 4 } },
-
     { name: "status", rules: { type: "text", label: "Status", required: true, colWidth: 4 , disabled: true} },
     { name: "isApproved", rules: { type: "toggle", label: "Approved", colWidth: 4 } },
-
     { name: "approvedBy", rules: { type: "text", label: "Approved By", colWidth: 4 } },
     { name: "approvedDate", rules: { type: "date", label: "Approved Date", colWidth: 4 } },
   ];
 
   const toIsoMidnight = (v?: string) => (v ? `${v}T00:00:00` : "");
 
-  /* ---------------- fetch ---------------- */
   const handleFetch = async (id: string) => {
     const response = await AccountDirectEntryService.getAccountDirectEntryById(Number(id));
     const data = response.value;
 
-    // hydrate popup selections
     setSelectedMember({ memberId: data.memberId, name: data.memberName } as Member);
     setSelectedBranch({ branchId: data.branchId, name: data.branchName } as Branch);
     setSelectedMonth({ monthCode: data.monthCode, monthName: data.monthName } as Month);
@@ -68,7 +58,6 @@ const AccountDirectEntryEdit: React.FC = () => {
     return data;
   };
 
-  /* ---------------- update ---------------- */
   const handleUpdate = async (id: string, formData: Record<string, any>) => {
     if (!selectedMember) throw new Error("Please select Member");
     if (!selectedBranch) throw new Error("Please select Branch");
@@ -144,25 +133,21 @@ const AccountDirectEntryEdit: React.FC = () => {
           recordIdField: "accountsDirectEntryID",
         }}
       />
-
       <MemberPopup
         show={showMemberPopup}
         handleClose={() => setShowMemberPopup(false)}
         onSelect={setSelectedMember}
       />
-
       <BranchPopup
         show={showBranchPopup}
         handleClose={() => setShowBranchPopup(false)}
         onSelect={setSelectedBranch}
       />
-
       <MonthPopup
         show={showMonthPopup}
         handleClose={() => setShowMonthPopup(false)}
         onSelect={setSelectedMonth}
       />
-
       <YearMasterPopup
         show={showYearMasterPopup}
         handleClose={() => setShowYearMasterPopup(false)}

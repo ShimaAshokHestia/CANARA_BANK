@@ -1,4 +1,3 @@
-// src/ADMIN-PORTAL/Pages/Contributions/RefundContribution/RefundContributionEdit.tsx
 import React, { useState } from "react";
 import type { Field } from "../../../Components/KiduEdit";
 import KiduEdit from "../../../Components/KiduEdit";
@@ -27,7 +26,7 @@ const RefundContributionEdit: React.FC = () => {
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
   const [selectedDesignation, setSelectedDesignation] = useState<Designation | null>(null);
   const [selectedYearMaster, setSelectedYearMaster] = useState<YearMaster | null>(null);
-  /* ===================== FIELDS ===================== */
+
   const fields: Field[] = [
     { name: "stateId", rules: { type: "popup", label: "State", required: true, colWidth: 4 } },
     { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4 } },
@@ -53,7 +52,6 @@ const RefundContributionEdit: React.FC = () => {
 
   const toIso = (val?: string) => (val ? `${val}T00:00:00` : "");
 
-  /* ===================== FETCH ===================== */
   const handleFetch = async (id: string) => {
     const response = await RefundContributionService.getRefundContributionById(Number(id));
     const refund = response.value;
@@ -155,7 +153,6 @@ const RefundContributionEdit: React.FC = () => {
         options={{ type: typeOptions }}
         themeColor="#1B3763"
       />
-
       <StatePopup 
        show={showStatePopup} 
        handleClose={() => setShowStatePopup(false)} 

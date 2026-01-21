@@ -1,4 +1,3 @@
-// src/Pages/Contributions/DirectPay/List.tsx
 import React from "react";
 import KiduServerTable from "../../../../Components/KiduServerTable";
 import DirectPaymentService from "../../../Services/Contributions/Directpayment.services";
@@ -23,7 +22,6 @@ const DirectPaymentList: React.FC = () => {
     let payments: DirectPayment[] =
       await DirectPaymentService.getAllDirectPayments();
 
-    /* ===================== SEARCH ===================== */
     if (params.searchTerm) {
       const q = params.searchTerm.toLowerCase();
       payments = payments.filter(p =>
@@ -38,7 +36,6 @@ const DirectPaymentList: React.FC = () => {
       );
     }
 
-    /* ===================== PAGINATION ===================== */
     const start = (params.pageNumber - 1) * params.pageSize;
     const end = start + params.pageSize;
 

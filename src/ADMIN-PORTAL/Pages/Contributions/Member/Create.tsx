@@ -84,7 +84,6 @@ const MemberCreate: React.FC = () => {
     if (!selectedCategory) throw new Error("Please select a category");
     if (!selectedStatus) throw new Error("Please select a status");
 
-    // First create the member to get the memberId
     const payload = {
       staffNo: Number(formData.staffNo),
       name: formData.name.trim(),

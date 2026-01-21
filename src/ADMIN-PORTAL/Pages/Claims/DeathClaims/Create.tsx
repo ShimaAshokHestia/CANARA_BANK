@@ -1,4 +1,3 @@
-// src/ADMIN-PORTAL/Pages/Claims/DeathClaims/DeathClaimCreate.tsx
 import React, { useState } from "react";
 import type { Field } from "../../../Components/KiduCreate";
 import KiduCreate from "../../../Components/KiduCreate";
@@ -106,7 +105,6 @@ const DeathClaimCreate: React.FC = () => {
         popupHandlers={popupHandlers}
         options={{ nomineeRelation: nomineeRelationOptions }}
       />
-
       <MemberPopup
         show={showMemberPopup}
         handleClose={() => setShowMemberPopup(false)}
@@ -115,7 +113,6 @@ const DeathClaimCreate: React.FC = () => {
           setShowMemberPopup(false);
         }}
       />
-
       <StatePopup
         show={showStatePopup}
         handleClose={() => setShowStatePopup(false)}
@@ -124,7 +121,6 @@ const DeathClaimCreate: React.FC = () => {
           setShowStatePopup(false);
         }}
       />
-
       <DesignationPopup
         show={showDesignationPopup}
         handleClose={() => setShowDesignationPopup(false)}

@@ -1,5 +1,3 @@
-// src/Pages/Contributions/RefundContribution/List.tsx
-
 import React from "react";
 import KiduServerTable from "../../../../Components/KiduServerTable";
 import type { RefundContribution } from "../../../Types/Claims/Refund.types";
@@ -8,12 +6,9 @@ import RefundContributionService from "../../../Services/Claims/Refund.services"
 const columns = [
   { key: "refundContributionId", label: "ID", enableSorting: true, type: "text" as const },
   { key: "staffNo", label: "Staff No", enableSorting: true, type: "text" as const },
-
-  // ✅ DISPLAY NAMES
   { key: "memberName", label: "Member", enableSorting: true, type: "text" as const },
   { key: "designationName", label: "Designation", enableSorting: true, type: "text" as const },
   { key: "stateName", label: "State", enableSorting: true, type: "text" as const },
-
   { key: "refundNO", label: "Refund No", enableSorting: true, type: "text" as const },
   { key: "amount", label: "Amount", enableSorting: true, type: "text" as const },
   { key: "yearOF", label: "Year", enableSorting: true, type: "text" as const },
@@ -29,7 +24,6 @@ const RefundContributionList: React.FC = () => {
     let data: RefundContribution[] =
       await RefundContributionService.getAllRefundContributions();
 
-    /* ===================== SEARCH ===================== */
     if (params.searchTerm) {
       const q = params.searchTerm.toLowerCase();
       data = data.filter(r =>
@@ -46,7 +40,6 @@ const RefundContributionList: React.FC = () => {
       );
     }
 
-    /* ===================== PAGINATION ===================== */
     const start = (params.pageNumber - 1) * params.pageSize;
     const end = start + params.pageSize;
 

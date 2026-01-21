@@ -1,4 +1,3 @@
-// src/Pages/Accounts/AccountsDirectEntry/List.tsx
 import React from "react";
 import KiduServerTable from "../../../../Components/KiduServerTable";
 import AccountDirectEntryService from "../../../Services/Contributions/AccountDirectEntry.services";
@@ -25,7 +24,6 @@ const AccountsDirectEntryList: React.FC = () => {
     let entries: AccountDirectEntry[] =
       await AccountDirectEntryService.getAllAccountDirectEntries();
 
-    /* ===================== SEARCH ===================== */
     if (params.searchTerm) {
       const q = params.searchTerm.toLowerCase();
       entries = entries.filter(e =>
@@ -41,7 +39,6 @@ const AccountsDirectEntryList: React.FC = () => {
       );
     }
 
-    /* ===================== PAGINATION ===================== */
     const start = (params.pageNumber - 1) * params.pageSize;
     const end = start + params.pageSize;
 

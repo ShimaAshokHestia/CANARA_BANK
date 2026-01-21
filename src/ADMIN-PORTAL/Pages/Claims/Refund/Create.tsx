@@ -1,4 +1,3 @@
-// src/ADMIN-PORTAL/Components/Claims/RefundContributionCreate.tsx
 import React, { useState } from "react";
 import type { Field } from "../../../Components/KiduCreate";
 import KiduCreate from "../../../Components/KiduCreate";
@@ -23,7 +22,6 @@ const RefundContributionCreate: React.FC = () => {
   const [selectedDesignation, setSelectedDesignation] = useState<Designation | null>(null);
   const [selectedYearMaster, setSelectedYearMaster] = useState<YearMaster | null>(null);
 
-  /* ===================== FIELDS ===================== */
   const fields: Field[] = [
     { name: "stateId", rules: { type: "popup", label: "State", required: true, colWidth: 4 } },
     { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4 } },
@@ -120,7 +118,6 @@ const popupHandlers = {
         navigateOnSuccess="/dashboard/claims/refundcontribution-list"
         themeColor="#1B3763"
       />
-
       <StatePopup
         show={showStatePopup}
         handleClose={() => setShowStatePopup(false)}
@@ -129,7 +126,6 @@ const popupHandlers = {
           setShowStatePopup(false);
         }}
       />
-
       <MemberPopup
         show={showMemberPopup}
         handleClose={() => setShowMemberPopup(false)}
@@ -138,7 +134,6 @@ const popupHandlers = {
           setShowMemberPopup(false);
         }}
       />
-
       <DesignationPopup
         show={showDesignationPopup}
         handleClose={() => setShowDesignationPopup(false)}

@@ -1,5 +1,3 @@
-// src/components/Circle/CircleView.tsx
-
 import React from "react";
 import type { ViewField } from "../../Components/KiduView";
 import CircleService from "../../Services/Settings/Circle.services";

@@ -1,5 +1,3 @@
-// src/components/Branch/BranchView.tsx
-
 import React from "react";
 import type { ViewField } from "../../Components/KiduView";
 import KiduView from "../../Components/KiduView";
@@ -14,12 +12,7 @@ const BranchView: React.FC = () => {
     { key: "stateName", label: "State", icon: "bi-flag" },
     { key: "circleName", label: "Circle", icon: "bi-diagram-3" },
     { key: "status", label: "Active", icon: "bi-check-circle" },
-    {
-      key: "isRegCompleted",
-      label: "Registration Completed",
-      icon: "bi-shield-check",
-      isBoolean: true,
-    },
+    { key: "isRegCompleted", label: "Registration Completed", icon: "bi-shield-check", isBoolean: true, },
   ];
 
   const handleFetch = async (branchId: string) => {

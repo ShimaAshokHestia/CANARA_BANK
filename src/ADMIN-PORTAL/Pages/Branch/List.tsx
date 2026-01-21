@@ -17,25 +17,21 @@ const columns = [
 
 const BranchList: React.FC = () => {
   const fetchData = async ({ pageNumber, pageSize, searchTerm }: any) => {
-    // 1️⃣ Fetch all data
     const [branches, states, circles] = await Promise.all([
       BranchService.getAllBranches(),
       StateService.getAllStates(),
       CircleService.getAllCircles(),
     ]);
 
-    // 2️⃣ Create lookup maps
     const stateMap = new Map(states.map((s) => [s.stateId, s.name]));
     const circleMap = new Map(circles.map((c) => [c.circleId, c.name]));
 
-    // 3️⃣ Enrich branches with names
     const enriched: Branch[] = branches.map((b) => ({
       ...b,
       stateName: stateMap.get(b.stateId) || "-",
       circleName: circleMap.get(b.circleId) || "-",
     }));
 
-    // 4️⃣ Search
     let filtered = enriched;
     if (searchTerm) {
       const q = searchTerm.toLowerCase();
@@ -47,7 +43,6 @@ const BranchList: React.FC = () => {
       );
     }
 
-    // 5️⃣ Pagination
     const start = (pageNumber - 1) * pageSize;
 
     return {

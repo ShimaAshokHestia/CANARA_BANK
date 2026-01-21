@@ -12,12 +12,10 @@ const DeathClaimView: React.FC = () => {
     { key: "memberName", label: "Member", icon: "bi-person" },
     { key: "stateName", label: "State", icon: "bi-flag" },
     { key: "designationName", label: "Designation", icon: "bi-briefcase" },
-
     { key: "deathDate", label: "Death Date", icon: "bi-calendar-event" },
     { key: "nominee", label: "Nominee", icon: "bi-person-heart" },
     { key: "nomineeRelation", label: "Nominee Relation", icon: "bi-people" },
     { key: "nomineeIDentity", label: "Nominee Identity", icon: "bi-person-badge" },
-
     { key: "ddno", label: "DD Number", icon: "bi-receipt" },
     { key: "dddate", label: "DD Date", icon: "bi-calendar" },
     { key: "amount", label: "Amount", icon: "bi-cash" },
@@ -25,13 +23,11 @@ const DeathClaimView: React.FC = () => {
     { key: "yearOF", label: "Year Of", icon: "bi-calendar-check" },
   ];
 
-  // ✅ FETCH (normalized like MemberView)
   const handleFetch = async (id: string) => {
     const response = await DeathClaimService.getDeathClaimById(Number(id));
     const claim = response.value;
 
     if (!claim) return response;
-
     if (claim.memberId) {
       const members = await MemberService.getAllMembers();
       const member = members.find(m => m.memberId === claim.memberId);
@@ -54,7 +50,6 @@ const DeathClaimView: React.FC = () => {
     };
   };
 
-  // ✅ DELETE HANDLER (THIS WAS MISSING / WRONG)
   const handleDelete = async (id: string) => {
     await DeathClaimService.deleteDeathClaim(Number(id));
   };

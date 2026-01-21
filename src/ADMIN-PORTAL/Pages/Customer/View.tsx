@@ -1,4 +1,3 @@
-// src/components/Customer/CustomerView.tsx
 import React from "react";
 import KiduView from "../../Components/KiduView";
 import type { ViewField } from "../../Components/KiduView";

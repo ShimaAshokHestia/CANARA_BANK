@@ -1,4 +1,3 @@
-// src/components/DailyNews/DailyNewsView.tsx
 import React from "react";
 import KiduView from "../../Components/KiduView";
 import DailyNewsService from "../../Services/CMS/DailyNews.services";

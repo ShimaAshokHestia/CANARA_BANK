@@ -1,4 +1,3 @@
-// src/components/CMS/DayQuoteList.tsx
 import React from "react";
 import type { DayQuote } from "../../Types/CMS/DayQuote.types";
 import DayQuoteService from "../../Services/CMS/DayQuote.services";
@@ -20,24 +19,19 @@ const DayQuoteList: React.FC = () => {
     searchTerm: string;
   }): Promise<{ data: any[]; total: number }> => {
     try {
-      /* ===================== FETCH DATA ===================== */
       const [dayQuotes, months] = await Promise.all([
         DayQuoteService.getAllDayQuotes(),
         MonthService.getAllMonths(),
       ]);
 
-      /* ===================== FIX: MAP BY monthCode ===================== */
       const monthMap = Object.fromEntries(
         months.map((m: Month) => [m.monthCode, m.monthName])
       );
 
-      /* ===================== ENRICH ===================== */
       let enrichedDayQuotes = dayQuotes.map((d: DayQuote) => ({
         ...d,
         monthName: monthMap[d.monthCode] ?? "-",
       }));
-
-      /* ===================== SEARCH ===================== */
       if (params.searchTerm) {
         const q = params.searchTerm.toLowerCase();
         enrichedDayQuotes = enrichedDayQuotes.filter((d) =>

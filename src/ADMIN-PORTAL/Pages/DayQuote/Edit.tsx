@@ -1,4 +1,3 @@
-// src/components/DayQuote/DayQuoteEdit.tsx
 import React, { useState } from "react";
 import KiduEdit from "../../Components/KiduEdit";
 import type { Field } from "../../Components/KiduEdit";
@@ -19,14 +18,11 @@ const DayQuoteEdit: React.FC = () => {
     { name: "unformatedContent", rules: { type: "textarea", label: "Unformatted Content", colWidth: 4 } },
   ];
 
-  /* ================= FETCH ================= */
   const handleFetch = async (id: string) => {
     const response = await DayQuoteService.getDayQuoteById(Number(id));
     const quote = response.value;
 
     if (!quote) return response;
-
-    // 🔑 FIX 1: Bind popup properly
     if (quote.monthCode) {
       const months = await MonthService.getAllMonths();
       const month = months.find(m => m.monthCode === quote.monthCode);
@@ -42,13 +38,11 @@ const DayQuoteEdit: React.FC = () => {
     };
   };
 
-  /* ================= UPDATE ================= */
   const handleUpdate = async (id: string, formData: Record<string, any>) => {
     if (!selectedMonth) {
       throw new Error("Please select a month");
     }
 
-    // 🔑 FIX 3: ID MUST BE IN PAYLOAD
     const payload: Omit<DayQuote, "auditLogs"> = {
       dayQuoteId: Number(id),
       day: Number(formData.day),
@@ -86,7 +80,6 @@ const DayQuoteEdit: React.FC = () => {
         popupHandlers={popupHandlers}
         themeColor="#1B3763"
       />
-
       <MonthPopup
         show={showMonthPopup}
         handleClose={() => setShowMonthPopup(false)}

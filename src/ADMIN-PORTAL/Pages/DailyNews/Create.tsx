@@ -1,4 +1,3 @@
-// src/components/DailyNews/DailyNewsCreate.tsx
 import React from "react";
 import type { Field } from "../../Components/KiduCreate";
 import type { DailyNews } from "../../Types/CMS/DailyNews.types";

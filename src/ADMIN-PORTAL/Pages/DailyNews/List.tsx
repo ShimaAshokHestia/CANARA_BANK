@@ -1,14 +1,12 @@
-// src/components/DailyNews/DailyNewsList.tsx
+// src/components/CMS/DailyNews/DailyNewsList.tsx
+
 import React from "react";
 import type { DailyNews } from "../../Types/CMS/DailyNews.types";
 import type { Company } from "../../Types/Settings/Company.types";
-
 import DailyNewsService from "../../Services/CMS/DailyNews.services";
 import CompanyService from "../../Services/Settings/Company.services";
-
 import KiduServerTable from "../../../Components/KiduServerTable";
 
-/* ===================== TABLE COLUMNS ===================== */
 const columns = [
   { key: "dailyNewsId", label: "ID", enableSorting: true, type: "text" as const },
   { key: "title", label: "Title", enableSorting: true, type: "text" as const },
@@ -18,31 +16,48 @@ const columns = [
 ];
 
 const DailyNewsList: React.FC = () => {
-  const fetchData = async (_params: {
+  const fetchData = async (params: {
     pageNumber: number;
     pageSize: number;
     searchTerm: string;
-  }): Promise<{ data: any[]; total: number }> => {
+  }): Promise<{ data: DailyNews[]; total: number }> => {
     try {
-      /* ===================== FETCH DATA ===================== */
       const [news, companies] = await Promise.all([
         DailyNewsService.getAllDailyNews(),
         CompanyService.getAllCompanies(),
       ]);
 
-      /* ===================== CREATE LOOKUP MAP ===================== */
       const companyMap = Object.fromEntries(
         companies.map((c: Company) => [c.companyId, c.comapanyName])
       );
 
-      /* ===================== ENRICH DAILY NEWS ===================== */
-      const enrichedNews = news.map((n: DailyNews) => ({
+      let enrichedNews: any[] = news.map((n: DailyNews) => ({
         ...n,
         companyName: companyMap[n.companyId] ?? "-",
       }));
 
+      if (params.searchTerm) {
+        const q = params.searchTerm.toLowerCase();
+
+        enrichedNews = enrichedNews.filter((n) =>
+          [
+            n.title,
+            n.newsDate,
+            n.companyName,
+            n.dailyNewsId?.toString(),
+            n.isActive?.toString(),
+          ]
+            .filter(Boolean)
+            .map(String)
+            .some(v => v.toLowerCase().includes(q))
+        );
+      }
+
+      const start = (params.pageNumber - 1) * params.pageSize;
+      const end = start + params.pageSize;
+
       return {
-        data: enrichedNews,
+        data: enrichedNews.slice(start, end),
         total: enrichedNews.length,
       };
     } catch (error: any) {

@@ -1,4 +1,3 @@
-// src/components/DailyNews/DailyNewsEdit.tsx
 import React, {  useRef } from "react";
 import type { Field } from "../../Components/KiduEdit";
 import KiduEdit from "../../Components/KiduEdit";
@@ -23,7 +22,6 @@ const DailyNewsEdit: React.FC = () => {
     if (!news) throw new Error("Daily news not found");
 
     originalDataRef.current = news;
-
     return response; 
   };
 

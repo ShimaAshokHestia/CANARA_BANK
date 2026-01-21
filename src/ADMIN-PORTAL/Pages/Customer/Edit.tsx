@@ -1,4 +1,3 @@
-// src/components/Customer/CustomerEdit.tsx
 import React from "react";
 import KiduEdit from "../../Components/KiduEdit";
 import type { Field } from "../../Components/KiduEdit";
@@ -19,14 +18,13 @@ const CustomerEdit: React.FC = () => {
   const handleFetch = async (id: string) => {
     const response = await CustomerService.getCustomerById(Number(id));
     
-    // Map API field to form field (nationalilty -> nationality)
     if (response.value) {
       const data = response.value;
       return {
         ...response,
         value: {
           ...data,
-          nationality: data.nationalilty || data.nationality, // Handle both spellings
+          nationality: data.nationalilty || data.nationality, 
         }
       };
     }
@@ -35,14 +33,13 @@ const CustomerEdit: React.FC = () => {
   };
 
   const handleUpdate = async (id: string, formData: Record<string, any>) => {
-    // Prepare payload matching API expectation
     const payload = {
       customerId: Number(id),
       customerName: formData.customerName?.trim(),
       customerPhone: formData.customerPhone?.trim(),
       customerEmail: formData.customerEmail?.trim(),
       dob: formData.dob,
-      nationalilty: formData.nationality?.trim(), // API expects 'nationalilty'
+      nationalilty: formData.nationality?.trim(), 
       customerAddress: formData.customerAddress?.trim(),
       createdAt: formData.createdAt || new Date().toISOString(),
       isActive: Boolean(formData.isActive),

@@ -1,4 +1,3 @@
-// src/components/Customer/CustomerCreate.tsx
 import React from "react";
 import KiduCreate from "../../Components/KiduCreate";
 import type { Field } from "../../Components/KiduCreate";
@@ -17,14 +16,13 @@ const CustomerCreate: React.FC = () => {
   ];
 
   const handleSubmit = async (formData: Record<string, any>) => {
-    // Prepare payload matching API expectation (note: nationalilty spelling matches API)
     const payload = {
       customerId: 0,
       customerName: formData.customerName?.trim(),
       customerPhone: formData.customerPhone?.trim(),
       customerEmail: formData.customerEmail?.trim(),
       dob: formData.dob,
-      nationalilty: formData.nationality?.trim(), // API expects 'nationalilty'
+      nationalilty: formData.nationality?.trim(),
       customerAddress: formData.customerAddress?.trim(),
       createdAt: new Date().toISOString(),
       isActive: Boolean(formData.isActive),

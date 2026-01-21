@@ -1,4 +1,3 @@
-// src/components/Customer/CustomerList.tsx
 import React from "react";
 import type { Customer } from "../../Types/Customers/Customers.types";
 import KiduServerTable from "../../../Components/KiduServerTable";

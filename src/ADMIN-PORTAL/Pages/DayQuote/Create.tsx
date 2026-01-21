@@ -1,4 +1,3 @@
-// src/components/CMS/DayQuoteCreate.tsx
 import React, { useState } from "react";
 import KiduCreate from "../../Components/KiduCreate";
 import type { Field } from "../../Components/KiduCreate";

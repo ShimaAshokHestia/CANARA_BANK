@@ -33,14 +33,19 @@ const DeathClaimList: React.FC = () => {
   return (
     <KiduServerTable
       title="Death Claims"
+      subtitle="Manage death claims with search, filter, and pagination."
       columns={columns}
       idKey="deathClaimId"
+      addButtonLabel="Add Death Claim"
       addRoute="/dashboard/claims/deathclaims-create"
       editRoute="/dashboard/claims/deathclaims-edit"
       viewRoute="/dashboard/claims/deathclaims-view"
-      showAddButton
-      showSearch
-      showActions
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
+      rowsPerPage={10}
       fetchData={fetchData}
     />
   );

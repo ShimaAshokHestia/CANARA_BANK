@@ -17,15 +17,20 @@ const YearMasterList: React.FC = () => {
   return (
     <KiduServerTable
       title="Year Master"
+      subtitle="Manage year with search, filter, and pagination."
       columns={columns}
       idKey="yearOf"
+      addButtonLabel="Add year"
       addRoute="/dashboard/settings/yearMaster-create"
       editRoute="/dashboard/settings/yearMaster-edit"
       viewRoute="/dashboard/settings/yearMaster-view"
       fetchData={fetchData}
-      showAddButton
-      showSearch
-      showActions
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
+      rowsPerPage={10}
     />
   );
 };

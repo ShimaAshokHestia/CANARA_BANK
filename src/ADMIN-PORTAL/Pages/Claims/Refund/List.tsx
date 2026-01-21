@@ -59,7 +59,7 @@ const RefundContributionList: React.FC = () => {
   return (
     <KiduServerTable
       title="Refund Contribution Management"
-      subtitle="Manage refund contributions"
+      subtitle="Manage refund contributions with search, filter, and pagination."
       columns={columns}
       idKey="refundContributionId"
       addButtonLabel="Add Refund"

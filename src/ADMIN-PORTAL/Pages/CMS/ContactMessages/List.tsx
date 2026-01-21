@@ -44,16 +44,17 @@ const ContactMessageList: React.FC = () => {
   return (
     <KiduServerTable
       title="Contact Messages"
-      subtitle="Manage customer contact enquiries"
+      subtitle="Manage customer contact enquiries with search, filter, and pagination."
       columns={columns}
       idKey="contactMessageId"
       fetchData={fetchData}
       viewRoute="/dashboard/cms/ContactMessage-view"
       editRoute="/dashboard/cms/ContactMessage-edit"
-      showSearch
-      showExport
-      showActions
-      showTitle
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
       rowsPerPage={10}
     />
   );

@@ -51,20 +51,20 @@ const DirectPaymentList: React.FC = () => {
   return (
     <KiduServerTable
       title="Direct Payment Management"
-      subtitle="Manage direct payments"
+      subtitle="Manage direct payments with search, filter, and pagination."
       columns={columns}
       idKey="directPaymentId"
       addButtonLabel="Add Direct Payment"
       addRoute="/dashboard/contributions/directpayment-create"
       editRoute="/dashboard/contributions/directpayment-edit"
       viewRoute="/dashboard/contributions/directpayment-view"
-      showAddButton
-      showExport
-      showSearch
-      showActions
-      showTitle
-      fetchData={fetchData}
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
       rowsPerPage={10}
+      fetchData={fetchData}
     />
   );
 };

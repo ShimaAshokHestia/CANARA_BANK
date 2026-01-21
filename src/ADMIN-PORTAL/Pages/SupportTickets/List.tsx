@@ -46,19 +46,19 @@ const SupportTicketList: React.FC = () => {
   return (
     <KiduServerTable
       title="Support Tickets"
-      subtitle="Manage support tickets"
+      subtitle="Manage support tickets with search, filter, and pagination."
       columns={columns}
       idKey="supportTicketId"
       addButtonLabel="Add Ticket"
       addRoute="/dashboard/supportTickets-create"
       editRoute="/dashboard/supportTickets-edit"
       viewRoute="/dashboard/supportTickets-view"
-      showAddButton
-      showExport
-      showSearch
-      showActions
-      showTitle
       fetchData={fetchData}
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
       rowsPerPage={10}
     />
   );

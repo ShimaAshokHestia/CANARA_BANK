@@ -54,10 +54,12 @@ const UserList: React.FC = () => {
       editRoute="/dashboard/settings/user-edit"
       viewRoute="/dashboard/settings/user-view"
       fetchData={fetchData}
-      showAddButton
-      showSearch
-      showActions
-      showExport
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
+      rowsPerPage={10}
     />
   );
 };

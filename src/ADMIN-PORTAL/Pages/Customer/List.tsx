@@ -42,17 +42,19 @@ const CustomerList: React.FC = () => {
   return (
     <KiduServerTable
       title="Customer Management"
-      subtitle="Manage customers"
+      subtitle="Manage customers with search, filter, and pagination."
       columns={columns}
       idKey="customerId"
       addButtonLabel="Add Customer"
       addRoute="/dashboard/customer-create"
       editRoute="/dashboard/customer-edit"
       viewRoute="/dashboard/customer-view"
-      showAddButton
-      showSearch
-      showActions
       fetchData={fetchData}
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
       rowsPerPage={10}
     />
   );

@@ -41,18 +41,19 @@ const StateList: React.FC = () => {
   return (
     <KiduServerTable
       title="State Management"
-      subtitle="Manage states"
+      subtitle="Manage states with search, filter, and pagination."
       columns={columns}
       idKey="stateId"
       addButtonLabel="Add State"
       addRoute="/dashboard/settings/state-create"
       editRoute="/dashboard/settings/state-edit"
       viewRoute="/dashboard/settings/state-view"
-      showAddButton
-      showSearch
-      showExport
-      showActions
       fetchData={fetchData}
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
       rowsPerPage={10}
     />
   );

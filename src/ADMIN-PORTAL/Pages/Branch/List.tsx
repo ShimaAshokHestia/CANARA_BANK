@@ -59,15 +59,20 @@ const BranchList: React.FC = () => {
   return (
     <KiduServerTable
       title="Branch Management"
+      subtitle="Manage branches with search, filter, and pagination."
       columns={columns}
       idKey="branchId"
+      addButtonLabel="Add Branch"
       addRoute="/dashboard/settings/branch-create"
       editRoute="/dashboard/settings/branch-edit"
       viewRoute="/dashboard/settings/branch-view"
       fetchData={fetchData}
-      showAddButton
-      showSearch
-      showActions
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
+      rowsPerPage={10}
     />
   );
 };

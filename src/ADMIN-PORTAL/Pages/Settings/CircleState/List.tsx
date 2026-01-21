@@ -18,17 +18,20 @@ const CircleStateList: React.FC = () => {
 
   return (
     <KiduServerTable
-      title="Circle-State Mapping"
-      subtitle="Manage Circle and State relationships"
+      title="Circle-State"
+      subtitle="Manage Circle State with search, filter, and pagination."
       columns={columns}
       idKey="id"
+      addButtonLabel="Add circle-state"
       addRoute="/dashboard/settings/circle-state-create"
       editRoute="/dashboard/settings/circle-state-edit"
       viewRoute="/dashboard/settings/circle-state-view"
       fetchData={fetchData}
-      showAddButton
-      showSearch
-      showActions
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
       rowsPerPage={10}
     />
   );

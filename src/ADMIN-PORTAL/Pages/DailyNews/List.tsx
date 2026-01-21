@@ -54,19 +54,19 @@ const DailyNewsList: React.FC = () => {
   return (
     <KiduServerTable
       title="Daily News Management"
-      subtitle="Manage daily news articles"
+      subtitle="Manage daily news articles with search, filter, and pagination."
       columns={columns}
       idKey="dailyNewsId"
       addButtonLabel="Add News"
       addRoute="/dashboard/cms/dailynews-create"
       editRoute="/dashboard/cms/dailynews-edit"
       viewRoute="/dashboard/cms/dailynews-view"
-      showAddButton
-      showSearch
-      showExport
-      showActions
-      showTitle
       fetchData={fetchData}
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
       rowsPerPage={10}
     />
   );

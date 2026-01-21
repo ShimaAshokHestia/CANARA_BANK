@@ -78,19 +78,19 @@ const MainPageList: React.FC = () => {
   return (
     <KiduServerTable
       title="Main Page Management"
-      subtitle="Manage main page details including images, contact info, and quotes"
+      subtitle="Manage main page details with search, filter, and pagination."
       columns={columns}
       idKey="mainPageId"
       addButtonLabel="Add Main Page"
       addRoute="/dashboard/cms/mainpage-create"
       editRoute="/dashboard/cms/mainpage-edit"
       viewRoute="/dashboard/cms/mainpage-view"
-      showAddButton
-      showExport
-      showSearch
-      showActions
-      showTitle
       fetchData={fetchData}
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
       rowsPerPage={10}
     />
   );

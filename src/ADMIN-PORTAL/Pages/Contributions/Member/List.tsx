@@ -78,19 +78,19 @@ const MemberList: React.FC = () => {
   return (
     <KiduServerTable
       title="Member Management"
-      subtitle="Manage members with search and pagination"
+      subtitle="Manage members with search, filter, and pagination."
       columns={columns}
       idKey="memberId"
       addButtonLabel="Add Member"
       addRoute="/dashboard/contributions/member-create"
       editRoute="/dashboard/contributions/member-edit"
       viewRoute="/dashboard/contributions/member-view"
-      showAddButton
-      showExport
-      showSearch
-      showActions
-      showTitle
       fetchData={fetchData}
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
       rowsPerPage={10}
     />
   );

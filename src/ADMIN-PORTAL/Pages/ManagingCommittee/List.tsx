@@ -49,16 +49,20 @@ const ManagingCommitteeList: React.FC = () => {
   return (
     <KiduServerTable
       title="Managing Committee"
+      subtitle="Manage managing committee with search, filter, and pagination."
       columns={columns}
       idKey="managingComiteeId"
+      addButtonLabel="Add Committee"
       fetchData={fetchData}
       addRoute="/dashboard/cms/manage-committe-create"
       editRoute="/dashboard/cms/manage-committe-edit"
       viewRoute="/dashboard/cms/manage-committe-view"
-      showAddButton
-      showSearch
-      showActions
-      showTitle
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
+      rowsPerPage={10}
     />
   );
 };

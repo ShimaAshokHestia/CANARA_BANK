@@ -69,19 +69,19 @@ const DayQuoteList: React.FC = () => {
   return (
     <KiduServerTable
       title="Day Quotes Management"
-      subtitle="Manage day quotes articles"
+      subtitle="Manage day quotes articles with search, filter, and pagination."
       columns={columns}
       idKey="dayQuoteId"
       addButtonLabel="Add Quotes"
       addRoute="/dashboard/cms/dayquote-create"
       editRoute="/dashboard/cms/dayquote-edit"
       viewRoute="/dashboard/cms/dayquote-view"
-      showAddButton
-      showExport
-      showSearch
-      showActions
-      showTitle
       fetchData={fetchData}
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
       rowsPerPage={10}
     />
   );

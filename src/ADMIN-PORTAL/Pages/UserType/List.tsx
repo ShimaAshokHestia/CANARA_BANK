@@ -50,12 +50,12 @@ const UserTypeList: React.FC = () => {
       addRoute="/dashboard/settings/usertype-create"
       editRoute="/dashboard/settings/usertype-edit"
       viewRoute="/dashboard/settings/usertype-view"
-      showAddButton
-      showExport
-      showSearch
-      showActions
-      showTitle
       fetchData={fetchData}
+      showAddButton={true}
+      showExport={true}
+      showSearch={true}
+      showActions={true}
+      showTitle={true}
       rowsPerPage={10}
     />
   );

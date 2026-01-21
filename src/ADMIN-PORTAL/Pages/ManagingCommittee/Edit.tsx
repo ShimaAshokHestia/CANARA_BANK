@@ -63,6 +63,11 @@ const ManagingCommitteeEdit: React.FC = () => {
         onFetch={handleFetch}
         onUpdate={handleUpdate}
         paramName="managingComiteeId"
+        submitButtonText="Update Managing Committee"
+        showResetButton
+        successMessage="Managing Committee updated successfully!"
+        errorMessage="Failed to update Managing Committee. Please try again."
+        loadingText="Loading Managing Committee..."
         navigateBackPath="/dashboard/cms/manage-committe-list"
         //auditLogConfig={{ tableName: "Managing committees", recordIdField: "managingComiteeId" }}
        // popupHandlers={popupHandlers}

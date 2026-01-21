@@ -83,12 +83,10 @@ const RefundContributionEdit: React.FC = () => {
     return response;
   };
 
-  /* ===================== UPDATE ===================== */
   const handleUpdate = async (id: string, formData: Record<string, any>) => {
     if (!selectedState || !selectedMember || !selectedDesignation ||! selectedYearMaster) {
       throw new Error("Please select all required values");
     }
-
     const payload: Partial<Omit<RefundContribution, "refundContributionId" | "auditLogs">> = {
       staffNo: selectedMember.staffNo,
       stateId: selectedState.stateId,
@@ -145,7 +143,12 @@ const RefundContributionEdit: React.FC = () => {
         fields={fields}
         onFetch={handleFetch}
         onUpdate={handleUpdate}
+        submitButtonText="Update Refund"
+        showResetButton
         paramName="refundContributionId"
+        successMessage="Refund updated successfully!"
+        errorMessage="Failed to update refund. Please try again."
+        loadingText="Loading Refund Contribution..."
         navigateBackPath="/dashboard/claims/refundcontribution-list"
         auditLogConfig={{ tableName: "RefundContribution", recordIdField: "refundContributionId" }}
         popupHandlers={popupHandlers}

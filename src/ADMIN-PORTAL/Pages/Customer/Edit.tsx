@@ -63,6 +63,7 @@ const CustomerEdit: React.FC = () => {
       showResetButton
       successMessage="Customer updated successfully!"
       errorMessage="Failed to update customer."
+      loadingText="Loading Customer details..."
       paramName="customerId"
       navigateBackPath="/dashboard/customer-list"
       auditLogConfig={{

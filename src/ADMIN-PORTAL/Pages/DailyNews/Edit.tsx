@@ -56,6 +56,11 @@ const DailyNewsEdit: React.FC = () => {
         onFetch={handleFetch}
         onUpdate={handleUpdate}
         paramName="dailyNewsId"
+        submitButtonText="Update Daily News"
+        showResetButton
+        successMessage="Daily News updated successfully!"
+        errorMessage="Failed to update Daily News. Please try again."
+        loadingText="Loading Daily News..."
         navigateBackPath="/dashboard/cms/dailynews-list"
        // auditLogConfig={{ tableName: "DailyNews", recordIdField: "dailyNewsId" }}
         themeColor="#1B3763"

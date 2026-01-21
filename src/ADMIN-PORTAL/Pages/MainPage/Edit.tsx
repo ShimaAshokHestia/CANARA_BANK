@@ -102,6 +102,11 @@ const payload = {
         onFetch={handleFetch}
         onUpdate={handleUpdate}
         paramName="mainPageId"
+        submitButtonText="Update Main Page"
+        showResetButton
+        successMessage="Main Page updated successfully!"
+        errorMessage="Failed to update main page. Please try again."
+        loadingText="Loading Main Page..."
         navigateBackPath="/dashboard/cms/mainpage-list"
         auditLogConfig={{ tableName: "MainPage", recordIdField: "mainPageId" }}
         popupHandlers={popupHandlers}

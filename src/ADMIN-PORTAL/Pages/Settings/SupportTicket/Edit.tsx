@@ -1,5 +1,4 @@
 // src/components/SupportTicket/SupportTicketEdit.tsx
-
 import React from "react";
 import KiduEdit from "../../../Components/KiduEdit";
 import type { Field } from "../../../Components/KiduEdit";
@@ -8,56 +7,13 @@ import type { SupportTicket } from "../../../Types/Settings/SupportTicket.types"
 
 const SupportTicketEdit: React.FC = () => {
   const fields: Field[] = [
-    {
-      name: "supportTicketId",
-      rules: { type: "number", label: "Ticket ID", disabled: true, colWidth: 3 },
-    },
-    {
-      name: "supportTicketNum",
-      rules: { type: "text", label: "Ticket Number", disabled: true, colWidth: 3 },
-    },
-    {
-      name: "description",
-      rules: {
-        type: "textarea",
-        label: "Description",
-        required: true,
-        colWidth: 12,
-      },
-    },
-    {
-      name: "priority",
-      rules: {
-        type: "text",
-        label: "Priority",
-        required: true,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "duration",
-      rules: {
-        type: "text",
-        label: "Duration",
-        required: true,
-        colWidth: 4,
-      },
-    },
-    {
-      name: "developerRemark",
-      rules: {
-        type: "textarea",
-        label: "Developer Remark",
-        colWidth: 12,
-      },
-    },
-    {
-      name: "isApproved",
-      rules: {
-        type: "toggle",
-        label: "Approved",
-      },
-    },
+    {  name: "supportTicketId", rules: { type: "number", label: "Ticket ID", disabled: true, colWidth: 3 },},
+    { name: "supportTicketNum", rules: { type: "text", label: "Ticket Number", disabled: true, colWidth: 3 }, },
+    { name: "description", rules: { type: "textarea", label: "Description", required: true, colWidth: 12, }, },
+    { name: "priority", rules: { type: "text", label: "Priority", required: true, colWidth: 4, }, },
+    { name: "duration", rules: { type: "text", label: "Duration", required: true, colWidth: 4, },},
+    { name: "developerRemark", rules: { type: "textarea", label: "Developer Remark", colWidth: 12, }, },
+    { name: "isApproved", rules: { type: "toggle", label: "Approved", }, },
   ];
 
   const handleFetch = async (id: string) =>
@@ -87,9 +43,12 @@ const SupportTicketEdit: React.FC = () => {
       onFetch={handleFetch}
       onUpdate={handleUpdate}
       paramName="supportTicketId"
+      submitButtonText="Update Support Ticket"
+      showResetButton
       navigateBackPath="/dashboard/support-ticket/supportTickets-list"
       successMessage="Support ticket updated successfully!"
-      errorMessage="Failed to update support ticket"
+      errorMessage="Failed to update support ticket. Please try again."
+      loadingText="Loading support tickets..."
       auditLogConfig={{
         tableName: "SupportTicket",
         recordIdField: "supportTicketId",

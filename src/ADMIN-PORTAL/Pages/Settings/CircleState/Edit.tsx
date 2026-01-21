@@ -32,9 +32,12 @@ const CircleStateEdit: React.FC = () => {
       onFetch={handleFetch}
       onUpdate={handleUpdate}
       paramName="id"
+      submitButtonText="Update Circle State"
+      showResetButton
       navigateBackPath="/dashboard/settings/circle-state-list"
-      successMessage="Mapping updated successfully!"
-      errorMessage="Failed to update mapping"
+      successMessage="Circle state updated successfully!"
+      errorMessage="Failed to update circle state. Please try again."
+      loadingText="Loading circle state..."
       auditLogConfig={{
         tableName: "CircleState",
         recordIdField: "id",

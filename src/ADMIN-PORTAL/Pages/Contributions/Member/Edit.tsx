@@ -295,6 +295,10 @@ const MemberEdit: React.FC = () => {
         onFetch={handleFetch}
         onUpdate={handleUpdate}
         paramName="memberId"
+        submitButtonText="Update Member"
+        showResetButton
+        successMessage="Member updated successfully!"
+        errorMessage="Failed to update member. Please try again."
         navigateBackPath="/dashboard/contributions/member-list"
         auditLogConfig={{ tableName: "Member", recordIdField: "memberId" }}
         popupHandlers={popupHandlers}

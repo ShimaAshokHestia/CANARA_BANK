@@ -76,6 +76,11 @@ const DayQuoteEdit: React.FC = () => {
         onFetch={handleFetch}
         onUpdate={handleUpdate}
         paramName="dayQuoteId"
+        submitButtonText="Update Day Quote"
+        showResetButton
+        successMessage="Day Quote updated successfully!"
+        errorMessage="Failed to update Day Quote. Please try again."
+        loadingText="Loading Day Quote..."
         navigateBackPath="/dashboard/cms/dayquote-list"
         auditLogConfig={{ tableName: "DayQuote", recordIdField: "dayQuoteId" }}
         popupHandlers={popupHandlers}

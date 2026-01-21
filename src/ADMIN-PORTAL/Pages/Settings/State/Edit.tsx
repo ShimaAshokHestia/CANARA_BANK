@@ -44,8 +44,9 @@ const StateEdit: React.FC = () => {
       onFetch={handleFetch}
       onUpdate={handleUpdate}
       submitButtonText="Update State"
+      showResetButton
       successMessage="State updated successfully!"
-      errorMessage="Failed to update state."
+      errorMessage="Failed to update state.Please try again"
       paramName="stateId"
       navigateBackPath="/dashboard/settings/state-list"
       loadingText="Loading State..."

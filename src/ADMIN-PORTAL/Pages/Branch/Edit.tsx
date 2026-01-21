@@ -104,6 +104,11 @@ const BranchEdit: React.FC = () => {
         onFetch={handleFetch}
         onUpdate={handleUpdate}
         popupHandlers={popupHandlers}
+        submitButtonText="Update Branch"
+        showResetButton
+        successMessage="Branch updated successfully!"
+        errorMessage="Failed to update branch. Please try again."
+        loadingText="Loading Branch..."
         paramName="branchId"
         navigateBackPath="/dashboard/settings/branch-list"
         auditLogConfig={{ tableName: "Branch", recordIdField: "branchId" }}

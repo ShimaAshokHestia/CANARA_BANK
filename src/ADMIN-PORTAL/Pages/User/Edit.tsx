@@ -102,9 +102,14 @@ const UserEdit: React.FC = () => {
         onFetch={handleFetch}
         onUpdate={handleUpdate}
         paramName="userId"
+        submitButtonText="Update User"
+        showResetButton
         navigateBackPath="/dashboard/settings/user-list"
         auditLogConfig={{ tableName: "User", recordIdField: "userId" }}
         popupHandlers={popupHandlers}
+        successMessage="User updates successfully!"
+        errorMessage="Failed to update user. Please try again."
+        loadingText="Loading user details..."
         options={{ role: roleOptions }}
         themeColor="#1B3763"
       />

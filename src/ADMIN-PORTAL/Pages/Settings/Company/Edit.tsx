@@ -71,10 +71,13 @@ const handleUpdate = async (
       fields={fields}
       onFetch={handleFetch}
       onUpdate={handleUpdate}
+      submitButtonText="Update Company"
+      showResetButton
       paramName="companyId"
       navigateBackPath="/dashboard/settings/company-list"
       successMessage="Company updated successfully!"
-      errorMessage="Failed to update company"
+      errorMessage="Failed to update company.Please try again."
+      loadingText="Loading company details..."
       //auditLogConfig={{ tableName: "Company", recordIdField: "companyId" }}
       themeColor="#1B3763"
     />

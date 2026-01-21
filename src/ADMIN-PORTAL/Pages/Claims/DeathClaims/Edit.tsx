@@ -143,6 +143,11 @@ const DeathClaimEdit: React.FC = () => {
         fields={fields}
         onFetch={handleFetch}
         onUpdate={handleUpdate}
+        showResetButton
+        submitButtonText="Update Death Claim"
+        successMessage="Death Claim updated successfully!"
+        errorMessage="Failed to update Death Claim. Please try again."
+        loadingText="Loading Death Claim..."
         paramName="deathClaimId"
         navigateBackPath="/dashboard/claims/deathclaims-list"
         auditLogConfig={{ tableName: "DeathClaim", recordIdField: "deathClaimId" }}

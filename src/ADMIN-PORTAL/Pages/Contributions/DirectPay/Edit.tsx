@@ -85,6 +85,8 @@ const handleFetch = async (id: string) => {
         fields={fields}
         onFetch={handleFetch}
         onUpdate={handleUpdate}
+        submitButtonText="Update Direct Payment"
+        showResetButton
         paramName="directPaymentId"
         navigateBackPath="/dashboard/contributions/directpayment-list"
         successMessage="Direct Payment updated successfully!"

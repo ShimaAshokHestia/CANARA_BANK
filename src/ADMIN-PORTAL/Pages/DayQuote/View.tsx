@@ -1,4 +1,3 @@
-// src/components/CMS/DayQuoteView.tsx
 import React from "react";
 import KiduView from "../../Components/KiduView";
 import type { ViewField } from "../../Components/KiduView";
@@ -16,7 +15,6 @@ const DayQuoteView: React.FC = () => {
   const handleFetch = async (id: string) => {
     return await DayQuoteService.getDayQuoteById(Number(id));
   };
-
   const handleDelete = async (id: string) => {
     await DayQuoteService.deleteDayQuote(Number(id));
   };

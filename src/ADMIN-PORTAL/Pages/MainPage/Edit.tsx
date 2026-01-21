@@ -1,4 +1,3 @@
-// src/components/MainPage/MainPageEdit.tsx
 import React, { useState } from "react";
 import KiduEdit from "../../Components/KiduEdit";
 import type { Field } from "../../Components/KiduEdit";
@@ -31,11 +30,9 @@ const MainPageEdit: React.FC = () => {
     { name: "website", rules: { type: "text", label: "Website", required: true, colWidth: 4 } },
     { name: "email", rules: { type: "email", label: "Email", required: true, colWidth: 4 } },
     { name: "dayQuote", rules: { type: "text", label: "Day Quote", colWidth: 4 } },
-
     { name: "rulesRegulation", rules: { type: "textarea", label: "Rules & Regulations", colWidth: 6 } },
   ];
 
-  
   const handleFetch = async (id: string) => {
     const response = await MainPageService.getMainPageById(Number(id));
     const page = response.value;
@@ -63,22 +60,17 @@ const payload = {
   corouselImage1: formData.corouselImage1?.trim() || "",
   corouselImage2: formData.corouselImage2?.trim() || "",
   corouselImage3: formData.corouselImage3?.trim() || "",
-  
   logoImage1: formData.logoImage1?.trim() || "",
   logoImage2: formData.logoImage2?.trim() || "",
-  
   contactDesc1: formData.contactDesc1?.trim() || "",
   contactDesc2: formData.contactDesc2?.trim() || "",
-  
   contactLine1: formData.contactLine1?.trim() || "",
   contactLine2: formData.contactLine2?.trim() || "",
   contactLine3: formData.contactLine3?.trim() || "",
-  
   phonenum: formData.phonenum?.trim() || "",
   faxnum: formData.faxnum?.trim() || "",
   website: formData.website?.trim() || "",
   email: formData.email?.trim() || "",
-  
   rulesRegulation: formData.rulesRegulation?.trim() || "",
   dayQuote: formData.dayQuote?.trim() || "",
  
@@ -112,7 +104,6 @@ const payload = {
         popupHandlers={popupHandlers}
         themeColor="#1B3763"
       />
-
       <CompanyPopup
         show={showCompanyPopup}
         handleClose={() => setShowCompanyPopup(false)}

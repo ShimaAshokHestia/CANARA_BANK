@@ -1,15 +1,10 @@
-// src/components/CMS/MainPage/MainPageList.tsx
-
 import React from "react";
 import type { MainPage } from "../../Types/CMS/MainPage.types";
 import type { Company } from "../../Types/Settings/Company.types";
-
 import MainPageService from "../../Services/CMS/MainPage.services";
 import CompanyService from "../../Services/Settings/Company.services";
-
 import KiduServerTable from "../../../Components/KiduServerTable";
 
-/* ===================== TABLE COLUMNS ===================== */
 const columns = [
   { key: "mainPageId", label: "ID", enableSorting: true, type: "text" as const },
   { key: "companyName", label: "Company", enableSorting: true, type: "text" as const },
@@ -26,24 +21,20 @@ const MainPageList: React.FC = () => {
     searchTerm: string;
   }): Promise<{ data: any[]; total: number }> => {
     try {
-      /* ===================== FETCH DATA ===================== */
       const [mainPages, companies] = await Promise.all([
         MainPageService.getAllMainPages(),
         CompanyService.getAllCompanies(),
       ]);
 
-      /* ===================== LOOKUP MAP ===================== */
       const companyMap = Object.fromEntries(
         companies.map((c: Company) => [c.companyId, c.comapanyName])
       );
 
-      /* ===================== ENRICH MAIN PAGES ===================== */
       let enrichedMainPages = mainPages.map((m: MainPage) => ({
         ...m,
         companyName: companyMap[m.companyId] ?? "-",
       }));
 
-      /* ===================== SEARCH ===================== */
       if (params.searchTerm) {
         const q = params.searchTerm.toLowerCase();
 
@@ -61,7 +52,6 @@ const MainPageList: React.FC = () => {
         );
       }
 
-      /* ===================== PAGINATION ===================== */
       const start = (params.pageNumber - 1) * params.pageSize;
       const end = start + params.pageSize;
 

@@ -46,7 +46,6 @@ const DayQuoteList: React.FC = () => {
         );
       }
 
-      /* ===================== PAGINATION ===================== */
       const start = (params.pageNumber - 1) * params.pageSize;
       const end = start + params.pageSize;
 

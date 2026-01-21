@@ -1,4 +1,3 @@
-// src/components/Category/CategoryCreate.tsx
 import React from "react";
 import type { Field } from "../../../Components/KiduCreate";
 import type { Category } from "../../../Types/Settings/Category.types";

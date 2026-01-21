@@ -13,10 +13,10 @@ const DirectPaymentCreate: React.FC = () => {
   const[selectedMember,setSelectedMember]=useState<Member|null>(null);
  
   const fields: Field[] = [
-    { name: "memberId", rules: { type: "popup", label: "Member ID", required: true, colWidth: 4 } },
+    { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4 } },
     { name: "amount", rules: { type: "number", label: "Amount", required: true, colWidth: 4 } },
     { name: "paymentDate", rules: { type: "date", label: "Payment Date", required: true, colWidth: 4 } },
-    { name: "paymentMode", rules: { type: "text", label: "Payment Mode", required: true, colWidth: 4 } },
+    { name: "paymentMode", rules: { type: "select", label: "Payment Mode", required: true, colWidth: 4 } },
     { name: "referenceNo", rules: { type: "text", label: "Reference No", required: true, colWidth: 4 } },
     { name: "remarks", rules: { type: "textarea", label: "Remarks", colWidth: 6} }
   ];
@@ -43,24 +43,38 @@ const DirectPaymentCreate: React.FC = () => {
   await DirectPaymentService.createDirectPayment(payload);
 };
 
-
-
   const popupHandlers={
     memberId:{
       value:selectedMember?.name||"",
       onOpen:()=>setShowMemberPopup(true),
     },
   }
+  //payment mode options
+  const paymentModeOptions = [
+    {value:"Cash Payment", label:"Cash Payments"},
+    {value:"Bank Transfer", label:"Bank Transfer"},
+    {value:"Cheque", label:"Cheque"},
+    {value:"Card Payment", label:"Card Payment"},
+    {value:"Digital/ Wallet Payment", label:"Digital/ Wallet Payment"},
+    {value:"Recurring Payment", label:"Recurring Payment"},
+    {value:"International Payment", label:"International Payment"},
+    {value:"Bank Specific", label:"Bank Specific"},
+    {value:"Government/ Statutory Payment", label:"Government/ Statutory Payment"},
+  ]
   return (
    <>
       <KiduCreate
         title="Create Direct Payment"
         fields={fields}
         onSubmit={handleSubmit}
+        submitButtonText="Create Direct Payment"
         successMessage="Direct Payment created successfully!"
         navigateOnSuccess="/dashboard/contributions/directpayment-list"
         themeColor="#1B3763"
          popupHandlers={popupHandlers}
+         options={{
+          paymentMode: paymentModeOptions,
+         }}
       />
       <MemberPopup
         show={showMemberPopup}

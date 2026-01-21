@@ -90,7 +90,9 @@ const popupHandlers = {
     onOpen: () => setShowDesignationPopup(true),
   },
   yearOF: {
-    value: selectedYearMaster?.yearName || "",
+    value: selectedYearMaster
+      ? String(selectedYearMaster.yearName) 
+      : "",
     actualValue: selectedYearMaster?.yearOf,
     onOpen: () => setShowYearMasterPopup(true),
   },

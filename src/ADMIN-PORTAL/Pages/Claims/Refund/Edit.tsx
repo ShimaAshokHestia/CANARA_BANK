@@ -13,34 +13,34 @@ import MemberPopup from "../../Contributions/Member/MemberPopup";
 import MemberService from "../../../Services/Contributions/Member.services";
 import StateService from "../../../Services/Settings/State.services";
 import DesignationService from "../../../Services/Settings/Designation.services";
+import YearMasterService from "../../../Services/Settings/YearMaster.services";
+import type { YearMaster } from "../../../Types/Settings/YearMaster.types";
+import YearMasterPopup from "../../YearMaster/YearMasterPopup";
 
 const RefundContributionEdit: React.FC = () => {
   const [showStatePopup, setShowStatePopup] = useState(false);
   const [showMemberPopup, setShowMemberPopup] = useState(false);
   const [showDesignationPopup, setShowDesignationPopup] = useState(false);
+  const [showYearMasterPopup, setShowYearMasterPopup] = useState(false);
 
   const [selectedState, setSelectedState] = useState<State | null>(null);
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
   const [selectedDesignation, setSelectedDesignation] = useState<Designation | null>(null);
-
+  const [selectedYearMaster, setSelectedYearMaster] = useState<YearMaster | null>(null);
   /* ===================== FIELDS ===================== */
   const fields: Field[] = [
     { name: "stateId", rules: { type: "popup", label: "State", required: true, colWidth: 4 } },
     { name: "memberId", rules: { type: "popup", label: "Member", required: true, colWidth: 4 } },
     { name: "designationId", rules: { type: "popup", label: "Designation", required: true, colWidth: 4 } },
-
     { name: "refundNO", rules: { type: "text", label: "Refund No", required: true, colWidth: 4 } },
     { name: "branchNameOFTime", rules: { type: "text", label: "Branch Name (At the Time)", required: true, colWidth: 4 } },
     { name: "dpcodeOfTime", rules: { type: "text", label: "DP Code (At the Time)", required: true, colWidth: 4 } },
-
     { name: "type", rules: { type: "select", label: "Type", required: true, colWidth: 4 } },
-
     { name: "ddno", rules: { type: "text", label: "DD No", required: true, colWidth: 4 } },
     { name: "dddate", rules: { type: "date", label: "DD Date", required: true, colWidth: 4 } },
-
     { name: "amount", rules: { type: "number", label: "Amount", required: true, colWidth: 4 } },
     { name: "lastContribution", rules: { type: "number", label: "Last Contribution", colWidth: 4 } },
-    { name: "yearOF", rules: { type: "number", label: "Year Of", required: true, colWidth: 4 } },
+    { name: "yearOF", rules: { type: "popup", label: "Year", required: true, colWidth: 4 } },
     { name: "remark", rules: { type: "textarea", label: "Remark", colWidth: 4 } },
 
   ];
@@ -75,12 +75,17 @@ const RefundContributionEdit: React.FC = () => {
       setSelectedDesignation(designation.value);
     }
 
+    if(refund.yearOF) {
+       const year = await YearMasterService.getYearMasterById(refund.yearOF);
+       setSelectedYearMaster(year.value);
+    }
+  
     return response;
   };
 
   /* ===================== UPDATE ===================== */
   const handleUpdate = async (id: string, formData: Record<string, any>) => {
-    if (!selectedState || !selectedMember || !selectedDesignation) {
+    if (!selectedState || !selectedMember || !selectedDesignation ||! selectedYearMaster) {
       throw new Error("Please select all required values");
     }
 
@@ -99,7 +104,7 @@ const RefundContributionEdit: React.FC = () => {
       dddateString: toIso(formData.dddate),
       amount: Number(formData.amount),
       lastContribution: Number(formData.lastContribution || 0),
-      yearOF: Number(formData.yearOF),
+      yearOF: selectedYearMaster?.yearOf,
       deathDate: "",
       deathDateString: "",
     };
@@ -124,6 +129,13 @@ const RefundContributionEdit: React.FC = () => {
       actualValue: selectedDesignation?.designationId,
       onOpen: () => setShowDesignationPopup(true),
     },
+     yearOF: {
+    value: selectedYearMaster
+      ? String(selectedYearMaster.yearName) 
+      : "",
+    actualValue: selectedYearMaster?.yearOf,
+    onOpen: () => setShowYearMasterPopup(true),
+  },
   };
 
   return (
@@ -141,9 +153,29 @@ const RefundContributionEdit: React.FC = () => {
         themeColor="#1B3763"
       />
 
-      <StatePopup show={showStatePopup} handleClose={() => setShowStatePopup(false)} onSelect={setSelectedState} />
-      <MemberPopup show={showMemberPopup} handleClose={() => setShowMemberPopup(false)} onSelect={setSelectedMember} />
-      <DesignationPopup show={showDesignationPopup} handleClose={() => setShowDesignationPopup(false)} onSelect={setSelectedDesignation} />
+      <StatePopup 
+       show={showStatePopup} 
+       handleClose={() => setShowStatePopup(false)} 
+       onSelect={setSelectedState} 
+       />
+      <MemberPopup 
+       show={showMemberPopup} 
+       handleClose={() => setShowMemberPopup(false)} 
+       onSelect={setSelectedMember} 
+       />
+      <DesignationPopup 
+       show={showDesignationPopup} 
+       handleClose={() => setShowDesignationPopup(false)} 
+       onSelect={setSelectedDesignation} 
+       />
+        <YearMasterPopup
+       show={showYearMasterPopup}
+       handleClose={() => setShowYearMasterPopup(false)}
+       onSelect={(y) => {
+        setSelectedYearMaster(y);
+        setShowYearMasterPopup(false);
+     }}
+     />
     </>
   );
 };

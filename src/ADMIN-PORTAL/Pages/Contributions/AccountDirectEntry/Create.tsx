@@ -13,7 +13,6 @@ import type { AccountDirectEntry } from "../../../Types/Contributions/AccountDir
 import AccountDirectEntryService from "../../../Services/Contributions/AccountDirectEntry.services";
 
 const AccountDirectEntryCreate: React.FC = () => {
-
   const [showMemberPopup, setShowMemberPopup] = useState(false);
   const [showBranchPopup, setShowBranchPopup] = useState(false);
   const [showMonthPopup, setShowMonthPopup] = useState(false);

@@ -44,7 +44,7 @@ const MemberEdit: React.FC = () => {
     { name: "dojtoScheme", rules: { type: "date", label: "DOJ to Scheme", required: true, colWidth: 4 } },
     { name: "isRegCompleted", rules: { type: "toggle", label: "Registration Completed" } },
     { name: "nominee", rules: { type: "text", label: "Nominee Name", colWidth: 4 } },
-    { name: "nomineeRelation", rules: { type: "text", label: "Nominee Relation", colWidth: 4 } },
+    { name: "nomineeRelation", rules: { type: "select", label: "Nominee Relation", colWidth: 4 } },
     { name: "nomineeIDentity", rules: { type: "text", label: "Nominee Identity", colWidth: 4 } },
     { name: "unionMember", rules: { type: "select", label: "Union Member", colWidth: 4 } },
     { name: "totalRefund", rules: { type: "text", label: "Total Refund", colWidth: 4 } },
@@ -62,7 +62,18 @@ const MemberEdit: React.FC = () => {
     { value: "Yes", label: "Yes" },
     { value: "No", label: "No" }
   ];
-
+  //nominee Relation options
+  const nomineeRelationOptions = [
+    {value:"Spouse", label: "Spouse"},
+    {value:"Father", label: "Father"},
+    {value:"Mother", label: "Mother"},
+    {value:"Son", label: "Son"},
+    {value:"Daughter", label: "Daughter"},
+    {value:"Sibling", label: "Sibling"},
+    {value:"Nephew", label: "Nephew"},
+    {value:"Niece", label: "Niece"},
+    {value:"Grandparent", label: "Grandparent"},
+  ]
   const toIsoMidnight = (val?: string) => (val ? `${val}T00:00:00` : "");
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -305,7 +316,8 @@ const MemberEdit: React.FC = () => {
         themeColor="#1B3763"
         options={{
           genderId: genderOptions,
-          unionMember: unionMemberOptions
+          unionMember: unionMemberOptions,
+          nomineeRelation: nomineeRelationOptions
         }}
       />
 

@@ -1,4 +1,3 @@
-// src/components/YearMaster/YearMasterList.tsx
 import React from "react";
 import YearMasterService from "../../Services/Settings/YearMaster.services";
 import KiduServerTable from "../../../Components/KiduServerTable";

@@ -1,20 +1,28 @@
 import React, { useState } from "react";
-import { Form, Row, Col, Button, Table } from "react-bootstrap";
+import { Form, Row, Col, Button, Table, InputGroup } from "react-bootstrap";
 import KiduPrevious from "../../../../Components/KiduPrevious";
+import type { YearMaster } from "../../../Types/Settings/YearMaster.types";
+import type { Month } from "../../../Types/Settings/Month.types";
+import YearMasterPopup from "../../YearMaster/YearMasterPopup";
+import MonthPopup from "../../Settings/Month/MonthPopup";
+import { FaSearch } from "react-icons/fa";
 
 const FileUploadCreate: React.FC = () => {
-  const [year, setYear] = useState<string>("");
-  const [selectType, setSelectType] = useState<string>("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+  // ✅ Year Popup State
+  const [showYearPopup, setShowYearPopup] = useState(false);
+  const [selectedYear, setSelectedYear] = useState<YearMaster | null>(null);
+
+  // ✅ Month Popup State
+  const [showMonthPopup, setShowMonthPopup] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState<Month | null>(null);
+
   return (
-    <div
-      className="container-fluid px-2 mt-1"
-      style={{ fontFamily: "Urbanist" }}
-    >
+    <div className="container-fluid px-2 mt-1" style={{ fontFamily: "Urbanist" }}>
       <div className="shadow-sm rounded p-4 bg-white">
 
-        {/* ================= HEADER ================= */}
+        {/* HEADER */}
         <div className="d-flex align-items-center mb-3">
           <KiduPrevious />
           <h4 className="fw-bold mb-0 ms-2 text-primary">
@@ -24,44 +32,56 @@ const FileUploadCreate: React.FC = () => {
 
         <hr />
 
-        {/* ================= FORM ================= */}
+        {/* FORM */}
         <Form>
           <Row className="mb-3">
+
+            {/* ✅ YEAR POPUP FIELD */}
             <Col md={6}>
               <Form.Label className="fw-bold">Year</Form.Label>
-              <Form.Select
-                value={year}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                  setYear(e.target.value)
-                }
-              >
-                <option value="">Select Year</option>
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-              </Form.Select>
+              <InputGroup>
+                <Form.Control
+                  type="text"
+                  placeholder="Select Year"
+                  value={selectedYear?.yearName ?? ""}
+                  readOnly
+                />
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => setShowYearPopup(true)}
+                >
+                  <FaSearch />
+                </Button>
+              </InputGroup>
             </Col>
 
+            {/* ✅ MONTH POPUP FIELD */}
             <Col md={6}>
-              <Form.Label className="fw-bold">Select</Form.Label>
-              <Form.Select
-                value={selectType}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                  setSelectType(e.target.value)
-                }
-              >
-                <option value="">Select Option</option>
-                <option value="Monthly">Monthly</option>
-                <option value="Yearly">Yearly</option>
-              </Form.Select>
+              <Form.Label className="fw-bold">Month</Form.Label>
+              <InputGroup>
+                <Form.Control
+                  type="text"
+                  placeholder="Select Month"
+                  value={selectedMonth?.monthName ?? ""}
+                  readOnly
+                />
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => setShowMonthPopup(true)}
+                >
+                  <FaSearch />
+                </Button>
+              </InputGroup>
             </Col>
           </Row>
 
+          {/* FILE UPLOAD */}
           <Row className="mb-4">
             <Col md={6}>
-              <Form.Label className="fw-bold">Upload Files</Form.Label>
+              <Form.Label className="fw-bold">Upload File</Form.Label>
               <Form.Control
                 type="file"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onChange={(e) => {
                   const file = e.target.files?.[0] || null;
                   setSelectedFile(file);
                 }}
@@ -69,14 +89,14 @@ const FileUploadCreate: React.FC = () => {
             </Col>
           </Row>
 
-          {/* ================= ACTION BUTTONS ================= */}
+          {/* ACTION BUTTONS */}
           <div className="d-flex justify-content-center gap-3 mb-4">
             <Button variant="primary">Upload</Button>
             <Button variant="danger">Cancel</Button>
           </div>
         </Form>
 
-        {/* ================= SUMMARY TABLE ================= */}
+        {/* SUMMARY TABLE */}
         <Table bordered className="mb-4 text-center">
           <thead className="table-light">
             <tr>
@@ -94,7 +114,7 @@ const FileUploadCreate: React.FC = () => {
           </tbody>
         </Table>
 
-        {/* ================= DETAILS TABLE ================= */}
+        {/* DETAILS TABLE */}
         <Table bordered hover>
           <thead className="table-light">
             <tr>
@@ -112,12 +132,31 @@ const FileUploadCreate: React.FC = () => {
           </tbody>
         </Table>
 
-        {/* ================= BACK BUTTON ================= */}
+        {/* BACK BUTTON */}
         <div className="mt-3">
           <Button variant="secondary">« Back to List</Button>
         </div>
-
       </div>
+
+      {/* ✅ YEAR POPUP */}
+      <YearMasterPopup
+        show={showYearPopup}
+        handleClose={() => setShowYearPopup(false)}
+        onSelect={(y) => {
+          setSelectedYear(y);
+          setShowYearPopup(false);
+        }}
+      />
+
+      {/* ✅ MONTH POPUP */}
+      <MonthPopup
+        show={showMonthPopup}
+        handleClose={() => setShowMonthPopup(false)}
+        onSelect={(m) => {
+          setSelectedMonth(m);
+          setShowMonthPopup(false);
+        }}
+      />
     </div>
   );
 };

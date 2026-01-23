@@ -14,8 +14,19 @@ const DailyNewsView: React.FC = () => {
   ];
 
 const handleFetch = async (id: string) => {
-  return DailyNewsService.getDailyNewsById(Number(id));
+  const res = await DailyNewsService.getDailyNewsById(Number(id));
+
+  return {
+    ...res,
+    value: {
+      ...res.value,
+      newsDate: res.value.newsDate
+        ? new Date(res.value.newsDate).toLocaleDateString("en-GB")
+        : "",
+    },
+  };
 };
+
 
   const handleDelete = async (id: string) => {
     await DailyNewsService.deleteDailyNews(Number(id));

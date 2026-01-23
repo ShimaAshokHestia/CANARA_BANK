@@ -31,10 +31,15 @@ const DailyNewsList: React.FC = () => {
         companies.map((c: Company) => [c.companyId, c.comapanyName])
       );
 
-      let enrichedNews: any[] = news.map((n: DailyNews) => ({
-        ...n,
-        companyName: companyMap[n.companyId] ?? "-",
-      }));
+     let enrichedNews: any[] = news.map((n: DailyNews) => ({
+  ...n,
+  companyName: companyMap[n.companyId] ?? "-",
+
+  newsDate: n.newsDate
+    ? new Date(n.newsDate).toLocaleDateString("en-GB")
+    : "",
+}));
+
 
       if (params.searchTerm) {
         const q = params.searchTerm.toLowerCase();

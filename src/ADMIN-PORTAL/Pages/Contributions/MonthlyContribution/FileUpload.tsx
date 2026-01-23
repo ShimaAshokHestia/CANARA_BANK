@@ -10,11 +10,9 @@ import { FaSearch } from "react-icons/fa";
 const FileUploadCreate: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  // ✅ Year Popup State
   const [showYearPopup, setShowYearPopup] = useState(false);
   const [selectedYear, setSelectedYear] = useState<YearMaster | null>(null);
 
-  // ✅ Month Popup State
   const [showMonthPopup, setShowMonthPopup] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState<Month | null>(null);
 
@@ -81,11 +79,12 @@ const FileUploadCreate: React.FC = () => {
               <Form.Label className="fw-bold">Upload File</Form.Label>
               <Form.Control
                 type="file"
-                onChange={(e) => {
-                  const file = e.target.files?.[0] || null;
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  const file = e.target.files ? e.target.files[0] : null;
                   setSelectedFile(file);
                 }}
               />
+
             </Col>
           </Row>
 

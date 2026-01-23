@@ -33,10 +33,7 @@ const ManagingCommitteeView: React.FC = () => {
       editRoute="/dashboard/cms/manage-committe-edit"
       listRoute="/dashboard/cms/manage-committe-list"
       paramName="managingComiteeId"
-      auditLogConfig={{
-        tableName: "ManagingCommittee",
-        recordIdField: "managingComiteeId",
-      }}
+      //auditLogConfig={{ tableName: "ManagingCommittee", recordIdField: "managingComiteeId",}}
       themeColor="#1B3763"
       loadingText="Loading managing committee details..."
       showEditButton={true}

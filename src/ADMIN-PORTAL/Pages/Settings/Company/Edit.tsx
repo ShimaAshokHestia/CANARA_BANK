@@ -1,4 +1,3 @@
-// src/components/Company/CompanyEdit.tsx
 import React from "react";
 import KiduEdit from "../../../Components/KiduEdit";
 import type { Field } from "../../../Components/KiduEdit";
@@ -33,24 +32,19 @@ const handleUpdate = async (
 ) => {
   const payload: Omit<Company, "auditLogs"> = {
     companyId: Number(companyId),
-
     comapanyName: formData.comapanyName,
     website: formData.website,
     contactNumber: formData.contactNumber,
     email: formData.email,
     taxNumber: formData.taxNumber,
-
     addressLine1: formData.addressLine1,
     addressLine2: formData.addressLine2,
-
     city: formData.city,
     state: formData.state,
     country: formData.country,
     zipCode: formData.zipCode,
-
     invoicePrefix: formData.invoicePrefix,
     companyLogo: formData.companyLogo,
-
     isActive: Boolean(formData.isActive),
     isDeleted: false,
   };

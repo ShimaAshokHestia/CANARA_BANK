@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col, Image, InputGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-import { FaEye, FaEyeSlash, FaPen } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { BsSearch } from "react-icons/bs";
 import Swal from 'sweetalert2';
 import KiduValidation from "../../Components/KiduValidation";
@@ -127,7 +127,7 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
   // Cleanup blob URLs
   useEffect(() => {
     return () => {
-      if (previewUrl && previewUrl.startsWith('blob:')) {
+      if (typeof previewUrl === "string" && previewUrl.startsWith("blob:")) {
         URL.revokeObjectURL(previewUrl);
       }
     };
@@ -150,7 +150,7 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
         return;
       }
 
-      if (previewUrl && previewUrl.startsWith('blob:')) {
+     if (typeof previewUrl === "string" && previewUrl.startsWith("blob:")) {
         URL.revokeObjectURL(previewUrl);
       }
 
@@ -160,18 +160,18 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
     }
   };
 
-  const fileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const base64String = reader.result as string;
-        const base64Data = base64String.split(',')[1];
-        resolve(base64Data);
-      };
-      reader.onerror = error => reject(error);
-    });
-  };
+  // const fileToBase64 = (file: File): Promise<string> => {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => {
+  //       const base64String = reader.result as string;
+  //       const base64Data = base64String.split(',')[1];
+  //       resolve(base64Data);
+  //     };
+  //     reader.onerror = error => reject(error);
+  //   });
+  // };
 
   const handleChange = (e: React.ChangeEvent<any>) => {
     const { name, value, type, checked } = e.target;
@@ -293,10 +293,14 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
       const submitData = { ...formData };
 
       // Convert image to base64 if exists
+      // if (imageConfig && selectedFile) {
+      //   const base64Logo = await fileToBase64(selectedFile);
+      //   submitData[imageConfig.fieldName] = base64Logo;
+      // }
       if (imageConfig && selectedFile) {
-        const base64Logo = await fileToBase64(selectedFile);
-        submitData[imageConfig.fieldName] = base64Logo;
-      }
+  submitData[imageConfig.fieldName] = selectedFile; // pass File directly
+}
+
 
       await onSubmit(submitData);
 
@@ -563,56 +567,90 @@ const KiduCreate: React.FC<KiduCreateProps> = ({
           <hr />
 
           <Form onSubmit={handleSubmit}>
-            <Row className="mb-3">
-              {/* Image Upload Section (if configured) */}
-              {imageConfig && (
-                <Col xs={12} md={4} className="d-flex flex-column align-items-center mb-4">
-                  <div style={{ position: "relative", width: "180px", height: "180px" }}>
-                    <Image
-                      src={previewUrl || imageConfig.defaultImage}
-                      alt={imageConfig.label || "Upload"}
-                      roundedCircle
-                      width={180}
-                      height={180}
-                      style={{
-                        objectFit: "cover",
-                        border: "1px solid #ccc"
-                      }}
-                      onError={(e: any) => { e.target.src = imageConfig.defaultImage; }}
-                    />
-                    <label
-                      htmlFor={imageConfig.fieldName}
-                      style={{
-                        position: "absolute",
-                        bottom: "5px",
-                        right: "5px",
-                        background: themeColor,
-                        borderRadius: "50%",
-                        padding: "8px 11px",
-                        cursor: "pointer"
-                      }}
-                      title={`Upload ${imageConfig.label || "Image"}`}
-                    >
-                      <FaPen style={{ color: "#fff", fontSize: "14px" }} />
-                    </label>
-                    <input
-                      type="file"
-                      id={imageConfig.fieldName}
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      style={{ display: "none" }}
-                    />
-                  </div>
-                </Col>
-              )}
+           <Row className="mb-4">
+  {/* Image Upload Section */}
+  {imageConfig && (
+    <Col xs={12}>
+      <div className="card mb-4">
+        <div className="card-body">
+          <h5 className="card-title mb-3">
+            {imageConfig.label || "Profile Picture"}
+          </h5>
 
-              {/* Form Fields Section */}
-              <Col xs={12} md={imageConfig ? 8 : 12}>
-                <Row className="g-2">
-                  {regularFields.map((field, index) => renderField(field, index))}
-                </Row>
-              </Col>
-            </Row>
+          <div className="d-flex align-items-center gap-3">
+            {/* Image Preview */}
+            <div>
+              {previewUrl ? (
+                <Image
+                  src={previewUrl}
+                  alt={imageConfig.label || "Preview"}
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                    border: "2px solid #dee2e6",
+                  }}
+                  onError={(e: any) => {
+                    e.target.src = imageConfig.defaultImage;
+                  }}
+                />
+              ) : (
+                <div
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    backgroundColor: "#f8f9fa",
+                    border: "2px dashed #dee2e6",
+                    borderRadius: "8px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "#6c757d",
+                    fontSize: "14px",
+                  }}
+                >
+                  No Image
+                </div>
+              )}
+            </div>
+
+            {/* Actions */}
+            <div>
+              <input
+                type="file"
+                id={imageConfig.fieldName}
+                accept="image/*"
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+              />
+
+              <label
+                htmlFor={imageConfig.fieldName}
+                className="btn btn-primary btn-sm mb-2"
+                style={{ cursor: "pointer", backgroundColor: themeColor, border: "none" }}
+              >
+                Select Image
+              </label>
+
+              <div className="text-muted small">
+                Max size: 5MB. Accepted formats: JPG, PNG, GIF
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Col>
+  )}
+
+  {/* Form Fields Section */}
+  <Col xs={12}>
+    <Row className="g-2">
+      {regularFields.map((field, index) => renderField(field, index))}
+    </Row>
+  </Col>
+</Row>
+
 
             {/* Toggle Switches Section */}
             {toggleFields.length > 0 && (

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import type { Field } from "../../../Components/KiduCreate";
 import type { Member } from "../../../Types/Contributions/Member.types";
 import type { Branch } from "../../../Types/Settings/Branch.types";
@@ -11,6 +11,7 @@ import BranchPopup from "../../Branch/BranchPopup";
 import DesignationPopup from "../../Settings/Designation/DesignationPopup";
 import CategoryPopup from "../../Settings/Category/CategoryPopup";
 import StatusPopup from "../../Settings/Status/StatusPopup";
+import profiledefaultimg from "../../../Assets/Images/profile.jpg"
 
 const MemberCreate: React.FC = () => {
 
@@ -24,10 +25,10 @@ const MemberCreate: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<Status | null>(null);
 
-  const [profileImage, setProfileImage] = useState<File | null>(null);
-  const [profileImagePreview, setProfileImagePreview] = useState<string>("");
-  const [isUploading, setIsUploading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  // const [profileImage, setProfileImage] = useState<File | null>(null);
+  // const [profileImagePreview, setProfileImagePreview] = useState<string>("");
+  const [_isUploading, setIsUploading] = useState(false);
+  // const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fields: Field[] = [
     { name: "staffNo", rules: { type: "number", label: "Staff No", required: true, colWidth: 4 } },
@@ -50,33 +51,34 @@ const MemberCreate: React.FC = () => {
 
   const toIsoMidnight = (val?: string) => (val ? `${val}T00:00:00` : "");
 
-  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        alert("Image size should be less than 5MB");
-        return;
-      }
-      if (!file.type.startsWith('image/')) {
-        alert("Please select a valid image file");
-        return;
-      }
-      setProfileImage(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     if (file.size > 5 * 1024 * 1024) {
+  //       alert("Image size should be less than 5MB");
+  //       return;
+  //     }
+  //     if (!file.type.startsWith('image/')) {
+  //       alert("Please select a valid image file");
+  //       return;
+  //     }
+  //     setProfileImage(file);
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setProfileImagePreview(reader.result as string);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
-  const handleRemoveImage = () => {
-    setProfileImage(null);
-    setProfileImagePreview("");
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
+  // const handleRemoveImage = () => {
+  //   setProfileImage(null);
+  //   setProfileImagePreview("");
+  //   if (fileInputRef.current) {
+  //     fileInputRef.current.value = "";
+  //   }
+  // };
+
 
   const handleSubmit = async (formData: Record<string, any>) => {
     if (!selectedBranch) throw new Error("Please select a branch");
@@ -110,17 +112,28 @@ const MemberCreate: React.FC = () => {
     const createdMember = await MemberService.createMember(payload);
 
     // Upload profile picture if exists
-    if (profileImage && createdMember.memberId) {
-      try {
-        setIsUploading(true);
-        await MemberService.uploadProfilePicture(profileImage, createdMember.memberId);
-      } catch (error) {
-        console.error("Failed to upload profile picture:", error);
-        // Don't throw error here, member is already created
-        console.warn("Member created but profile picture upload failed");
-      } finally {
-        setIsUploading(false);
-      }
+  //   if (profileImage && createdMember.memberId) {
+  //     try {
+  //       setIsUploading(true);
+  //       await MemberService.uploadProfilePicture(profileImage, createdMember.memberId);
+  //     } catch (error) {
+  //       console.error("Failed to upload profile picture:", error);
+  //       // Don't throw error here, member is already created
+  //       console.warn("Member created but profile picture upload failed");
+  //     } finally {
+  //       setIsUploading(false);
+  //     }
+  //   }
+  // };
+
+  // ✅ IMAGE NOW COMES FROM KiduCreate
+    if (formData.profileImage && createdMember.memberId) {
+      setIsUploading(true);
+      await MemberService.uploadProfilePicture(
+        formData.profileImage,
+        createdMember.memberId
+      );
+      setIsUploading(false);
     }
   };
 
@@ -175,7 +188,7 @@ const MemberCreate: React.FC = () => {
 
   return (
     <>
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <div className="card">
           <div className="card-body">
             <h5 className="card-title">Profile Picture</h5>
@@ -248,7 +261,7 @@ const MemberCreate: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <KiduCreate
         title="Create Member"
@@ -256,6 +269,11 @@ const MemberCreate: React.FC = () => {
         onSubmit={handleSubmit}
         submitButtonText="Create Member"
         showResetButton
+         imageConfig={{
+          fieldName: "profileImage",
+          defaultImage: profiledefaultimg,
+          label: "Profile Picture",
+        }}
         successMessage="Member created successfully!"
         errorMessage="Failed to create member. Please try again."
         navigateOnSuccess="/dashboard/contributions/member-list"

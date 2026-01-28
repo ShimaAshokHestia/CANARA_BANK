@@ -331,6 +331,24 @@ const PublicPageEdit: React.FC = () => {
                   {input("contactSubjectLabel", "Subject Label")}
                   {input("contactMessageLabel", "Message Label")}
                   {input("contactSubmitButtonLabel", "Submit Button Label")}
+                  {input("contactFullNamePlaceholder","Full Name Placeholder")}
+                  {input("contactPhoneNumberPlaceholder","Phone Number Placeholder")}
+                  {input("contactEmailPlaceholder","Email Placeholder")}
+                  {input("contactSubjectPlaceholder","Subject Placeholder")}
+                  {input("contactMessagePlaceholder","Message Placeholder")}
+                  {input("contactMessageRowNo","Message Row No")}
+                  {input("contactSubmitButtonIconClass","Submit Button Icon Class")}
+                  {input("contactOfficeTitleLabel","Office Title Label")}
+                  {input("contactOfficeTitleIconClass","Office Title Icon Class")}
+                  {input("contactOfficePhoneLabel","Office Phone Label")}
+                  {input("contactOfficePhoneIconClass","Office Icon Class")}
+                  {input("contactOfficeEmailLabel","Office Email Label")}
+                  {input("contactOfficeEmailIconClass","Office Icon Class")}
+                  {input("contactOfficeAddress2","Office Address 2")}
+                  {input("contactOfficeAddress3","Office Address 3")}
+                  {input("contactOfficeDay1","Office Day 1")}
+                  {input("contactOfficeDay2","Office Day 2")}
+                  {input("contactOfficeDay3","Office Day 3")}
                   {input("officeTitle", "Office Title")}
                   {input("officeAddress", "Office Address")}
                   {input("officePhone", "Office Phone")}
@@ -339,6 +357,7 @@ const PublicPageEdit: React.FC = () => {
                   {input("officeDay1Time", "Day 1 Time")}
                   {input("officeDay2Time", "Day 2 Time")}
                   {input("officeDay3Time", "Day 3 Time")}
+
                 </Row>
               </Card.Body>
             </Card>

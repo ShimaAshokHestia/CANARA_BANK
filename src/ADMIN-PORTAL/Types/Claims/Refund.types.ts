@@ -21,6 +21,7 @@ export interface RefundContribution {
   dddateString: Date | string;           
   amount: number;             
   lastContribution: number;   
-  yearOF: number;             
+  yearOF: number; 
+  yearName:number;            
   auditLogs?: AuditTrails[];  
 }

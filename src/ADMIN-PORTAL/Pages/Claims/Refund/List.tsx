@@ -11,7 +11,7 @@ const columns = [
   { key: "stateName", label: "State", enableSorting: true, type: "text" as const },
   { key: "refundNO", label: "Refund No", enableSorting: true, type: "text" as const },
   { key: "amount", label: "Amount", enableSorting: true, type: "text" as const },
-  { key: "yearOF", label: "Year", enableSorting: true, type: "text" as const },
+  { key: "yearName", label: "Year", enableSorting: true, type: "text" as const },
 ];
 
 const RefundContributionList: React.FC = () => {
@@ -34,6 +34,7 @@ const RefundContributionList: React.FC = () => {
           r.designationName,
           r.stateName,
           r.refundNO?.toString(),
+          r.yearName?.toString(),
         ]
           .filter(Boolean)
           .some(v => String(v).toLowerCase().includes(q))

@@ -20,7 +20,7 @@ const RefundContributionView: React.FC = () => {
     { key: "dddateString", label: "DD Date", icon: "bi-calendar-event" },
     { key: "amount", label: "Amount", icon: "bi-currency-rupee" },
     { key: "lastContribution", label: "Last Contribution", icon: "bi-cash-stack" },
-    { key: "yearOF", label: "Year", icon: "bi-calendar" },
+    { key: "yearName", label: "Year", icon: "bi-calendar" },
   ];
 
   const handleFetch = async (id: string) => {

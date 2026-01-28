@@ -19,7 +19,6 @@ const PublicPageCreate: React.FC = () => {
   /* ===================== INITIAL VALUES ===================== */
   const initialValues: Partial<PublicPage> = {
     isActive: true,
-    navMenuHead: false,
   };
 
   const [formData, setFormData] = useState<Partial<PublicPage>>(initialValues);
@@ -127,9 +126,7 @@ const PublicPageCreate: React.FC = () => {
                   {input("navBrandSubTitle", "Brand Subtitle")}
                   {input("navLogoUrl", "Logo URL")}
                   {input("navLogoAlt", "Logo Alt")}
-                  <Col md={12} className="mb-3">
-                    {checkbox("navMenuHead", "Menu Head")}
-                  </Col>
+                  {input("navMenuHead","Menu Head")}
                   {input("navHomeLabel", "Home Label")}
                   {input("navAboutLabel", "About Label")}
                   {input("navRulesLabel", "Rules Label")}

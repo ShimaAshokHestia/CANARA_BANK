@@ -8,7 +8,7 @@ export interface PublicPage {
   navBrandSubTitle: string;//
   navLogoUrl: string;//
   navLogoAlt: string;//
-  navMenuHead: boolean;//
+  navMenuHead: string;//
   navHomeLabel: string;//
   navAboutLabel: string;//
   navRulesLabel: string;//

@@ -1,8 +1,8 @@
 // src/components/CMS/DocumentEdit.tsx
 import React from "react";
-import type { Field } from "../../Components/KiduCreate";
-import AttachmentService from "../../../Services/Attachment.services";
+import type { Field } from "../../Components/KiduEdit";
 import KiduEdit from "../../Components/KiduEdit";
+import AttachmentService from "../../../Services/Attachment.services";
 
 const DocumentEdit: React.FC = () => {
 

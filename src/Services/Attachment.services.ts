@@ -3,7 +3,6 @@ import type { CustomResponse } from "../Types/ApiTypes";
 import type { Attachment } from "../Types/Attachment.types";
 import HttpService from "./HttpService";
 
-
 class AttachmentService {
 
   static async getByTableAndId(
@@ -60,6 +59,21 @@ class AttachmentService {
       API_ENDPOINTS.ATTACHMENT.DOWNLOAD(attachmentId),
       fileName
     );
+  }
+
+  // ✅ NEW UPDATE METHOD (added only)
+  static async updateAttachment(
+    attachmentId: number,
+    data: Partial<Attachment>
+  ): Promise<Attachment> {
+
+    const response: CustomResponse<Attachment> = await HttpService.callApi(
+      API_ENDPOINTS.ATTACHMENT.UPDATE(attachmentId),
+      "PUT",
+      data
+    );
+
+    return response.value;
   }
 }
 

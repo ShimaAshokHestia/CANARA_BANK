@@ -116,6 +116,8 @@ import DailyNewsView from '../Pages/DailyNews/View';
 //Document
 import DocumentList from '../Pages/Documents/List';
 import DocumentCreate from '../Pages/Documents/Create';
+import DocumentEdit from '../Pages/Documents/Edit';
+import DocumentView from '../Pages/Documents/View';
 
 //Direct Pay
 import DirectPaymentList from '../Pages/Contributions/DirectPay/List';
@@ -152,6 +154,8 @@ import YearMasterView from '../Pages/YearMaster/View';
 
 import FileUploadCreate from '../Pages/Contributions/MonthlyContribution/FileUpload';
 import Notifications from '../Pages/Notifications/Notifications';
+
+
 
 
 // Export route configuration as JSX elements - ALL PROTECTED
@@ -278,7 +282,9 @@ export const adminRoutes = (
       
       {/* Documents*/}
       <Route path="cms/documents-list" element={<DocumentList />} />
-      <Route path="cms/document-create" element={<DocumentCreate />} />
+      <Route path="cms/documents-create" element={<DocumentCreate />} />
+      <Route path="cms/documents-edit/:attachmentId" element={<DocumentEdit/>}/>
+      <Route path="cms/documents-view/:attachmentId" element={<DocumentView/>}/>
       
       {/* Direct Pay */}
       <Route path="contributions/directpayment-list" element={<DirectPaymentList />} />

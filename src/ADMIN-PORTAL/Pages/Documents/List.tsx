@@ -33,9 +33,9 @@ const DocumentList: React.FC = () => {
       columns={columns}
       idKey="attachmentId"
       addButtonLabel="Add document"
-      addRoute="/dashboard/cms/document-create"
-      editRoute="/dashboard/cms/document-edit"
-      viewRoute="/dashboard/cms/document-view"
+      addRoute="/dashboard/cms/documents-create"
+      editRoute="/dashboard/cms/documents-edit"
+      viewRoute="/dashboard/cms/documents-view"
       showAddButton
       showExport
       showSearch

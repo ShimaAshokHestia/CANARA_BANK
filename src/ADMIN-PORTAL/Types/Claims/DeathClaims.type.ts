@@ -18,6 +18,7 @@ export interface DeathClaim {
   amount: number;
   lastContribution: number;
   yearOF?: number;
+  yearName:number;
   auditLogs?: AuditTrails[];
 }
 

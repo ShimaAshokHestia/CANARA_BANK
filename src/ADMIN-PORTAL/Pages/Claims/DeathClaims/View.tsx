@@ -5,6 +5,7 @@ import KiduView from "../../../Components/KiduView";
 import MemberService from "../../../Services/Contributions/Member.services";
 import StateService from "../../../Services/Settings/State.services";
 import DesignationService from "../../../Services/Settings/Designation.services";
+import YearMasterService from "../../../Services/Settings/YearMaster.services";
 
 const DeathClaimView: React.FC = () => {
   const fields: ViewField[] = [
@@ -20,7 +21,7 @@ const DeathClaimView: React.FC = () => {
     { key: "dddate", label: "DD Date", icon: "bi-calendar" },
     { key: "amount", label: "Amount", icon: "bi-cash" },
     { key: "lastContribution", label: "Last Contribution", icon: "bi-wallet2" },
-    { key: "yearOF", label: "Year Of", icon: "bi-calendar-check" },
+    { key: "yearName", label: "Year", icon: "bi-calendar-check" }, 
   ];
 
   const handleFetch = async (id: string) => {
@@ -28,6 +29,7 @@ const DeathClaimView: React.FC = () => {
     const claim = response.value;
 
     if (!claim) return response;
+
     if (claim.memberId) {
       const members = await MemberService.getAllMembers();
       const member = members.find(m => m.memberId === claim.memberId);
@@ -42,6 +44,11 @@ const DeathClaimView: React.FC = () => {
     if (claim.designationId) {
       const desig = await DesignationService.getDesignationById(claim.designationId);
       claim.designationName = desig.value?.name || "N/A";
+    }
+
+    if (claim.yearOF) {
+      const year = await YearMasterService.getYearMasterById(claim.yearOF);
+      claim.yearName = year.value?.yearName || claim.yearOF;
     }
 
     return {
@@ -59,10 +66,10 @@ const DeathClaimView: React.FC = () => {
       title="Death Claim Details"
       fields={fields}
       onFetch={handleFetch}
-      onDelete={handleDelete}       
+      onDelete={handleDelete}
       editRoute="/dashboard/claims/deathclaims-edit"
       listRoute="/dashboard/claims/deathclaims-list"
-      paramName="deathClaimId"         
+      paramName="deathClaimId"
       auditLogConfig={{
         tableName: "DeathClaim",
         recordIdField: "deathClaimId",
@@ -70,7 +77,7 @@ const DeathClaimView: React.FC = () => {
       themeColor="#1B3763"
       loadingText="Loading death claim..."
       showEditButton={true}
-      showDeleteButton={true}          
+      showDeleteButton={true}
       deleteConfirmMessage="Are you sure you want to delete this death claim? This action cannot be undone."
     />
   );

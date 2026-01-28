@@ -1,6 +1,7 @@
 import React from "react";
 import KiduServerTable from "../../../../Components/KiduServerTable";
 import DeathClaimService from "../../../Services/Claims/DeathClaims.services";
+import type { DeathClaim } from "../../../Types/Claims/DeathClaims.type";
 
 const columns = [
   { key: "deathClaimId", label: "Death Claim ID", type: "text" as const },
@@ -9,18 +10,24 @@ const columns = [
   { key: "designationName", label: "Designation", type: "text" as const },
   { key: "deathDate", label: "Death Date", type: "text" as const },
   { key: "amount", label: "Amount", type: "text" as const },
+  { key: "yearName", label: "Year", type: "text" as const }, 
 ];
 
 const DeathClaimList: React.FC = () => {
   const fetchData = async ({ pageNumber, pageSize, searchTerm }: any) => {
-    let data = await DeathClaimService.getAllDeathClaims();
+    let data: DeathClaim[] = await DeathClaimService.getAllDeathClaims();
 
     if (searchTerm) {
       const q = searchTerm.toLowerCase();
       data = data.filter(d =>
-        [d.memberName, d.stateName, d.designationName]
+        [
+          d.memberName,
+          d.stateName,
+          d.designationName,
+          d.yearName?.toString(), 
+        ]
           .filter(Boolean)
-          .some(v => v.toLowerCase().includes(q))
+          .some(v => String(v).toLowerCase().includes(q))
       );
     }
 

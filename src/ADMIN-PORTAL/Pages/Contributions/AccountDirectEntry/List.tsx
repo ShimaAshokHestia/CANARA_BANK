@@ -8,7 +8,7 @@ const columns = [
   { key: "memberName", label: "Member", enableSorting: true, type: "text" as const },
   { key: "branchName", label: "Branch", enableSorting: true, type: "text" as const },
   { key: "monthName", label: "Month", enableSorting: true, type: "text" as const },
-  { key: "yearOf", label: "Year", enableSorting: true, type: "text" as const },
+  { key: "yearName", label: "Year", enableSorting: true, type: "text" as const },
   { key: "amt", label: "Amount", enableSorting: true, type: "text" as const },
   { key: "status", label: "Status", enableSorting: true, type: "text" as const },
   { key: "isApproved", label: "Approved", enableSorting: true, type: "checkbox" as const },
@@ -16,37 +16,45 @@ const columns = [
 
 const AccountsDirectEntryList: React.FC = () => {
   const fetchData = async (params: {
-    pageNumber: number;
-    pageSize: number;
-    searchTerm: string;
-  }): Promise<{ data: AccountDirectEntry[]; total: number }> => {
+  pageNumber: number;
+  pageSize: number;
+  searchTerm: string;
+}): Promise<{ data: AccountDirectEntry[]; total: number }> => {
 
-    let entries: AccountDirectEntry[] =
-      await AccountDirectEntryService.getAllAccountDirectEntries();
+  let entries: AccountDirectEntry[] =
+    await AccountDirectEntryService.getAllAccountDirectEntries();
 
-    if (params.searchTerm) {
-      const q = params.searchTerm.toLowerCase();
-      entries = entries.filter(e =>
-        [
-          e.accountsDirectEntryID?.toString(),
-          e.memberName,
-          e.branchName,
-          e.monthName,
-          e.status,
-        ]
-          .filter(Boolean)
-          .some(v => String(v).toLowerCase().includes(q))
-      );
-    }
+  // ✅ Ensure yearName exists (fallback to yearOf)
+  entries = entries.map(e => ({
+    ...e,
+    yearName: e.yearName ?? (e.yearOf ? String(e.yearOf) : "N/A"),
+  }));
 
-    const start = (params.pageNumber - 1) * params.pageSize;
-    const end = start + params.pageSize;
+  if (params.searchTerm) {
+    const q = params.searchTerm.toLowerCase();
+    entries = entries.filter(e =>
+      [
+        e.accountsDirectEntryID?.toString(),
+        e.memberName,
+        e.branchName,
+        e.monthName,
+        e.status,
+        e.yearName,
+      ]
+        .filter(Boolean)
+        .some(v => String(v).toLowerCase().includes(q))
+    );
+  }
 
-    return {
-      data: entries.slice(start, end),
-      total: entries.length,
-    };
+  const start = (params.pageNumber - 1) * params.pageSize;
+  const end = start + params.pageSize;
+
+  return {
+    data: entries.slice(start, end),
+    total: entries.length,
   };
+};
+
 
   return (
     <KiduServerTable

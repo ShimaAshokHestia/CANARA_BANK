@@ -72,7 +72,7 @@ const Claims: React.FC = () => {
     deathClaims.forEach((claim) => {
       const state = stateMap.get(claim.stateId);
       if (state) {
-        const year = claim.yearOF.toString();
+        const year = claim.yearName.toString();
         state.yearlyData[year] = (state.yearlyData[year] || 0) + 1;
         state.total += 1;
       }
@@ -102,7 +102,7 @@ const Claims: React.FC = () => {
     deathClaims.forEach((claim) => {
       const designation = designationMap.get(claim.designationId);
       if (designation) {
-        const year = claim.yearOF.toString();
+        const year = claim.yearName.toString();
         designation.yearlyData[year] = (designation.yearlyData[year] || 0) + 1;
         designation.total += 1;
       }

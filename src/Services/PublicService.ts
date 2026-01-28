@@ -701,11 +701,11 @@ export const PublicService = {
             },
             phone: {
                 iconclass: "bi bi-telephone-fill text-gold",
-                value: "+91 98765 43210",
+                value: "047124721760",
             },
             email: {
                 iconclass: "bi bi-envelope-fill text-gold",
-                value: "info@cbfws.org",
+                value: "cbeutvm@gmail.com",
             },
         },
         quickhead: "Quick Links",

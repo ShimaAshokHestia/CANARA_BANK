@@ -20,19 +20,23 @@ interface FeatureItem {
 }
 const FeaturesSection: React.FC = () => {
 
-   const [config, setConfig] = useState<PublicPage | null>(null);
+  const [config, setConfig] = useState<PublicPage | null>(null);
   const [features, setFeatures] = useState<FeatureItem[]>([]);
 
   useEffect(() => {
     const loadFeatureConfig = async () => {
       try {
         const data = await PublicPageConfigService.getPublicPageConfig();
-        const pageConfig = data[0]; // CMS returns single record in array
-        setConfig(pageConfig);
+
+        // pick the active config instead of data[0]
+        const activeConfig = data.find(
+          (item: PublicPage) => item.isActive === true
+        );
+        setConfig(activeConfig || null);
 
         // 🔹 Parse features JSON from CMS
-        if (pageConfig?.homeFeatureItemsJson) {
-          const parsed = JSON.parse(pageConfig.homeFeatureItemsJson);
+        if (activeConfig?.homeFeatureItemsJson) {
+          const parsed = JSON.parse(activeConfig.homeFeatureItemsJson);
           setFeatures(parsed);
         }
       } catch (error) {
@@ -51,7 +55,7 @@ const FeaturesSection: React.FC = () => {
           <span className="feature-label">{config?.homeFeatureHeading || "Our Commitment"}</span>
           <h2 className="feature-heading"> {config?.homeFeatureTitle || "Why Join Our Scheme?"}</h2>
           <p className="feature-subtext mx-auto">
-           {config?.homeFeatureSubTitle ||
+            {config?.homeFeatureSubTitle ||
               "For five decades, we have been providing essential support to bank employees and their families."}
           </p>
         </div>
@@ -64,7 +68,6 @@ const FeaturesSection: React.FC = () => {
                 <div className="feature-icon-wrapper">
                   <div className="feature-icon"> {iconMap[feature.icon]}</div>
                 </div>
-
                 <h5 className="feature-title">{feature.title}</h5>
                 <p className="feature-description">{feature.description}</p>
               </Card>

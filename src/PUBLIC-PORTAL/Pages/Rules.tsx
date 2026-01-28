@@ -19,11 +19,14 @@ const Rules: React.FC = () => {
     const loadRulesConfig = async () => {
       try {
         const data = await PublicPageConfigService.getPublicPageConfig();
-        const pageConfig = data[0]; // CMS returns single record
-        setConfig(pageConfig);
+        // pick active config instead of data[0]
+        const activeConfig = data.find(
+          (item: PublicPage) => item.isActive === true
+        );
+        setConfig(activeConfig || null);
 
-        if (pageConfig?.rulesSectionsJson) {
-          setSections(JSON.parse(pageConfig.rulesSectionsJson));
+        if (activeConfig?.rulesSectionsJson) {
+          setSections(JSON.parse(activeConfig.rulesSectionsJson));
         }
       } catch (error) {
         console.error("Failed to load rules config:", error);
@@ -41,7 +44,7 @@ const Rules: React.FC = () => {
           {config?.rulesHeaderTitle || "Rules & Regulations"}
         </h2>
         <p className="rules-subtitle">
-  {config?.rulesHeaderSubTitle || "Complete guidelines for the Golden Jubilee Family Welfare Scheme"}
+          {config?.rulesHeaderSubTitle || "Complete guidelines for the Golden Jubilee Family Welfare Scheme"}
         </p>
       </div>
       {/* CONTENT */}

@@ -5,15 +5,19 @@ import PublicPageConfigService from "../Services/Publicpage.services";
 import type { PublicPage } from "../../ADMIN-PORTAL/Types/CMS/PublicPage.types";
 
 const AboutUs: React.FC = () => {
-  //const about = PublicService.about
 
-   const [config, setConfig] = useState<PublicPage | null>(null);
+  const [config, setConfig] = useState<PublicPage | null>(null);
 
   useEffect(() => {
     const loadAboutConfig = async () => {
       try {
         const data = await PublicPageConfigService.getPublicPageConfig();
-        setConfig(data[0]); // CMS returns single record in array
+        // pick active config instead of data[0]
+        const activeConfig = data.find(
+          (item: PublicPage) => item.isActive === true
+        );
+
+        setConfig(activeConfig || null);
       } catch (error) {
         console.error("Failed to load about us config:", error);
       }
@@ -22,45 +26,16 @@ const AboutUs: React.FC = () => {
     loadAboutConfig();
   }, []);
 
-  // 🔹 Map API → existing structure (NO UI change)
-  const about = {
-    header: {
-      title: config?.aboutHeaderTitle,
-      subtitle: config?.aboutHeaderSubTitle,
-    },
-    mission: {
-      title: config?.aboutMissionTitle,
-      icon: config?.aboutMissionIcon,
-      description: config?.aboutMissionDescription,
-    },
-    vision: {
-      title: config?.aboutVisionTitle,
-      icon: config?.aboutVisionIcon,
-      description: config?.aboutVisionDescription,
-    },
-    history: {
-      title: config?.aboutHistoryTitle,
-      icon: config?.aboutHistoryIcon,
-      paragraphs: {
-        paragraph1: config?.aboutHistoryPara1,
-        paragraph2: config?.aboutHistoryPara2,
-        paragraph3: config?.aboutHistoryPara3,
-        paragraph4: config?.aboutHistoryPara4,
-        paragraph5: config?.aboutHistoryPara5,
-      },
-      // footerNote: config?.aboutHistoryPara5,
-    },
-  };
   return (
     <div className="about-wrapper">
 
       {/* HEADER */}
       <div className="about-header text-center py-4">
         <h2 className="about-title text-white mt-2 mb-0">
-          {about.header.title}
+          {config?.aboutHeaderTitle}
         </h2>
         <p className="about-subtitle">
-          {about.header.subtitle}
+          {config?.aboutHeaderSubTitle}
         </p>
       </div>
 
@@ -74,13 +49,13 @@ const AboutUs: React.FC = () => {
               {/* Icon beside heading */}
               <div className="heading-row d-flex align-items-center mb-3">
                 <div className="icon-box me-2">
-                  <i className={about.mission.icon}></i>
+                  <i className={config?.aboutMissionIcon}></i>
                 </div>
-                <h5 className="section-heading mb-0">{about.mission.title}</h5>
+                <h5 className="section-heading mb-0">{config?.aboutMissionTitle}</h5>
               </div>
 
               <p className="section-text">
-                {about.mission.description}
+                {config?.aboutMissionDescription}
               </p>
             </Card>
           </Col>
@@ -91,13 +66,13 @@ const AboutUs: React.FC = () => {
               {/* Icon beside heading */}
               <div className="heading-row d-flex align-items-center mb-3">
                 <div className="icon-box me-2">
-                  <i className={about.vision.icon}></i>
+                  <i className={config?.aboutVisionIcon}></i>
                 </div>
-                <h5 className="section-heading mb-0">{about.vision.title}</h5>
+                <h5 className="section-heading mb-0">{config?.aboutVisionTitle}</h5>
               </div>
 
               <p className="section-text">
-                {about.vision.description}
+                {config?.aboutVisionDescription}
               </p>
             </Card>
           </Col>
@@ -111,32 +86,30 @@ const AboutUs: React.FC = () => {
               {/* Icon beside heading */}
               <div className="heading-row d-flex align-items-center mb-3">
                 <div className="icon-box me-2">
-                  <i className={about.history.icon}></i>
+                  <i className={config?.aboutHistoryIcon}></i>
                 </div>
-                <h5 className="section-heading mb-0">{about.history.title}</h5>
+                <h5 className="section-heading mb-0">{config?.aboutHistoryTitle}</h5>
               </div>
 
               <p className="section-text">
-                {about.history.paragraphs.paragraph1}
+                {config?.aboutHistoryPara1}
               </p>
 
               <p className="section-text">
-                {about.history.paragraphs.paragraph2}
+                {config?.aboutHistoryPara2}
               </p>
 
               <p className="section-text">
-                {about.history.paragraphs.paragraph3}
+                {config?.aboutHistoryPara3}
               </p>
 
               <p className="section-text">
-                {about.history.paragraphs.paragraph4}
+                {config?.aboutHistoryPara4}
               </p>
 
               <p className="section-text">
-                {about.history.paragraphs.paragraph5}
+                {config?.aboutHistoryPara5}
               </p>
-
-              {/* <p className="section-text fw-bold">{about.history.footerNote}</p> */}
             </Card>
           </Col>
         </Row>

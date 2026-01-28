@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { Calendar } from "lucide-react";
-import { Link } from "react-router-dom";
 import "../Style/NewsPage.css";
 import type { DailyNews } from "../../ADMIN-PORTAL/Types/CMS/DailyNews.types";
 import DailyNewsPublicService from "../Services/DailyNewsPublic.services";
-import { PublicService } from "../../Services/PublicService";
-// ================NEW FIELDS NEED TO BE ADDED FROM API============
+import type { PublicPage } from "../../ADMIN-PORTAL/Types/CMS/PublicPage.types";
+import PublicPageConfigService from "../Services/Publicpage.services";
+
 const News: React.FC = () => {
-  const news = PublicService.newsPage
   const [newsItems, setNewsItems] = useState<DailyNews[]>([]);
   const [loading, setLoading] = useState(true);
+   const [config, setConfig] = useState<PublicPage | null>(null);
 
   useEffect(() => {
     const loadNews = async () => {
       try {
+        //  CMS config (ACTIVE ONLY)
+        const data = await PublicPageConfigService.getPublicPageConfig();
+        const activeConfig = data.find(
+          (item: PublicPage) => item.isActive === true
+        );
+        setConfig(activeConfig || null);
+
         // Get last 9 added news (filtered and sorted by createdOn)
         const latestNine = await DailyNewsPublicService.getLatestNineNews();
         setNewsItems(latestNine);
@@ -33,34 +40,23 @@ const News: React.FC = () => {
       {/* Hero Section */}
       <section className="news-hero text-center py-4">
         <Container>
-          <span className="news-tag">{news.hero.tag}</span>
-          <h1 className="news-title text-white">{news.hero.title}</h1>
+          <span className="news-tag"> {config?.newsSectionHeadingLabel}</span>
+          <h1 className="news-title text-white"> {config?.newsHeroTitle}</h1>
           <p className="news-subtext">
-            {news.hero.subtitle}
+            {config?.newsHeroSubTitle}
           </p>
         </Container>
       </section>
-      {/* Breadcrumb */}
-      <div className="news-breadcrumb">
-        <Container>
-          <span>
-            <Link to="/" className="breadcrumb-link">
-              {news.breadcrumb.homeLabel}
-            </Link>{" "}
-            › <span className="breadcrumb-active">{news.breadcrumb.currentLabel}</span>
-          </span>
-        </Container>
-      </div>
       {/* News Cards Grid */}
       <section className="news-section">
         <Container>
           {loading ? (
             <div className="text-center py-5">
-              <p>{news.states.loadingText}</p>
+              <p>{config?.newsLoadingText}</p>
             </div>
           ) : newsItems.length === 0 ? (
             <div className="text-center py-5">
-              <p>{news.states.emptyText}.</p>
+              <p>{config?.newsEmptyText}.</p>
             </div>
           ) : (
             <Row className="g-4">
@@ -70,11 +66,13 @@ const News: React.FC = () => {
                     <Card.Body>
                       <div className="news-date">
                         <Calendar size={18} className="news-calendar-icon" />
-                        <span>{item.newsDateString}</span>
+                        <span className="news-date">
+                          {item.newsDateString?.split(" ").slice(0, 3).join(" ")}
+                        </span>
                       </div>
                       <h5 className="news-heading">{item.title}</h5>
                       <p className="news-excerpt">
-                        {item.description?.length > 150 ? item.description.slice(0, 150) + "..." : item.description}
+                        {item.description?.length > 250 ? item.description.slice(0, 250) + "..." : item.description}
                       </p>
                     </Card.Body>
                   </Card>

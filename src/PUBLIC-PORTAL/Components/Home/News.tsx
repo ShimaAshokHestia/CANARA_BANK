@@ -3,7 +3,6 @@ import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { HiOutlineCalendar, HiOutlineArrowRight } from "react-icons/hi";
 import "../../Style/Home/News.css";
 import { Link, useNavigate } from "react-router-dom";
-import { PublicService } from "../../../Services/PublicService";
 import DayQuotePublicService from "../../Services/DayQuotePublic.services";
 import type { DayQuote } from "../../../ADMIN-PORTAL/Types/CMS/DayQuote.types";
 import type { DailyNews } from "../../../ADMIN-PORTAL/Types/CMS/DailyNews.types";
@@ -18,7 +17,6 @@ interface QuickLink {
 
 const NewsSection: React.FC = () => {
   const navigate = useNavigate()
-  const news = PublicService.home.news
   const [dayQuote, setDayQuote] = useState<DayQuote | null>(null);
   const [latestNews, setLatestNews] = useState<DailyNews[]>([]);
   const [config, setConfig] = useState<PublicPage | null>(null);
@@ -30,12 +28,13 @@ const NewsSection: React.FC = () => {
 
         // 🔹 CMS config
         const data = await PublicPageConfigService.getPublicPageConfig();
-        const pageConfig = data[0];
-        setConfig(pageConfig);
+        const activeConfig = data.find(
+          (item: PublicPage) => item.isActive === true
+        );
+        setConfig(activeConfig || null);
 
-       
-        if (pageConfig?.newsQuickLinksJson) {
-          setQuickLinks(JSON.parse(pageConfig.newsQuickLinksJson));
+        if (activeConfig?.newsQuickLinksJson) {
+          setQuickLinks(JSON.parse(activeConfig.newsQuickLinksJson));
         }
 
         const quote = await DayQuotePublicService.getLastQuote();
@@ -52,6 +51,7 @@ const NewsSection: React.FC = () => {
 
     loadHomeData();
   }, []);
+
   return (
     <section className="py-5 news-section">
       <Container>
@@ -59,8 +59,8 @@ const NewsSection: React.FC = () => {
           {/* LEFT SIDE - NEWS LIST */}
           <Col lg={8}>
             <div className="mb-4">
-              <span className="news-label"> {config?.newsHeroTitle || "Stay Informed"}</span>
-              <h2 className="news-heading fs-3"> {config?.newsHeroSubTitle || "Latest announcements and activities"}</h2>
+              <span className="news-label"> {config?.newsSectionHeadingLabel || "Stay Informed"}</span>
+              <h2 className="news-heading fs-3"> {config?.newsSectionHeadingTitle || "Latest News & Updates"}</h2>
             </div>
 
             <Row className="gy-3">
@@ -69,9 +69,11 @@ const NewsSection: React.FC = () => {
                   <Card className="news-card shadow-sm border-0 p-3">
                     <div className="d-flex align-items-center gap-2 text-warning mb-2">
                       <HiOutlineCalendar size={18} />
-                      <span className="news-date">{item.newsDateString}</span>
-                    </div>
+                      <span className="news-date">
+                        {item.newsDateString?.split(" ").slice(0, 3).join(" ")}
+                      </span>
 
+                    </div>
                     <h6 className="news-title fs-5">{item.title}</h6>
                     <p className="news-text"> {item.description?.length > 150 ? item.description.slice(0, 150) + "..." : item.description}</p>
                   </Card>
@@ -80,7 +82,7 @@ const NewsSection: React.FC = () => {
             </Row>
 
             <Button variant="warning" onClick={() => navigate("/news")} className="mt-4 d-flex align-items-center gap-2 text-white">
-              View All News
+              {config?.newsTag || "View All News"}
               <HiOutlineArrowRight />
             </Button>
           </Col>
@@ -89,16 +91,15 @@ const NewsSection: React.FC = () => {
           <Col lg={4} className="sidebar-wrapper">
             {/* Gold Box */}
             <Card className="p-4 border-0 sidebar-gold shadow-sm">
-              <h4 className="mb-3 fw-bold fs-5"> {dayQuote?.toDayQuote || news.sidebar.quoteTitle}</h4>
+              <h4 className="mb-3 fw-bold fs-5 text-center bg-white px-1 py-2 rounded border-start border-primary border-5"> {dayQuote?.toDayQuote || "Every Day is an AIBEA Day"}</h4>
               <p className="mb-4">
-                {dayQuote?.unformatedContent || news.sidebar.quoteText}
+                {dayQuote?.unformatedContent || "We salute all the members of the Scheme who have joined in a noble task of extending a helping hand to the families of our deceased colleagues."}
               </p>
-              <Button onClick={() => navigate("/contact-us")} className="sidebar-btn-gold w-100">Join the Movement</Button>
             </Card>
 
             {/* Blue Quick Links */}
             <Card className="p-4 border-0 sidebar-blue text-white mt-4 shadow-sm">
-              <h4 className="mb-3 fw-bold">{news.sidebar.heading}</h4>
+              <h4 className="mb-3 fw-bold">{config?.newsSectionQuickLinksHead}</h4>
               <ul className="list-unstyled sidebar-links">
                 {quickLinks.map((link, index) => (
                   <li key={index}>

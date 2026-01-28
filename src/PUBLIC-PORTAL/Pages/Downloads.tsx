@@ -16,12 +16,16 @@ const Downloads: React.FC = () => {
   useEffect(() => {
     const fetchAttachments = async () => {
       try {
-        // 🔹 CMS config
-        const configData = await PublicPageConfigService.getPublicPageConfig();
-        setConfig(configData[0]); // CMS returns single record
+        // CMS config
+        const data = await PublicPageConfigService.getPublicPageConfig();
+        // pick active config instead of data[0]
+        const activeConfig = data.find(
+          (item: PublicPage) => item.isActive === true
+        );
+        setConfig(activeConfig || null);
 
-        const data = await PublicAttachmentService.getPublicAttachments();
-        setFiles(data);
+        const fileData = await PublicAttachmentService.getPublicAttachments();
+        setFiles(fileData);
       } catch (error) {
         console.error("Failed to load attachments", error);
       } finally {
@@ -58,7 +62,7 @@ const Downloads: React.FC = () => {
       <div className="downloads-header text-center py-4">
         <h2 className="downloads-title">  {config?.downloadsHeaderTitle || "Downloads"}</h2>
         <p className="downloads-subtitle">
-           {config?.downloadsHeaderSubTitle ||
+          {config?.downloadsHeaderSubTitle ||
             "Access all forms and documents related to the Golden Jubilee Family Welfare Scheme"}
         </p>
       </div>
@@ -68,14 +72,14 @@ const Downloads: React.FC = () => {
           <Col lg={12} md={10}>
             <Card className="downloads-card p-4">
               <h5 className="fw-bold mb-4 d-flex align-items-center">
-                 {config?.downloadsCardIconClass && (
+                {config?.downloadsCardIconClass && (
                   <i className={config.downloadsCardIconClass}></i>
                 )}
                 {config?.downloadsCardTitle}
               </h5>
               {
                 loading ? (
-                  <p className="text-center">Loading...</p>
+                  <p className="text-center">{config?.newsLoadingText}</p>
                 ) : (
                   files.map((file, index) => (
                     <Card key={index} className="file-item-card mb-3 p-3">

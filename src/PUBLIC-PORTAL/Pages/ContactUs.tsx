@@ -23,7 +23,12 @@ const ContactUs: React.FC = () => {
     const loadContactConfig = async () => {
       try {
         const data = await PublicPageConfigService.getPublicPageConfig();
-        setConfig(data[0]); // CMS returns single record in array
+        // pick active config instead of data[0]
+        const activeConfig = data.find(
+          (item: PublicPage) => item.isActive === true
+        );
+
+        setConfig(activeConfig || null);
       } catch (error) {
         console.error("Failed to load contact config:", error);
       }
@@ -146,14 +151,14 @@ const ContactUs: React.FC = () => {
                 <Row className="mb-3">
                   <Col md={6}>
                     <Form.Label>{config?.contactFullNameLabel}</Form.Label>
-                    <Form.Control placeholder={contact?.form.fields.fullName.placeholder} name="fullName"
+                    <Form.Control placeholder={config?.contactFullNamePlaceholder} name="fullName"
                       value={formData.fullName}
                       onChange={handleChange}/>
                   </Col>
 
                   <Col md={6}>
                     <Form.Label>{config?.contactPhoneLabel}</Form.Label>
-                    <Form.Control placeholder={contact?.form.fields.phone.placeholder} name="phoneNumber"
+                    <Form.Control placeholder={config?.contactPhoneNumberPlaceholder} name="phoneNumber"
                       value={formData.phoneNumber}
                       onChange={handleChange}/>
                   </Col>
@@ -161,27 +166,27 @@ const ContactUs: React.FC = () => {
 
                 <Form.Group className="mb-3">
                   <Form.Label>{config?.contactEmailLabel}</Form.Label>
-                  <Form.Control placeholder={contact?.form.fields.email.placeholder} name="emailAddress"
+                  <Form.Control placeholder={config?.contactEmailPlaceholder} name="emailAddress"
                     value={formData.emailAddress}
                     onChange={handleChange}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3">
                   <Form.Label>{config?.contactSubjectLabel}</Form.Label>
-                  <Form.Control placeholder={contact?.form.fields.subject.placeholder}   name="subject"
+                  <Form.Control placeholder={config?.contactSubjectPlaceholder}   name="subject"
                     value={formData.subject}
                     onChange={handleChange}/>
                 </Form.Group>
 
                 <Form.Group className="mb-4">
                   <Form.Label>{config?.contactMessageLabel}</Form.Label>
-                  <Form.Control as="textarea" rows={contact?.form.fields.message.rows} placeholder={contact?.form.fields.message.placeholder}  name="message"
+                  <Form.Control as="textarea" rows={config?.contactMessageRowNo || 3} placeholder={config?.contactMessagePlaceholder}  name="message"
                     value={formData.message}
                     onChange={handleChange}/>
                 </Form.Group>
 
                 <Button  type="submit" className="send-btn w-100">
-                  <i className={contact?.form.submitButton.iconclass}></i> {config?.contactSubmitButtonLabel}{/* API needed */}
+                  <i className={config?.contactSubmitButtonIconClass}></i> {config?.contactSubmitButtonLabel}{/* API needed */}
                 </Button>
               </Form>
             </Card>

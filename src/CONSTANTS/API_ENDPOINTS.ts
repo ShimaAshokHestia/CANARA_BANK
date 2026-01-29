@@ -199,7 +199,12 @@ export const API_ENDPOINTS = {
     GET_BY_STAFFID: (id: number) => `${API_BASE_URL}/AccountDirecyEntry/GetByMemberId${id}`,
   },
   MONTHLY_CONTRIBUTION:{
-   
+    GET_ALL:`${API_BASE_URL}/MonthlyContribution`,
+    GET_BY_ID:(id:number)=>`${API_BASE_URL}/MonthlyContribution/${id}`,
+    CREATE:`${API_BASE_URL}/MonthlyContribution`,
+    UPDATE:(id:number)=>`${API_BASE_URL}/MonthlyContribution/${id}`,
+    DELETE:(id:number)=>`${API_BASE_URL}/MonthlyContribution/${id}`,
+    UPLOAD_FILE:`${API_BASE_URL}/MonthlyContribution/upload-file`
   },
 
   //------------------------PUBLIC MODULE----------------------------------------

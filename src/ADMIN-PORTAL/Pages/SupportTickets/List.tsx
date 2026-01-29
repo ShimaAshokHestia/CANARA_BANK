@@ -1,8 +1,8 @@
 // src/ADMIN-PORTAL/Pages/Support/SupportTicketList.tsx
 
 import React from "react";
-import type { SupportTicket } from "../../Types/Settings/SupportTicket.types";
-import SupportTicketService from "../../Services/Settings/SupportTicket.services";
+import type { SupportTicket } from "../../Types/SupportTicket/SupportTicket.types";
+import SupportTicketService from "../../Services/SupportTicket/SupportTicket.services";
 import KiduServerTable from "../../../Components/KiduServerTable";
 
 const columns = [

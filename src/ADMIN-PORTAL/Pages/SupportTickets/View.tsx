@@ -2,7 +2,7 @@
 
 import React from "react";
 import type { ViewField } from "../../Components/KiduView";
-import SupportTicketService from "../../Services/Settings/SupportTicket.services";
+import SupportTicketService from "../../Services/SupportTicket/SupportTicket.services";
 import KiduView from "../../Components/KiduView";
 
 const SupportTicketView: React.FC = () => {

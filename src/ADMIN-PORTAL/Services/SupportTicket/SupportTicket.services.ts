@@ -1,7 +1,7 @@
 import { API_ENDPOINTS } from "../../../CONSTANTS/API_ENDPOINTS";
 import HttpService from "../../../Services/HttpService";
 import type { CustomResponse } from "../../../Types/ApiTypes";
-import type { SupportTicket } from "../../Types/Settings/SupportTicket.types";
+import type { SupportTicket } from "../../Types/SupportTicket/SupportTicket.types";
 
 const SupportTicketService = {
  

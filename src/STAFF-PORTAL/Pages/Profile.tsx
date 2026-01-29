@@ -19,10 +19,10 @@ const Profile: React.FC = () => {
     { label: "Name", key: "name" },
     { label: "Gender", key: "gender" },
     { label: "Designation", key: "designationName" },
-    { label: "Category", key: "category" },
+    { label: "Category", key: "categoryname" },
     { label: "Date of Birth", key: "dateOfBirth" },
     { label: "Date of Join", key: "dojtoSchemeString" },
-    { label: "DP Code", key: "branchName" },
+    { label: "DP Code", key: "dpCode" },
     { label: "Date From", key: "dateFrom" },
     { label: "Date To", key: "dateTo" },
     { label: "Retirement Date", key: "retirementDate" },
@@ -152,7 +152,7 @@ const Profile: React.FC = () => {
             <Col md={4} className="profile-row">
               <span className="profile-label">{fields[8].label}</span>
               <span className="profile-value">{user?.dojtoSchemeString ? user.dojtoSchemeString.split(" ").slice(0,3).join(" ") : "—"}</span>
-            </Col>
+            </Col> {/* from date needed */}
           </Row>
 
           <Row>
@@ -164,6 +164,7 @@ const Profile: React.FC = () => {
               <span className="profile-label">{fields[10].label}</span>
               <span className="profile-value">{user?.modifiedDateString  ? user.modifiedDateString.split(" ").slice(0,3).join(" ") : "—"}</span>
             </Col>
+            {/* Retiremnet date needed */}
 
             <Col md={4} className="profile-row">
               <span className="profile-label">{fields[11].label}</span>
@@ -198,3 +199,36 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
+
+
+// export const IMAGE_BASE_URL =
+//   import.meta.env.VITE_IMAGE_BASE_URL || "http://api.cbeugjfws.co.in";
+//    {/* Profile Image */}
+//               <div
+//                 style={{
+//                   width: "70px",
+//                   height: "70px",
+//                   border: "1px solid #ddd",
+//                   borderRadius: "6px",
+//                   overflow: "hidden",
+//                   flexShrink: 0,
+//                   backgroundColor: "#f5f5f5",
+//                 }}
+//               >
+//                 <img
+//                   src={
+//                     user?.profileImageSrc
+//                       ? `${IMAGE_BASE_URL}${user.profileImageSrc}`
+//                       : profiledefaultimg
+//                   }
+//                   alt="Profile"
+//                   style={{
+//                     width: "100%",
+//                     height: "100%",
+//                     objectFit: "cover",
+//                   }}
+//                   onError={(e) => {
+//                     (e.target as HTMLImageElement).src = profiledefaultimg;
+//                   }}
+//                 />
+//               </div>

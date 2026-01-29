@@ -66,7 +66,7 @@ const StaffAccountDirectEntryEdit: React.FC = () => {
         monthName: entry.monthName,
       } as Month);
 
-        setSelectedYearMaster({ yearOf: entry.yearOf, yearName: entry.yearOf } as YearMaster);
+        setSelectedYearMaster({ yearOf: entry.yearOf, yearName: entry.yearName } as YearMaster);
       
     }
 

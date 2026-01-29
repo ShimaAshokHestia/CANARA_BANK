@@ -9,7 +9,7 @@ const columns = [
   { key: "memberName", label: "Member", enableSorting: true, type: "text" as const },
   { key: "branchName", label: "Branch", enableSorting: true, type: "text" as const },
   { key: "monthName", label: "Month", enableSorting: true, type: "text" as const },
-  { key: "yearOf", label: "Year", enableSorting: true, type: "text" as const },
+  { key: "yearName", label: "Year", enableSorting: true, type: "text" as const },
   { key: "amt", label: "Amount", enableSorting: true, type: "text" as const },
   { key: "status", label: "Status", enableSorting: true, type: "text" as const },
   { key: "isApproved", label: "Approved", enableSorting: true, type: "checkbox" as const },

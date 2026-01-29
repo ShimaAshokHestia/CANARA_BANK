@@ -10,6 +10,8 @@ import type { State } from "../../ADMIN-PORTAL/Types/Settings/States.types";
 import type { Designation } from "../../ADMIN-PORTAL/Types/Settings/Designation";
 import DeathClaimService from "../../ADMIN-PORTAL/Services/Claims/DeathClaims.services";
 import ClaimsTable from "../Components/Claims/KiduClaimsTable";
+import YearMasterService from "../../ADMIN-PORTAL/Services/Settings/YearMaster.services";
+import type { YearMaster } from "../../ADMIN-PORTAL/Types/Settings/YearMaster.types";
 
 interface ClaimsTableRow {
   name: string;
@@ -21,10 +23,11 @@ const Claims: React.FC = () => {
   const claims = PublicService.claimsPage;
   const [stateWiseClaims, setStateWiseClaims] = useState<ClaimsTableRow[]>([]);
   const [designationWiseClaims, setDesignationWiseClaims] = useState<ClaimsTableRow[]>([]);
+  const [years, setYears] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Dummy years from 2003 to 2030
-  const years = Array.from({ length: 28 }, (_, i) => (2003 + i).toString());
+  // const years = Array.from({ length: 28 }, (_, i) => (2003 + i).toString());
 
   useEffect(() => {
     loadClaimsData();
@@ -33,12 +36,18 @@ const Claims: React.FC = () => {
   const loadClaimsData = async () => {
     try {
       setLoading(true);
-      const [deathClaims, states, designations] = await Promise.all([
+      const [deathClaims, states, designations, yearMasters] = await Promise.all([
         DeathClaimService.getAllDeathClaims(),
         StateService.getAllStates(),
         DesignationService.getAllDesignations(),
+         YearMasterService.getAllYearMasters(),
       ]);
+//  Get years from Year Master API
+      const yearList = yearMasters
+        .map((y: YearMaster) => y.yearName.toString())
+        .sort();
 
+      setYears(yearList);
       // Process state-wise claims
       const stateData = processStateWiseData(deathClaims, states);
       setStateWiseClaims(stateData);

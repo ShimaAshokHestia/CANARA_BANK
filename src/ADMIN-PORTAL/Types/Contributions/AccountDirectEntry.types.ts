@@ -10,7 +10,7 @@ export interface AccountDirectEntry {
   monthName?:string;
   monthCode: number;
   yearOf?: number;
-  yearName:number;
+  yearName?:number;
   ddIba: string;
   ddIbaDate: Date | string;
   ddIbaDateString?:string;
